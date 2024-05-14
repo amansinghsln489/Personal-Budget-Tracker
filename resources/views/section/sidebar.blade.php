@@ -27,6 +27,69 @@
                     </a>
                 </li>
 
+                <!-- Users Menu -->
+                <li class="submenu">
+                    <a href="#" class="{{ request()->routeIs('add.user') ||request()->routeIs('view.user') || request()->routeIs('user.edit') ? 'subdrop' : '' }}">
+                        <img src="{{ asset('assets/img/sidebar/icon-2.png') }}" alt="icon">
+                        <span>User</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="list-unstyled" style="{{ request()->routeIs('add.user') ||request()->routeIs('view.user') || request()->routeIs('user.edit') ? 'display: block;' : 'display: none;' }}">
+                        <li class="{{ request()->routeIs('add.user') ? 'active' : '' }}">
+                            <a href="{{ route('add.user') }}"><span>Add Users</span></a>
+                        </li>
+                        @if(request()->routeIs('user.edit'))
+                        <li class="active">
+                                <a href="{{ route('user.edit', $user->user_id) }}"><span>Edit Profile</span></a>
+                            </li>
+                        @endif
+                        <li class="{{ request()->routeIs('view.user') ? 'active' : '' }}">
+                            <a href="{{ route('view.user') }}"><span>View Users</span></a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Internal Leads Menu  -->
+                <li class="submenu">
+                    <a href="javascript:void(0);" class="noti-dot {{ request()->routeIs('internal-leads.*') ? 'subdrop' : '' }}">
+                        <img src="{{ asset('assets/img/sidebar/icon-13.png') }}" alt="icon">
+                        <span>Internal Leads</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="list-unstyled" style="{{ request()->routeIs('internal-leads.*') ? 'display: block;' : 'display: none;' }}">
+                        <li class="{{ request()->routeIs('internal-leads.index') ? 'active' : '' }}">
+                            <a href="{{ route('internal-leads.index') }}"><span>All Internal Leads</span></a>
+                        </li>
+                        <li class="{{ request()->routeIs('internal-leads.create') ? 'active' : '' }}">
+                            <a href="{{ route('internal-leads.create') }}"><span>Add Internal Lead</span></a>
+                        </li>
+                        <!-- You can add more submenu items as needed -->
+                    </ul>
+                </li>
+
+                <!-- Configuration Menu -->
+                <li class="submenu">
+                    <a href="#" class="{{ request()->routeIs('add.technology') || request()->routeIs('add.role') || request()->routeIs('add.leadstatus') ? 'subdrop' : '' }}">
+                        <img src="{{ asset('assets/img/sidebar/icon-14.png') }}" alt="icon">
+                        <span>Configuration</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="list-unstyled" style="{{ request()->routeIs('add.technology') || request()->routeIs('add.role') || request()->routeIs('add.leadstatus') ? 'display: block;' : 'display: none;' }}">
+                        <!-- Technology Menu -->
+                        <li class="{{ request()->routeIs('add.technology') ? 'active' : '' }}">
+                            <a href="{{ route('add.technology') }}"><span>Add Technology</span></a>
+                        </li>
+                        <!-- Role Menu -->
+                        <li class="{{ request()->routeIs('add.role') ? 'active' : '' }}">
+                            <a href="{{ route('add.role') }}"><span>Add Role</span></a>
+                        </li>
+                        <!-- Lead Status -->
+                        <li class="{{ request()->routeIs('add.leadstatus') ? 'active' : '' }}">
+                            <a href="{{ route('add.leadstatus') }}"><span>Add Lead Status</span></a>
+                        </li>
+                    </ul>
+                </li>
+
                 <!-- Call History Menu --> 
                 <!-- <li class="submenu">
                     <a href="#" class="{{ request()->routeIs('callhistory.*') ? 'subdrop' : '' }}">
@@ -46,7 +109,7 @@
                         </li>
                     </ul>
                 </li> -->
-
+                
                 <?php 
                 if($user->role == 4 || $user->role == 1){
                 ?>
@@ -100,27 +163,7 @@
                     </ul>
                 </li> -->
 
-                <!-- Users Menu -->
-                <li class="submenu">
-                    <a href="#" class="{{ request()->routeIs('add.user') ||request()->routeIs('view.user') || request()->routeIs('user.edit') ? 'subdrop' : '' }}">
-                        <img src="{{ asset('assets/img/sidebar/icon-2.png') }}" alt="icon">
-                        <span>User</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul class="list-unstyled" style="{{ request()->routeIs('add.user') ||request()->routeIs('view.user') || request()->routeIs('user.edit') ? 'display: block;' : 'display: none;' }}">
-                        <li class="{{ request()->routeIs('add.user') ? 'active' : '' }}">
-                            <a href="{{ route('add.user') }}"><span>Add Users</span></a>
-                        </li>
-                        @if(request()->routeIs('user.edit'))
-                        <li class="active">
-                                <a href="{{ route('user.edit', $user->user_id) }}"><span>Edit Profile</span></a>
-                            </li>
-                        @endif
-                        <li class="{{ request()->routeIs('view.user') ? 'active' : '' }}">
-                            <a href="{{ route('view.user') }}"><span>View Users</span></a>
-                        </li>
-                    </ul>
-                </li>
+              
 
                 <!-- Company Menu -->
                 <!-- <li class="submenu">
@@ -136,28 +179,7 @@
                     </ul>
                 </li> -->
 
-                <!-- Configuration Menu -->
-                <li class="submenu">
-                    <a href="#" class="{{ request()->routeIs('add.technology') || request()->routeIs('add.role') || request()->routeIs('add.leadstatus') ? 'subdrop' : '' }}">
-                        <img src="{{ asset('assets/img/sidebar/icon-14.png') }}" alt="icon">
-                        <span>Configuration</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul class="list-unstyled" style="{{ request()->routeIs('add.technology') || request()->routeIs('add.role') || request()->routeIs('add.leadstatus') ? 'display: block;' : 'display: none;' }}">
-                        <!-- Technology Menu -->
-                        <li class="{{ request()->routeIs('add.technology') ? 'active' : '' }}">
-                            <a href="{{ route('add.technology') }}"><span>Add Technology</span></a>
-                        </li>
-                        <!-- Role Menu -->
-                        <li class="{{ request()->routeIs('add.role') ? 'active' : '' }}">
-                            <a href="{{ route('add.role') }}"><span>Add Role</span></a>
-                        </li>
-                        <!-- Lead Status -->
-                        <li class="{{ request()->routeIs('add.leadstatus') ? 'active' : '' }}">
-                            <a href="{{ route('add.leadstatus') }}"><span>Add Lead Status</span></a>
-                        </li>
-                    </ul>
-                </li>
+
 
 
                 <!-- Profiles Menu -->
@@ -202,7 +224,7 @@
                     </ul>
                 </li> -->
 
-
+             
 
                 <?php
                 }
