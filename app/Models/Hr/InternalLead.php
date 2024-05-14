@@ -4,6 +4,7 @@ namespace App\Models\Hr;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Lead\LeadStatus;
 
 class InternalLead extends Model
 {
@@ -17,4 +18,8 @@ class InternalLead extends Model
         'status',
         'additional_comments',
     ];
+    public function leadStatus()
+    {
+        return $this->belongsTo(LeadStatus::class, 'status');
+    }
 }

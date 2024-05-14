@@ -10,4 +10,6 @@ class LeadStatus extends Model
     protected $table = 'lead_statuses';
     protected $primaryKey = 'leadstatusid';
     protected $fillable = ['leadstatusname', 'leadstatusstatus'];
+
+   
 }

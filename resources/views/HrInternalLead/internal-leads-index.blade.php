@@ -85,7 +85,7 @@
                                         <td>{{ $candidate->candidate_mobile }}</td>
                                         <td>{{ $candidate->candidate_interview_feedback }}</td>
                                         <td>{{ $candidate->interview_date }}</td>
-                                        <td>{{ $candidate->status }}</td>
+                                        <td>{{ $candidate->leadStatus->leadstatusname }}</td>
                                         <td>{{ $candidate->additional_comments }}</td>
                                         <td>{{ $candidate->created_at }}</td>
                                         <td class="text-right">

@@ -6,19 +6,28 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Hr\InternalLead;
 use App\Models\Company\Technology;
+use App\Models\Lead\LeadStatus;
 
 
 class InternalLeadController extends Controller
 {
     public function index()
     {
-        $candidates = InternalLead::all(); // Retrieve all internal leads from the database
+        // $candidates = InternalLead::all(); 
+
+        $candidates = InternalLead::with('leadStatus')->get();
+        // Retrieve all internal leads from the database
+        // echo "<pre>";
+        // print_r($candidates);
+        // die;
         return view('HrInternalLead.internal-leads-index', compact('candidates'));
     }
     public function create()
     {
         $technologies = Technology::where('technology_status', 1)->get();
-        return view('HrInternalLead.internal-leads-create', compact('technologies'));
+        $leadStatuss = LeadStatus::all();
+        
+        return view('HrInternalLead.internal-leads-create', compact('technologies','leadStatuss'));
    
     }
 

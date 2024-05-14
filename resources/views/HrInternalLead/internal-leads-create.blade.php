@@ -138,10 +138,11 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <strong><label>Status</label></strong>
-                                            <select class="form-control" name="status">
-                                                <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>Pending</option>
-                                                <option value="in_progress" {{ old('status') == 'in_progress' ? 'selected' : '' }}>In Progress</option>
-                                                <option value="completed" {{ old('status') == 'completed' ? 'selected' : '' }}>Completed</option>
+                                            <select class="form-control select2" name="status">
+                                                <option value="">--Select--</option>
+                                                @foreach($leadStatuss as $LeadStatus)
+                                                    <option value="{{ $LeadStatus->leadstatusid }}"{{ $LeadStatus->leadstatusid ==  1 ? 'selected' : '' }}>{{ $LeadStatus->leadstatusname }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -186,6 +187,11 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+    $('.select2').select2();
+});
+</script>
 
 <script src="{{ asset('assets/js/moment.min.js') }}"></script>
 
