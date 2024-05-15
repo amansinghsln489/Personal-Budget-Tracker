@@ -1,26 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
-@section('title', 'Candidate')
+@section('title', 'Lead')
 
 <div class="page-wrapper">
     <div class="content container-fluid">
         <div class="page-header">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                    <h5 class="text-uppercase mb-0 mt-0 page-title">Create New Candidate</h5>
+                    <h5 class="text-uppercase mb-0 mt-0 page-title">Create New Interviewee</h5>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                     <ul class="breadcrumb float-right p-0 mb-0">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fas fa-home"></i> Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('internal-leads.index') }}">Candidates</a></li>
-                        <li class="breadcrumb-item"><span> Add Candidate</span></li>
+                        <li class="breadcrumb-item"><a href="dashboard.php"><i class="fas fa-home"></i> Home</a></li>
+                        <li class="breadcrumb-item"><a href="add-card.php">Lead</a></li>
+                        <li class="breadcrumb-item"><span> Add Interviewee</span></li>
                     </ul>
                 </div>
             </div>
             
             <div class="col-sm-12 col-12 text-left add-btn-col">
-                <a href="{{ route('internal-leads.create') }}" class="btn btn-primary float-right btn-rounded"><i class="fas fa-plus"></i> Add New Candidate </a>
+                 <a href="{{ route('interviewee.createInterviewee') }}" class="btn btn-primary float-right btn-rounded"><i class="fas fa-plus"></i> Add New Interviewee </a>
             </div>
         </div>
 
@@ -54,7 +54,7 @@
                         <div class="row align-items-center">
                             <div class="col-auto">
                                 <div class="page-title">
-                                    Candidate Lists
+                                    Interviewee Lists
                                 </div>
                             </div>
                         </div>
@@ -65,36 +65,33 @@
                                 <thead class="thead-dark">
                                     <tr>
                                         <th>Id</th>
-                                        <th>Candidate Name</th>
-                                        <th>Email</th>
-                                        <th>Mobile</th>
-                                        <th>Interview Feedback</th>
-                                        <th>Interview Date</th>
-                                        <th>Status</th>
                                         <th>Interviewee Name</th>
-                                        <th>Additional Comments</th>
+                                        <th>Email</th>
+                                      
+                                        <th>Phone Number</th>
+                                       
+                                        <th>Technology</th>
+                                        <th>Status</th>
+                                        <th>Comment</th>
                                         <th>Created At</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($candidates as $candidate)
+                                    @foreach($vendors as $vendor)
                                     <tr>
-                                        <td>{{ $candidate->id }}</td>
-                                        <td>{{ $candidate->candidate_name }}</td>
-                                        <td>{{ $candidate->candidate_email }}</td>
-                                        <td>{{ $candidate->candidate_mobile }}</td>
-                                        <td>{{ $candidate->candidate_interview_feedback }}</td>
-                                        <td>{{ $candidate->interview_date }}</td>
-                                        <td>{{ $candidate->leadStatus->leadstatusname }}</td>
-                                        <td>{{ $candidate->interviewee_id }}</td>
-                                        <td>{{ $candidate->additional_comments }}</td>
-                                        <td>{{ $candidate->created_at }}</td>
+                                        <td>{{ $vendor->id }}</td>
+                                        <td>{{ $vendor->name }}</td>
+                                        <td>{{ $vendor->email }}</td>
+                                        <td>{{ $vendor->phone_number }}</td>
+                                        <td>{{ $vendor->technology}}</td>
+                                       
+                                        <td>{{ $vendor->status }}</td>
+                                        <td>{{ $vendor->comment }}</td>
+                                        <td>{{ $vendor->created_at }}</td>
                                         <td class="text-right">
-                                            <a href="{{ route('internal-leads.edit', $candidate->id) }}" class="btn btn-primary btn-sm mb-1">
-                                                <i class="far fa-edit"></i>
-                                            </a>
-                                            <!-- Add other action buttons as needed -->
+                                            
+                                          
                                         </td>
                                     </tr>
                                     @endforeach
@@ -114,7 +111,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-md">
                 <div class="modal-header">
-                    <h4 class="modal-title">Delete Candidate</h4>
+                    <h4 class="modal-title">Delete </h4>
                 </div>
                 <form>
                     <div class="modal-body">
@@ -153,3 +150,6 @@ $(document).ready(function() {
 
 <script src="{{ asset('assets/js/app.js') }}"></script>
 @endsection
+
+   
+

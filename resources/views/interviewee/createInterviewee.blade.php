@@ -1,26 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
-@section('title', 'Candidate')
+@section('title', 'Lead')
 
 <div class="page-wrapper">
     <div class="content container-fluid">
         <div class="page-header">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                    <h5 class="text-uppercase mb-0 mt-0 page-title">Create New Candidate</h5>
+                    <h5 class="text-uppercase mb-0 mt-0 page-title">Create New Interviewee</h5>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                     <ul class="breadcrumb float-right p-0 mb-0">
                         <li class="breadcrumb-item"><a href="dashboard.php"><i class="fas fa-home"></i> Home</a></li>
-                        <li class="breadcrumb-item"><a href="add-card.php">Candidate</a></li>
-                        <li class="breadcrumb-item"><span> Add Candidate</span></li>
+                        <li class="breadcrumb-item"><a href="add-card.php">Lead</a></li>
+                        <li class="breadcrumb-item"><span> Add Interviewee</span></li>
                     </ul>
                 </div>
             </div>
             
             <div class="col-sm-12 col-12 text-left add-btn-col">
-                <a href="{{ route('internal-leads.index') }}" class="btn btn-primary float-right btn-rounded"><i class="fas fa-plus"></i> View All Candidates </a>
+                <a href="{{ route('vendors.index') }}" class="btn btn-primary float-right btn-rounded"><i class="fas fa-plus"></i> View All Interviewee </a>
             </div>
         </div>
 
@@ -55,7 +55,7 @@
                                 <div class="row align-items-center">
                                     <div class="col-auto">
                                         <div class="page-title">
-                                            Create New Candidate
+                                            Create New Interviewee
                                         </div>
                                     </div>
                                 </div>
@@ -70,17 +70,17 @@
                                 </div>
                             @endif
                          
-                            <form class="m-b-30" method="POST" action="{{ route('internal-leads.store') }}" enctype="multipart/form-data">
+                            <form class="m-b-30" method="POST" action="{{ route('add.interviewee.submit') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <strong><label>Candidate Name <span class="text-danger">*</span></label></strong>
+                                            <strong><label>Interviewee Name <span class="text-danger">*</span></label></strong>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" name="candidate_name" placeholder="Candidate Name" value="{{ old('candidate_name') }}" required>
+                                                <input type="text" class="form-control" name="name" placeholder="Interviewee Name" value="{{ old('name') }}" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">
-                                                        <i class="fas fa-user"></i>
+                                                        <i class="fas fa-building"></i>
                                                     </span>
                                                 </div>
                                             </div>
@@ -88,9 +88,9 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <strong><label>Candidate Email <span class="text-danger">*</span></label></strong>
+                                            <strong><label>Interviewee Email <span class="text-danger">*</span></label></strong>
                                             <div class="input-group">
-                                                <input type="email" class="form-control" name="candidate_email" placeholder="Candidate Email" value="{{ old('candidate_email') }}" required>
+                                                <input type="email" class="form-control" name="email" placeholder="Interviewee Email" value="{{ old('email') }}" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">
                                                         <i class="fas fa-envelope"></i>
@@ -103,9 +103,21 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <strong><label>Candidate Mobile <span class="text-danger">*</span></label></strong>
+                                            <strong><label>Technology <span class="text-danger">*</span></label></strong>
+                                            <select class="form-control select2" name="technology_id">
+                                                <option value="">--Select Technologies--</option>
+                                               @foreach($technologies as $technology)
+                                                    <option value="{{ $technology->technology_id }}" {{ old('technology_id') == $technology->technology_id ? 'selected' : '' }}>{{ $technology->technology_name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <strong><label>Phone Number <span class="text-danger">*</span></label></strong>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" name="candidate_mobile" placeholder="Candidate Mobile" value="{{ old('candidate_mobile') }}" required>
+                                                <input type="text" class="form-control" name="phone_number" placeholder="Phone Number" value="{{ old('phone_number') }}" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">
                                                         <i class="fas fa-phone"></i>
@@ -114,62 +126,54 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                            <div class="form-group">
-                                                <strong><label>Interviewee</label></strong>
-                                                <select class="form-control select2" name="interview">
-                                                    <option value="">--Select--</option>
-                                                    @foreach($interview_names as $interview_name)
-                                                        <option value="{{ $interview_name->id }}">{{ $interview_name->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                    </div>
                                 </div>
                                 <div class="row">
-                                <div class="col-md-8">
-                                        <div class="form-group">
-                                            <strong><label>Candidate Interview Feedback</label></strong>
-                                            <textarea class="form-control" name="candidate_interview_feedback" rows="3" placeholder="Candidate Interview Feedback">{{ old('candidate_interview_feedback') }}</textarea>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <strong><label for="status">Status <span class="text-danger">*</span></label></strong>
+                                                <select id="status" name="status" class="form-control" required>
+                                                    <option value="" disabled selected>Select Status</option>
+                                                    <option value="1">Active</option>
+                                                    <option value="0">Inactive</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                               </div>        
+
                                 <div class="row">
-                                    <div class="col-md-6">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Image</label>
+												<input type="file" name="user_image" accept="image/*" class="form-control" id="user_image" onchange="previewImage(this);">
+												<br>
+											
+												<div id="user_image_error" class="error" style="color: red; font-weight: bold;"></div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Image Preview</label><br>
+												<img id="imagePreview" src="{{ asset('assets/img/store_logo/placeholder.jpg') }}" alt="Image Preview" width="80" height="80">
+											</div>
+										</div>
+									</div>
+                                <div class="row">
+                                    <div class="col-md-12">
                                         <div class="form-group">
-                                            <strong><label>Interview Date</label></strong>
+                                            <strong><label>Comment (Optional)</label></strong>
                                             <div class="input-group">
-                                                <input type="date" class="form-control" name="interview_date" value="{{ old('interview_date') }}">
+                                                <textarea class="form-control" name="comment" rows="3" placeholder="Comment">{{ old('comment') }}</textarea>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">
-                                                        <i class="fas fa-calendar"></i>
+                                                        <i class="fas fa-comment"></i>
                                                     </span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <strong><label>Status</label></strong>
-                                            <select class="form-control select2" name="status">
-                                                <option value="">--Select--</option>
-                                                @foreach($leadStatuss as $LeadStatus)
-                                                    <option value="{{ $LeadStatus->leadstatusid }}"{{ $LeadStatus->leadstatusid ==  1 ? 'selected' : '' }}>{{ $LeadStatus->leadstatusname }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <strong><label>Additional Comments</label></strong>
-                                            <textarea class="form-control" name="additional_comments" rows="3" placeholder="Additional Comments">{{ old('additional_comments') }}</textarea>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="m-t-20 text-center">
-                                    <button type="submit" class="btn btn-primary btn-lg">Register Candidate</button>
+                                    <button type="submit" class="btn btn-primary btn-lg">Register Interviewee</button>
                                 </div>
                             </form>
                     </div>
@@ -200,10 +204,28 @@
         </div>
     </div>
 </div>
+
 <script>
-    $(document).ready(function() {
-    $('.select2').select2();
+$(function () {
+    $("#example1").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "buttons": ["pdf"]
+        // "order": [[0, "desc"]] 
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 });
+function previewImage(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            $('#imagePreview').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
 </script>
 
 <script src="{{ asset('assets/js/moment.min.js') }}"></script>
@@ -214,3 +236,6 @@
 
 
 @endsection
+
+   
+

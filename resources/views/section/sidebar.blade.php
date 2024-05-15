@@ -163,6 +163,29 @@
                     </ul>
                 </li> -->
 
+
+                <li class="submenu">
+                    <a href="#" class="{{ request()->routeIs('vendors.*') ? 'subdrop' : '' }}">
+                        <img src="{{ asset('assets/img/sidebar/icon-3.png') }}" alt="icon">
+                        <span>Add Interviewee</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="list-unstyled" style="{{ request()->routeIs('interviewee.*') ? 'display: block;' : 'display: none;' }}">
+                        <li class="{{ request()->routeIs('interviewee.index') ? 'active' : '' }}">
+                            <a href="{{ route('interviewee.index') }}"><span>View Interviewee</span></a>
+                        </li>
+                        @if(Route::currentRouteName() == 'vendors.edit')
+                            <li class="active">
+                                <a href="{{ route('vendors.edit', $vendor->id) }}"><span>Edit Vendor</span></a>
+                            </li>
+                        @endif
+                        <li class="{{ request()->routeIs('interviewee.createInterviewee') ? 'active' : '' }}">
+                            <a href="{{ route('interviewee.createInterviewee') }}"><span>Add Interviewee</span></a>
+                        </li>
+                    </ul>
+                </li>
+
+
               
 
                 <!-- Company Menu -->

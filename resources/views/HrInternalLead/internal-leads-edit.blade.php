@@ -8,7 +8,7 @@
         <div class="page-header">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                    <h5 class="text-uppercase mb-0 mt-0 page-title">Create New Candidate</h5>
+                    <h5 class="text-uppercase mb-0 mt-0 page-title">Update Information</h5>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                     <ul class="breadcrumb float-right p-0 mb-0">
@@ -55,7 +55,7 @@
                                 <div class="row align-items-center">
                                     <div class="col-auto">
                                         <div class="page-title">
-                                            Create New Candidate
+                                            Update Candidate Information
                                         </div>
                                     </div>
                                 </div>
@@ -70,14 +70,14 @@
                                 </div>
                             @endif
                          
-                            <form class="m-b-30" method="POST" action="{{ route('internal-leads.store') }}" enctype="multipart/form-data">
+                            <form class="m-b-30" method="POST" action="{{ route('internal-leads.update',$internal_lead->id) }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <strong><label>Candidate Name <span class="text-danger">*</span></label></strong>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" name="candidate_name" placeholder="Candidate Name" value="{{ old('candidate_name') }}" required>
+                                                <input type="text" class="form-control" name="candidate_name" placeholder="Candidate Name" value="{{ $internal_lead->candidate_name }}" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">
                                                         <i class="fas fa-user"></i>
@@ -90,7 +90,7 @@
                                         <div class="form-group">
                                             <strong><label>Candidate Email <span class="text-danger">*</span></label></strong>
                                             <div class="input-group">
-                                                <input type="email" class="form-control" name="candidate_email" placeholder="Candidate Email" value="{{ old('candidate_email') }}" required>
+                                                <input type="email" class="form-control" name="candidate_email" placeholder="Candidate Email" value="{{  $internal_lead->candidate_email }}" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">
                                                         <i class="fas fa-envelope"></i>
@@ -105,7 +105,7 @@
                                         <div class="form-group">
                                             <strong><label>Candidate Mobile <span class="text-danger">*</span></label></strong>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" name="candidate_mobile" placeholder="Candidate Mobile" value="{{ old('candidate_mobile') }}" required>
+                                                <input type="text" class="form-control" name="candidate_mobile" placeholder="Candidate Mobile" value="{{ $internal_lead->candidate_mobile }}" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">
                                                         <i class="fas fa-phone"></i>
@@ -115,31 +115,18 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                            <div class="form-group">
-                                                <strong><label>Interviewee</label></strong>
-                                                <select class="form-control select2" name="interview">
-                                                    <option value="">--Select--</option>
-                                                    @foreach($interview_names as $interview_name)
-                                                        <option value="{{ $interview_name->id }}">{{ $interview_name->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                <div class="col-md-8">
                                         <div class="form-group">
                                             <strong><label>Candidate Interview Feedback</label></strong>
-                                            <textarea class="form-control" name="candidate_interview_feedback" rows="3" placeholder="Candidate Interview Feedback">{{ old('candidate_interview_feedback') }}</textarea>
+                                            <textarea class="form-control" name="candidate_interview_feedback" rows="3"  placeholder="Candidate Interview Feedback">{{ $internal_lead->candidate_interview_feedback }}</textarea>
                                         </div>
                                     </div>
-                               </div>        
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <strong><label>Interview Date</label></strong>
                                             <div class="input-group">
-                                                <input type="date" class="form-control" name="interview_date" value="{{ old('interview_date') }}">
+                                                <input type="date" class="form-control" name="interview_date" value="{{ $internal_lead->interview_date }}">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">
                                                         <i class="fas fa-calendar"></i>
@@ -154,8 +141,9 @@
                                             <select class="form-control select2" name="status">
                                                 <option value="">--Select--</option>
                                                 @foreach($leadStatuss as $LeadStatus)
-                                                    <option value="{{ $LeadStatus->leadstatusid }}"{{ $LeadStatus->leadstatusid ==  1 ? 'selected' : '' }}>{{ $LeadStatus->leadstatusname }}</option>
+                                                    <option value="{{ $LeadStatus->leadstatusid }}"{{ $LeadStatus->leadstatusid ==  $internal_lead->status ? 'selected' : '' }}>{{ $LeadStatus->leadstatusname }}</option>
                                                 @endforeach
+                                              
                                             </select>
                                         </div>
                                     </div>
@@ -164,12 +152,12 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <strong><label>Additional Comments</label></strong>
-                                            <textarea class="form-control" name="additional_comments" rows="3" placeholder="Additional Comments">{{ old('additional_comments') }}</textarea>
+                                            <textarea class="form-control" name="additional_comments" rows="3" placeholder="Additional Comments">{{ $internal_lead->additional_comments}}</textarea>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="m-t-20 text-center">
-                                    <button type="submit" class="btn btn-primary btn-lg">Register Candidate</button>
+                                    <button type="submit" class="btn btn-primary btn-lg">Update Candidate</button>
                                 </div>
                             </form>
                     </div>

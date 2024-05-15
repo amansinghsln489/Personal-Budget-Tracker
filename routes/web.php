@@ -21,6 +21,7 @@ use App\Http\Controllers\UserProfile\UserProfileController;
 use App\Http\Controllers\CallHistoryController;
 use App\Http\Controllers\OldRecordController;
 use App\Http\Controllers\HR\InternalLeadController;
+use App\Http\Controllers\Interviewee\IntervieweeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -213,9 +214,19 @@ Route::prefix('hr')->group(function () {
     Route::post('internal-leads', [InternalLeadController::class, 'store'])->name('internal-leads.store');
     Route::get('internal-leads/{internal_lead}', [InternalLeadController::class, 'show'])->name('internal-leads.show');
     Route::get('internal-leads/{internal_lead}/edit', [InternalLeadController::class, 'edit'])->name('internal-leads.edit');
-    Route::put('internal-leads/{internal_lead}', [InternalLeadController::class, 'update'])->name('internal-leads.update');
+    Route::post('internal-leads/{internal_lead}', [InternalLeadController::class, 'update'])->name('internal-leads.update');
     Route::delete('internal-leads/{internal_lead}', [InternalLeadController::class, 'destroy'])->name('internal-leads.destroy');
 });
 
+/*
+|--------------------------------------------------------------------------
+| interviewee Registration
+|--------------------------------------------------------------------------
+*/
+Route::get('/interviewee', [IntervieweeController::class, 'index'])->name('interviewee.index');
+Route::get('/interviewee/create', [IntervieweeController::class, 'create'])->name('interviewee.createInterviewee');
+Route::post('/add-interviewee', [IntervieweeController::class, 'store'])->name('add.interviewee.submit');
+// Route::get('/interviewee/{interviewee}', [IntervieweeController::class, 'edit'])->name('interviewee.editInterviewee');
+// Route::post('/interviewee/update', [IntervieweeController::class, 'update'])->name('interviewee.updateInterviewee');
 
 
