@@ -87,7 +87,7 @@
                                         <td>{{ $candidate->candidate_interview_feedback }}</td>
                                         <td>{{ $candidate->interview_date }}</td>
                                         <td>{{ $candidate->leadStatus->leadstatusname }}</td>
-                                        <td>{{ $candidate->interviewee_id }}</td>
+                                        <td>{{ $candidate->intervieweeName->name }}</td>
                                         <td>{{ $candidate->additional_comments }}</td>
                                         <td>{{ $candidate->created_at }}</td>
                                         <td class="text-right">

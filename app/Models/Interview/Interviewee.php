@@ -4,7 +4,7 @@ namespace App\Models\Interview;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Company\Technology;
 
 class Interviewee extends Model
 {
@@ -14,4 +14,8 @@ class Interviewee extends Model
         'name', 'email', 'technology', 'phone_number', 'status', 'image', 'comment'
     ];
     
+    public function technologyName()
+    {
+        return $this->belongsTo(Technology::class, 'technology');
+    }
 }

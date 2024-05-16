@@ -67,9 +67,7 @@
                                         <th>Id</th>
                                         <th>Interviewee Name</th>
                                         <th>Email</th>
-                                      
                                         <th>Phone Number</th>
-                                       
                                         <th>Technology</th>
                                         <th>Status</th>
                                         <th>Comment</th>
@@ -78,19 +76,36 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($vendors as $vendor)
+                                    
+                                    @foreach($technologys as $technology)
                                     <tr>
-                                        <td>{{ $vendor->id }}</td>
-                                        <td>{{ $vendor->name }}</td>
-                                        <td>{{ $vendor->email }}</td>
-                                        <td>{{ $vendor->phone_number }}</td>
-                                        <td>{{ $vendor->technology}}</td>
-                                       
-                                        <td>{{ $vendor->status }}</td>
-                                        <td>{{ $vendor->comment }}</td>
-                                        <td>{{ $vendor->created_at }}</td>
-                                        <td class="text-right">
+                                        
+                                        <td>{{ $technology->id }}</td>
+                                        <td>{{ $technology->name }}</td>
+                                        <td>{{ $technology->email }}</td>
+                                        <td>{{ $technology->phone_number }}</td>
+                                        <td>{{ $technology->technologyName->technology_name}}</td>
+                                        <td
+                                        @if($technology->status == 1)
+                                     
+                                             style="font-weight: bold; color: green;">
+                                                {{ 'Active' }}
+                                            @else
+                                                style="font-weight: bold; color: red;">
+                                                {{ 'Inactive111' }}
                                             
+                                            @endif
+                                            </td>
+
+                                        <td>{{ $technology->comment }}</td>
+                                        <td>{{ $technology->created_at }}</td>
+                                        <td class="text-right">
+                                        <a href="{{ route('interviewee.editInterviewee', $technology->id) }}" class="btn btn-primary btn-sm mb-1">
+                                                <i class="far fa-edit"></i>
+                                            </a>
+                                            <a href="" class="btn btn-danger btn-sm mb-1">
+                                                    <i class="far fa-trash-alt"></i>
+                                                </a>
                                           
                                         </td>
                                     </tr>

@@ -13,8 +13,9 @@ class IntervieweeController extends Controller
         // Display a listing of the vendors
         public function index()
         {
-            $vendors = Interviewee::all();
-            return view('interviewee.index', compact('vendors'));
+            $technologys = Interviewee::with('technologyName')->get();
+            
+            return view('interviewee.index', compact('technologys'));
         }
     
         // Show the form for creating a new interviewee
@@ -57,16 +58,18 @@ class IntervieweeController extends Controller
             
             $interview->save();
             
-            // return redirect()->route('vendors.createVendor')->with('success', 'Vendor added successfully.');
+            return redirect()->route('interviewee.createInterviewee')->with('success', 'Interviewee added successfully.');
         }
         
     
         // // Show the form for editing the specified vendor
-        // public function edit($id)
-        // {
-        //     $vendor = Vendor::findOrFail($id); // Retrieve the vendor record by ID
-        //     return view('vendors.editVendor', compact('vendor'));
-        // }
+        public function edit($interviewee)
+        {
+          
+            $vendor = Interviewee::findOrFail($interviewee); 
+         
+            return view('interviewee.editInterviewee', compact('vendor'));
+        }
     
         // public function update(Request $request)
         // {

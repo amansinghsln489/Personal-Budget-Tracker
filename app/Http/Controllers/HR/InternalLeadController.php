@@ -20,9 +20,9 @@ class InternalLeadController extends Controller
 
         // $cand = InternalLead::with('intervieweeName')->get();
         // Retrieve all internal leads from the database
-        echo "<pre>";
-        print_r($candidates);
-        die;
+        // echo "<pre>";
+        // print_r($candidates);
+        // die;
 
 
         return view('HrInternalLead.internal-leads-index', compact('candidates'));
@@ -68,7 +68,9 @@ class InternalLeadController extends Controller
     public function edit(InternalLead $internal_lead)
     {
         $leadStatuss = LeadStatus::all();
-        return view('HrInternalLead.internal-leads-edit',compact('internal_lead','leadStatuss'));
+
+        $interview_names = Interviewee::all();
+        return view('HrInternalLead.internal-leads-edit',compact('internal_lead','leadStatuss','interview_names'));
     }
 
     public function update(Request $request, InternalLead $internal_lead)
@@ -83,6 +85,7 @@ class InternalLeadController extends Controller
             'candidate_name' => $request->input('candidate_name'),
             'candidate_email' => $request->input('candidate_email'),
             'candidate_mobile' => $request->input('candidate_mobile'),
+            'interviewee_id' => $request->input('interview'),
             'candidate_interview_feedback' => $request->input('candidate_interview_feedback'),
             'interview_date' => $request->input('interview_date'),
             'status' => $request->input('status'),

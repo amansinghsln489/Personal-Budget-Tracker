@@ -226,7 +226,7 @@ Route::prefix('hr')->group(function () {
 Route::get('/interviewee', [IntervieweeController::class, 'index'])->name('interviewee.index');
 Route::get('/interviewee/create', [IntervieweeController::class, 'create'])->name('interviewee.createInterviewee');
 Route::post('/add-interviewee', [IntervieweeController::class, 'store'])->name('add.interviewee.submit');
-// Route::get('/interviewee/{interviewee}', [IntervieweeController::class, 'edit'])->name('interviewee.editInterviewee');
+Route::get('/interviewee/{interviewee}', [IntervieweeController::class, 'edit'])->name('interviewee.editInterviewee');
 // Route::post('/interviewee/update', [IntervieweeController::class, 'update'])->name('interviewee.updateInterviewee');
 
 
