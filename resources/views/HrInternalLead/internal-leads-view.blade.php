@@ -17,7 +17,7 @@
 											class="status online"></span></a>
 								</div>
 								<div class="user-info float-left">
-									<a href="#" title="Mike Litorus"><span class="font-bold">{{ $leadData->company_name }}</span> </a>
+									<a href="#" title="Mike Litorus"><span class="font-bold"></span> </a>
 									<!-- <span class="Last-seen">Last seen today at 7:50 AM</span> -->
 								</div>
 							</div>
@@ -59,7 +59,7 @@
 							<div class="chat-wrap-inner">
 								<div class="chat-box">
 									<div class="chats">
-									@foreach($leadHistories as $history)
+                                    @foreach($leadHistories as $history)
 									@if ($history->leadCreate_user_role == "Sales Team")
 										<div class="chat chat-left">
 											<div class="chat-avatar">
@@ -94,7 +94,7 @@
 										<div class="chat chat-right">
 											<div class="chat-avatar">
 												<a href="profile.html" class="avatar">
-													<img alt="John Doe" src="{{ asset('storage/' . $history->user->user_image) }}"
+													<img alt="John Doe" src="{{ asset('storage/' . $history->userName->user_image) }}"
 														class="img-fluid rounded-circle">
 												</a>
 												<h5>
@@ -125,16 +125,17 @@
 										</div>
 										@endif
 									@endforeach
+									
 
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				
-					<form action="{{ route('comments.add') }}" method="POST">
+                    @foreach($leadDatas as $leadData)
+					<form action="{{ route('comment.add') }}" method="POST">
 						@csrf
-						<input type="hidden" name="lead_id" value="{{ $history->lead_id }}">
+						<input type="hidden" name="lead_id" value="{{ $leadData->id }}">
 						<div class="chat-footer">
 							<div class="message-bar">
 								<div class="message-inner">
@@ -171,48 +172,80 @@
 										<div class="table-content">
 											<div class="chat-profile-img">
 												<div class="invoice-details">
-													<img src="{{ asset('storage/' . $leadData->company->company_image) }}" class="inv-logo" alt="">
+													
 												</div>
 												<br>
 											
 											</div>
 											<div class="chat-profile-info">
+                                          
 												<ul class="user-det-list">
-													<h3 class="text-uppercase">{{ $leadData->company->company_name }}</h3>
-													<li><strong>Company Detals</strong></li>
+													<h3 class="text-uppercase">Condidate Details</h3>
+													
 													<li>
-													company_email: <span class="float-right text-muted">{{ $leadData->company_email }}</span>
+													Candidate Name: <span class="float-right text-muted">{{ $leadData->candidate_name }}</span>
 													</li>
 													<li>
-													company_phone: 
-														<span class="float-right text-muted">{{ $leadData->company_phone }}</span>
+													Phone Number: 
+														<span class="float-right text-muted">{{ $leadData->candidate_mobile }}</span>
 													</li>
 													<li>
-													company_rate: 
-														<span class="float-right text-muted">{{ $leadData->company_rate }}</span>
+													Email: 
+														<span class="float-right text-muted">{{ $leadData->candidate_email }}</span>
 													</li>
 													<li><strong> -- Detals --</strong></li>
 													<li>
 														<span>Technology:</span>
-														<span class="float-right text-muted">{{ $leadData->vendor->technology->technology_name }}</span>
-													</li>
-													<li>
-														<span>Vendor Name:</span>
-														<span class="float-right text-muted">{{ $leadData->vendor->name }}</span>
+														<span class="float-right text-muted">{{ $leadData->technology->technology_name }}</span>
 													</li>
 													<li>
 														<span>Interviewer Name:</span>
+														<span class="float-right text-muted">{{ $leadData->intervieweeName->name }}</span>
+													</li>
+													<li>
+														<span>created_by:</span>
 														<span class="float-right text-muted">
-														{{ $leadData->interviewer->firstname }} {{ $leadData->interviewer->lastname }}
+														{{ $leadData->userName->firstname}} {{ $leadData->userName->lastname}} 
 														</span>
 													</li>
-													<li><strong>Lead Created date</strong></li>
+													
 													<li>
-														Date: <span class="float-right text-muted">{{ \Carbon\Carbon::parse($leadData->lead_created_at)->format('F j, Y') }}</span>
+                                                    <span>Resume</span>
+                                                    <span class="float-right text-muted">
+                                                        @if($leadData->resume)
+                                                            <a href="{{ asset('storage/' . $leadData->resume) }}" download>Download Resume <i class="fas fa-download"></i></a>
+                                                            @else
+                                                            Not upload resume
+                                                        @endif
+													</span>
+													</li>
+                                                   
+													<li> 
+                                                    <span> Interview Feedback</span>
+                                                    <span class="float-right text-muted">
+														{{ $leadData->candidate_interview_feedback }} 
+														</span>
+													</li>
+                                                    
+													<li>
+                                                    <span> Interview Date</span>
+                                                    <span class="float-right text-muted">
+														{{ $leadData->interview_date }} 
+														</span>
 													</li>
 													<li>
-														Time: <span class="float-right text-muted">{{ \Carbon\Carbon::parse($leadData->lead_created_at)->format('h:i A') }}</span>
+                                                    <span>Status</span>
+                                                    <span class="float-right text-muted">
+														{{ $leadData->leadStatus->leadstatusname }} 
+														</span>
 													</li>
+													<li>
+                                                    <span> Additional Comments</span>
+                                                    <span class="float-right text-muted">
+														{{ $leadData->additional_comments }} 
+														</span>
+													</li>
+													
 													<li><strong>Other Details</strong></li>
 
 													<li>
@@ -227,12 +260,13 @@
 													
 													<li>source: <span class="float-right text-muted">{{ $leadData->source }}</span></li>
 												</ul>
+                                                @endforeach
 
 												<div class="col-sm-12 col-12 text-left add-btn-col">
 													@if(auth()->user()->role != 3)
-														<a href="{{ route('leads.edit', $leadData->id) }}" class="btn btn-warning float-right btn-rounded"><i class="far fa-edit"></i>Edit Lead </a>
-														<a href="{{ route('view.lead') }}" class="btn btn-danger float-right btn-rounded"><i class="far fa-eye"></i>All Lead </a>
-														<a href="{{ route('add.lead') }}" class="btn btn-primary float-right btn-rounded"><i class="fas fa-plus"></i>New Lead </a>
+														<a href="{{ route('internal-leads.edit', $leadData->id) }}" class="btn btn-warning float-right btn-rounded"><i class="far fa-edit"></i>Edit Lead </a>
+														<a href="{{ route('internal-leads.index') }}" class="btn btn-danger float-right btn-rounded"><i class="far fa-eye"></i>All Lead </a>
+														<a href="{{ route('internal-leads.create') }}" class="btn btn-primary float-right btn-rounded"><i class="fas fa-plus"></i>New Lead </a>
 													@endif
 												</div>
 											</div>

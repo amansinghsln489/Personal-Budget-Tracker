@@ -127,19 +127,11 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                <div class="col-md-8">
-                                        <div class="form-group">
-                                            <strong><label>Candidate Interview Feedback</label></strong>
-                                            <textarea class="form-control" name="candidate_interview_feedback" rows="3" placeholder="Candidate Interview Feedback">{{ old('candidate_interview_feedback') }}</textarea>
-                                        </div>
-                                    </div>
-                               </div>        
-                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <strong><label>Interview Date</label></strong>
                                             <div class="input-group">
-                                                <input type="date" class="form-control" name="interview_date" value="{{ old('interview_date') }}">
+                                                <input type="datetime-local" class="form-control" name="interview_date" value="{{ old('interview_date') }}">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">
                                                         <i class="fas fa-calendar"></i>
@@ -160,6 +152,47 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                <div class="col-md-6">
+                                        <div class="form-group">
+                                            <strong><label>Technology <span class="text-danger">*</span></label></strong>
+                                            <select class="form-control select2" name="technology_id">
+                                                <option value="">--Select Technologies--</option>
+                                               @foreach($technologies as $technology)
+                                                    <option value="{{ $technology->technology_id }}" {{ old('technology_id') == $technology->technology_id ? 'selected' : '' }}>{{ $technology->technology_name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                  <!-- <div class="col-md-6">
+                                        <div class="form-group">
+                                            <strong><label>Candidate Interview Feedback</label></strong>
+                                            <textarea class="form-control" name="candidate_interview_feedback" rows="3" placeholder="Candidate Interview Feedback">{{ old('candidate_interview_feedback') }}</textarea>
+                                        </div>
+                                    </div> -->
+                                    <!-- <div class="col-md-3">
+											<div class="form-group">
+												<label>Image</label>
+												<input type="file" name="user_image" accept="image/*" class="form-control" id="user_image" onchange="previewImage(this);">
+												<br>											
+												<div id="user_image_error" class="error" style="color: red; font-weight: bold;"></div>
+											</div>
+										</div>
+										<div class="col-md-3">
+											<div class="form-group">
+												<label>Image Preview</label><br>
+												<img id="imagePreview" src="{{ asset('assets/img/store_logo/placeholder.jpg') }}" alt="Image Preview" width="80" height="80">
+											</div>
+										</div> -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                            <strong><label>Upload Candidate Resume</label></strong>
+                                                <input type="file" name="user_resume" accept=".pdf,.doc,.docx" class="form-control" id="user_resume">
+                                                <br>
+                                                <div id="user_resume_error" class="error" style="color: red; font-weight: bold;"></div>
+                                            </div>
+                                        </div>
+                               </div>        
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -204,6 +237,17 @@
     $(document).ready(function() {
     $('.select2').select2();
 });
+function previewImage(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            $('#imagePreview').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
 </script>
 
 <script src="{{ asset('assets/js/moment.min.js') }}"></script>

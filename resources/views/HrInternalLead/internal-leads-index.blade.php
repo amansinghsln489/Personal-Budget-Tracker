@@ -64,14 +64,15 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th>Id</th>
+                                        <th>Id</th>                                      
                                         <th>Candidate Name</th>
                                         <th>Email</th>
                                         <th>Mobile</th>
-                                        <th>Interview Feedback</th>
                                         <th>Interview Date</th>
                                         <th>Status</th>
+                                        <th>Resume</th>
                                         <th>Interviewee Name</th>
+                                        <th>Created_by</th>
                                         <th>Additional Comments</th>
                                         <th>Created At</th>
                                         <th>Action</th>
@@ -84,16 +85,35 @@
                                         <td>{{ $candidate->candidate_name }}</td>
                                         <td>{{ $candidate->candidate_email }}</td>
                                         <td>{{ $candidate->candidate_mobile }}</td>
-                                        <td>{{ $candidate->candidate_interview_feedback }}</td>
                                         <td>{{ $candidate->interview_date }}</td>
                                         <td>{{ $candidate->leadStatus->leadstatusname }}</td>
-                                        <td>{{ $candidate->intervieweeName->name }}</td>
+                                        <td data-label="@lang('Resume')">
+                                        @if($candidate->resume)
+                                        <a href="{{ asset('storage/' . $candidate->resume) }}" download>Download Resume <i class="fas fa-download"></i></a>
+                                        @else
+                                           Not upload resume
+                                           @endif
+                                        </td>
+                                        <td>
+                                        @if(!empty( $candidate->intervieweeName->name))
+                                        {{ $candidate->intervieweeName->name }}
+                                        @endif
+                                        </td>
+                                        <td>{{ $candidate->userName->firstname}} {{ $candidate->userName->lastname}}</td>
                                         <td>{{ $candidate->additional_comments }}</td>
                                         <td>{{ $candidate->created_at }}</td>
                                         <td class="text-right">
                                             <a href="{{ route('internal-leads.edit', $candidate->id) }}" class="btn btn-primary btn-sm mb-1">
                                                 <i class="far fa-edit"></i>
                                             </a>
+                                            <!-- <a href="{{ route('internal-leads.show', $candidate->id) }}" class="btn btn-primary btn-sm mb-1">
+                                            <i class="far fa-eye"></i>
+                                            </a> -->
+
+                                                <a href="{{ route('internal-leads.show', $candidate->id) }}" class="btn btn-warning btn-sm mb-1">
+                                                    <i class="far fa-eye"></i>
+                                                </a>
+
                                             <!-- Add other action buttons as needed -->
                                         </td>
                                     </tr>

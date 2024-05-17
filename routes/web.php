@@ -22,6 +22,7 @@ use App\Http\Controllers\CallHistoryController;
 use App\Http\Controllers\OldRecordController;
 use App\Http\Controllers\HR\InternalLeadController;
 use App\Http\Controllers\Interviewee\IntervieweeController;
+use App\Http\Controllers\HR\InternalCommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -227,6 +228,9 @@ Route::get('/interviewee', [IntervieweeController::class, 'index'])->name('inter
 Route::get('/interviewee/create', [IntervieweeController::class, 'create'])->name('interviewee.createInterviewee');
 Route::post('/add-interviewee', [IntervieweeController::class, 'store'])->name('add.interviewee.submit');
 Route::get('/interviewee/{interviewee}', [IntervieweeController::class, 'edit'])->name('interviewee.editInterviewee');
-// Route::post('/interviewee/update', [IntervieweeController::class, 'update'])->name('interviewee.updateInterviewee');
+Route::post('/interviewee/update', [IntervieweeController::class, 'update'])->name('interviewee.updateInterviewee');
+Route::post('/interviewee/{delete}', [IntervieweeController::class, 'destroy'])->name('interviewee.deleteInterviewee');
 
+// Internal comment and update route
+Route::post('/comment/add', [InternalCommentController::class, 'store'])->name('comment.add');
 

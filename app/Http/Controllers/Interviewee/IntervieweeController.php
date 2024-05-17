@@ -67,37 +67,45 @@ class IntervieweeController extends Controller
         {
           
             $vendor = Interviewee::findOrFail($interviewee); 
-         
-            return view('interviewee.editInterviewee', compact('vendor'));
+            $technologies = Technology::all();
+            return view('interviewee.editInterviewee', compact('vendor','technologies'));
         }
     
-        // public function update(Request $request)
-        // {
-        //     // Validate request data
-        //     $validatedData = $request->validate([
-        //         'vendor_id' => 'required',
-        //         'name' => 'required',
-        //         'email' => 'required',
-        //         'technology_id' => 'nullable',
-        //         'phone_number' => 'nullable',
-        //         'alternate_email' => 'nullable|email',
-        //         'alternate_phone_number' => 'nullable',
-        //         'comment' => 'nullable',
-        //     ]);
+        public function update(Request $request)
+        {
+            // Validate request data
+            $validatedData = $request->validate([
+                'id' => 'required',
+                'name' => 'required',
+                'email' => 'required',
+                'technology' => 'required',
+                'phone_number' => 'required',
+                'status' => 'required',
+                'comment' => 'nullable',
+            ]);
     
-        //     // Find the vendor by vendor_id
-        //     $vendor = Vendor::findOrFail($request->input('vendor_id'));
+            // Find the vendor by vendor_id
+            $vendor = Interviewee::findOrFail($request->input('id'));
     
-        //     // Update the vendor
-        //     $vendor->update($validatedData);
+          
+            // Update the vendor
+            $vendor->update($validatedData);
     
-        //     return redirect()->route('vendors.index')->with('success', 'Vendor updated successfully.');
-        // }
+            return redirect()->route('interviewee.index')->with('success', 'Interviewee updated successfully.');
+        }
     
-        // // Remove the specified vendor from the database
-        // public function destroy(Vendor $vendor)
-        // {
-        //     $vendor->delete();
-        //     return redirect()->route('vendors.index')->with('success', 'Vendor deleted successfully.');
-        // }
+        // Remove the specified vendor from the database
+        public function destroy($delete)
+        {
+            
+            $interview = Interviewee::find($delete);
+            
+            if ($interview) {
+                // Delete the lead status
+                $interview->delete();
+                return redirect()->back()->with('success', 'Interview status deleted successfully');
+            }
+            }
+           
+            
 }

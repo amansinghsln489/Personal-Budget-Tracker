@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-   
     /**
      * Run the migrations.
      *
@@ -14,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('lead_history', function (Blueprint $table) {
-            $table->id('lead_history_id');
+        Schema::create('internal_leads_details', function (Blueprint $table) {
+            $table->id('internal_leads_details_id');
             $table->unsignedBigInteger('lead_id');
             $table->text('comment')->nullable();
             $table->integer('interview_status')->nullable();
@@ -36,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lead_history');
+        Schema::dropIfExists('internal_leads_details');
     }
 };

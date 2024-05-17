@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Lead\LeadStatus;
 use App\Models\Interview\Interviewee;
+use App\Models\User\User;
+use App\Models\Company\Technology;
 
 class InternalLead extends Model
 {
@@ -18,6 +20,10 @@ class InternalLead extends Model
         'candidate_interview_feedback',
         'interview_date',
         'interviewee_id',
+        'technology_id',
+        'created_by',
+        'image',
+        'resume',
         'status',
         'additional_comments',
     ];
@@ -28,5 +34,13 @@ class InternalLead extends Model
     public function intervieweeName()
     {
         return $this->belongsTo(Interviewee::class, 'interviewee_id');
+    }
+    public function userName()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+    public function technology()
+    {
+        return $this->belongsTo(Technology::class, 'technology_id');
     }
 }

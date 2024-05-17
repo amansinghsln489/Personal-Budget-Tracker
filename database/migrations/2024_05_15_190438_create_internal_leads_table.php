@@ -19,8 +19,12 @@ class CreateInternalLeadsTable extends Migration
             $table->string('candidate_email');
             $table->string('candidate_mobile');
             $table->string('interviewee_id');
+            $table->string('technology_id');
+            $table->string('created_by');
+            $table->string('image')->nullable();
+            $table->string('resume')->nullable();
             $table->text('candidate_interview_feedback')->nullable();
-            $table->date('interview_date')->nullable();
+            $table->dateTime('interview_date')->nullable();
             $table->string('status')->default('pending');
             $table->text('additional_comments')->nullable();
             $table->timestamps();

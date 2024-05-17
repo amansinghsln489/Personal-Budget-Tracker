@@ -142,7 +142,7 @@
                                         <div class="form-group">
                                             <strong><label>Interview Date</label></strong>
                                             <div class="input-group">
-                                                <input type="date" class="form-control" name="interview_date" value="{{ $internal_lead->interview_date }}">
+                                                <input type="datetime-local" class="form-control" name="interview_date" value="{{ $internal_lead->interview_date }}">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">
                                                         <i class="fas fa-calendar"></i>

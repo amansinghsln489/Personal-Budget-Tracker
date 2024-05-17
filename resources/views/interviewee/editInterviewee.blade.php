@@ -70,16 +70,16 @@
                                 </div>
                             @endif
                          
-                            <form class="m-b-30" method="POST" action="{{ route('vendors.updateVendor') }}" enctype="multipart/form-data">
+                            <form class="m-b-30" method="POST" action="{{ route('interviewee.updateInterviewee') }}" enctype="multipart/form-data">
                                 @csrf
 
-                                <input type="hidden" class="form-control" name="vendor_id" placeholder="Vendor Name" value="{{ $vendor->vendor_id }}" required>
+                                <input type="hidden" class="form-control" name="id" placeholder="Vendor Name" value="{{ $vendor->id }}" required>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <strong><label>Interviewee Name <span class="text-danger">*</span></label></strong>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" name="name" placeholder="Vendor Name" value="{{ $vendor->name }}" required>
+                                                <input type="text" class="form-control" name="name" placeholder="Interviewee Name" value="{{ $vendor->name }}" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">
                                                         <i class="fas fa-building"></i>
@@ -92,7 +92,7 @@
                                         <div class="form-group">
                                             <strong><label>Interviewee Email <span class="text-danger">*</span></label></strong>
                                             <div class="input-group">
-                                                <input type="email" class="form-control" name="email" placeholder="Vendor Email" value="{{ $vendor->email }}" required>
+                                                <input type="email" class="form-control" name="email" placeholder="Interviewee Email" value="{{ $vendor->email }}" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">
                                                         <i class="fas fa-envelope"></i>
@@ -106,14 +106,12 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <strong><label>Technology <span class="text-danger">*</span></label></strong>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" name="technology" placeholder="Technology" value="{{ $vendor->technology }}" required>
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">
-                                                        <i class="fas fa-laptop"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
+                                            <select class="form-control select2" name="technology">
+                                                <option value="">--Select Technologies--</option>
+                                               @foreach($technologies as $technology)
+                                                    <option value="{{ $technology->technology_id }}" {{ $vendor->technology == $technology->technology_id ? 'selected' : '' }}>{{ $technology->technology_name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -137,11 +135,8 @@
                                                 <strong><label for="status">Status <span class="text-danger">*</span></label></strong>
                                                 <select id="status" name="status" class="form-control" required>
                                                     <option value="" disabled>Select Status</option>
-                                                    @if($vendor->status == 1)
-                                                        <option value="1" selected>Active</option>
-                                                    @else
-                                                        <option value="0" selected>Inactive</option>
-                                                    @endif
+                                                    <option value="1" {{$vendor->status == '1' ? 'selected' : '' }}>Active</option>
+                                                   <option value="0" {{$vendor->status == '0' ? 'selected' : '' }}>Inactive</option>
                                                    
                                                 </select>
 
@@ -149,22 +144,7 @@
                                         </div>
                                     
                                     <div class="col-md-6">
-                                        <div class="form-group">
-                                            <strong><label>Alternate Phone Number(Optional)</label></strong>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" name="alternate_phone_number" placeholder="Alternate Phone Number" value="{{ $vendor->alternate_phone_number }}">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">
-                                                        <i class="fas fa-phone"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
+                                    <div class="form-group">
                                             <strong><label>Comment (Optional)</label></strong>
                                             <div class="input-group">
                                                 <textarea class="form-control" name="comment" rows="3" placeholder="Comment">{{ $vendor->comment }}</textarea>
@@ -175,10 +155,16 @@
                                                 </div>
                                             </div>
                                         </div>
+                                       
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        
                                     </div>
                                 </div>
                                 <div class="m-t-20 text-center">
-                                    <button type="submit" class="btn btn-primary btn-lg">Update Vendor</button>
+                                    <button type="submit" class="btn btn-primary btn-lg">Update Interviewee</button>
                                 </div>
                             </form>
                     </div>

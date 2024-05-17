@@ -76,7 +76,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+                               
                                     @foreach($technologys as $technology)
                                     <tr>
                                         
@@ -84,7 +84,11 @@
                                         <td>{{ $technology->name }}</td>
                                         <td>{{ $technology->email }}</td>
                                         <td>{{ $technology->phone_number }}</td>
-                                        <td>{{ $technology->technologyName->technology_name}}</td>
+                                        @if(!empty($technology->technologyName))
+                                            <td>{{ $technology->technologyName->technology_name }}</td>
+                                            @else
+                                                <td>No technology name</td>
+                                        @endif
                                         <td
                                         @if($technology->status == 1)
                                      
@@ -92,7 +96,7 @@
                                                 {{ 'Active' }}
                                             @else
                                                 style="font-weight: bold; color: red;">
-                                                {{ 'Inactive111' }}
+                                                {{ 'Inactive' }}
                                             
                                             @endif
                                             </td>
@@ -103,9 +107,10 @@
                                         <a href="{{ route('interviewee.editInterviewee', $technology->id) }}" class="btn btn-primary btn-sm mb-1">
                                                 <i class="far fa-edit"></i>
                                             </a>
-                                            <a href="" class="btn btn-danger btn-sm mb-1">
-                                                    <i class="far fa-trash-alt"></i>
-                                                </a>
+                                            <button type="submit" data-toggle="modal" data-target="#delete_leadstatus"
+                                                class="btn btn-danger btn-sm mb-1">
+                                                <i class="far fa-trash-alt"></i>
+                                            </button>
                                           
                                         </td>
                                     </tr>
@@ -122,20 +127,26 @@
         @include('section/notification') 
     </div>
 
-    <div id="delete_employee" class="modal" role="dialog">
+    <div id="delete_leadstatus" class="modal" role="dialog">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-md">
                 <div class="modal-header">
-                    <h4 class="modal-title">Delete </h4>
+                    <h4 class="modal-title">Interviewee Lead Status</h4>
                 </div>
-                <form>
+                @if(isset($technology->id))
+                <form id="delete_leadstatus" action="{{ route('interviewee.deleteInterviewee', $technology->id) }}" method="POST">
+                    @csrf
                     <div class="modal-body">
                         <p>Are you sure want to delete this?</p>
-                        <div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                        <div class="m-t-20">
+                            <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+                            <button type="submit" class="btn btn-danger" >Delete</button>
                         </div>
                     </div>
                 </form>
+                @else
+                    <p>No technology found.</p>
+                @endif
             </div>
         </div>
     </div>

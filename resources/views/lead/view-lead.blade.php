@@ -159,7 +159,7 @@
                                             </td>
 
                                             <td style="font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow:     ellipsis; max-width: 100px;">
-                                                    {{ $lead->leadStatus->leadstatusname }}
+                                              
                                             </td>
                                             <td>
                                                 {{ $lead->createdUser->firstname }}
