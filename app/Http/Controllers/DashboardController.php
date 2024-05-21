@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Lead\LeadStatus;
 use App\Models\Lead\LeadHistory;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Hr\InternalLead;
 
 class DashboardController extends Controller
 {
@@ -25,9 +26,12 @@ class DashboardController extends Controller
         $today = Carbon::today();
 
         $firstDayOfMonth = Carbon::now()->startOfMonth();
-
+       
+          
         // Fetch users where the role is 4 Sales Team
         $users = User::where('role', 4)->get();
+    //    echo "<pre>";
+    //    print_r($users); die;
 
         // Iterate through users and add count of leads created by each user
         foreach ($users as $user) {
@@ -63,8 +67,18 @@ class DashboardController extends Controller
         }
 
         $leads = Lead::with(['company', 'vendor', 'interviewer', 'createdUser', 'technology', 'leadStatus'])->get();
-
-        return view('dashboard', compact('users', 'interviewees', 'leads'));
+        
+        $totalInterviews = InternalLead::select(
+            'technology_id',
+            DB::raw('COUNT(*) as total'),
+            DB::raw('SUM(CASE WHEN status = 6 THEN 1 ELSE 0 END) as selected_total'),
+            DB::raw('SUM(CASE WHEN status = 13 THEN 1 ELSE 0 END) as unselected_total')
+        )
+        ->groupBy('technology_id')
+        ->with('technology') // Eager load the technology relationship
+        ->get();
+    
+        return view('dashboard', compact('users', 'interviewees', 'leads','totalInterviews'));
     }
 
 }

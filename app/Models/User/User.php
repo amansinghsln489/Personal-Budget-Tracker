@@ -4,6 +4,7 @@ namespace App\Models\User;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Hr\InternalLead;
 
 class User extends Model
 {
@@ -67,5 +68,6 @@ class User extends Model
        {
            return $this->hasMany(Lead::class, 'interviewee_id', 'user_id');
        }
+     
     
 }

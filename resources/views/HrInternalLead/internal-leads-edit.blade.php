@@ -128,16 +128,6 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                   <div class="col-md-8">
-                                        <div class="form-group">
-                                            <strong><label>Candidate Interview Feedback</label></strong>
-                                            <textarea class="form-control" name="candidate_interview_feedback" rows="3"  placeholder="Candidate Interview Feedback">{{ $internal_lead->candidate_interview_feedback }}</textarea>
-                                        </div>
-                                    </div> 
-
-                                </div>   
-
-                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <strong><label>Interview Date</label></strong>
@@ -164,6 +154,29 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                   <div class="col-md-6">
+                                        <div class="form-group">
+                                            <strong><label>Candidate Interview Feedback</label></strong>
+                                            <textarea class="form-control" name="candidate_interview_feedback" rows="3"  placeholder="Candidate Interview Feedback">{{ $internal_lead->candidate_interview_feedback }}</textarea>
+                                        </div>
+                                    </div> 
+                                    <div class="col-md-6">
+                                    <div class="form-group">
+                                            <strong><label>Working Experience</label></strong>
+                                            <select class="form-control select2" name="experience">
+                                            <option value="" disabled selected>Select</option>
+                                            @foreach($experiences as $experience)
+                                                    <option value="{{ $experience->experience_id }}"{{ $experience->experience_id ==  $internal_lead->experience ? 'selected' : '' }}>{{ $experience->experience }}</option>
+                                                @endforeach
+                                              
+                                            </select>
+                                        </div>
+                                    </div> 
+
+                                </div>   
+
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -213,8 +226,5 @@
 <script src="{{ asset('assets/js/moment.min.js') }}"></script>
 
 <script src="{{ asset('assets/plugins/datetimepicker/js/tempusdominus-bootstrap-4.min.js') }}"></script>
-
-<script src="{{ asset('assets/js/app.js') }}"></script>
-
 
 @endsection

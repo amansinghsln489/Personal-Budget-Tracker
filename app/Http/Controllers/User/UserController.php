@@ -125,6 +125,7 @@ class UserController extends Controller
         $user->lastname = $request->input('lastname');
         $user->email = $request->input('email');
         $user->phone = $request->input('phone');
+        $user->role = $request->input('role');
         
         // Check if a new password is provided and update it
         if ($request->has('password')) {

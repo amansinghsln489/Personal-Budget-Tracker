@@ -8,6 +8,7 @@ use App\Models\Lead\LeadStatus;
 use App\Models\Interview\Interviewee;
 use App\Models\User\User;
 use App\Models\Company\Technology;
+use App\Models\Company\Experience;
 
 class InternalLead extends Model
 {
@@ -25,6 +26,7 @@ class InternalLead extends Model
         'image',
         'resume',
         'status',
+        'experience',
         'additional_comments',
     ];
     public function leadStatus()
@@ -43,4 +45,12 @@ class InternalLead extends Model
     {
         return $this->belongsTo(Technology::class, 'technology_id');
     }
+    public function experienceYear()
+    {
+        return $this->belongsTo(Experience::class, 'experience');
+    }
+    // public function interviewStatus()
+    // {
+    //     return $this->belongsTo(Experience::class, 'experience');
+    // }
 }

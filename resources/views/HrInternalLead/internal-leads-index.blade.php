@@ -89,8 +89,7 @@
                                         <td>{{ $candidate->leadStatus->leadstatusname }}</td>
                                         <td data-label="@lang('Resume')">
                                         @if($candidate->resume)
-                                        <a href="{{ asset('storage/' . $candidate->resume) }}" download>Download Resume <i class="fas fa-download"></i></a>
-                                        @else
+                                        <a href="{{ asset('storage/' . $candidate->resume) }}" target="_blank">Download<i class="fas fa-download"></i></a>                                        @else
                                            Not upload resume
                                            @endif
                                         </td>
@@ -170,6 +169,4 @@ $(document).ready(function() {
 <script src="{{ asset('assets/js/moment.min.js') }}"></script>
 
 <script src="{{ asset('assets/plugins/datetimepicker/js/tempusdominus-bootstrap-4.min.js') }}"></script>
-
-<script src="{{ asset('assets/js/app.js') }}"></script>
 @endsection

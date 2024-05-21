@@ -189,9 +189,14 @@
 													Phone Number: 
 														<span class="float-right text-muted">{{ $leadData->candidate_mobile }}</span>
 													</li>
+													
 													<li>
 													Email: 
 														<span class="float-right text-muted">{{ $leadData->candidate_email }}</span>
+													</li>
+													<li>
+													Working Experience: 
+														<span class="float-right text-muted">{{ $leadData->experienceYear->experience }}</span>
 													</li>
 													<li><strong> -- Detals --</strong></li>
 													<li>
@@ -334,7 +339,7 @@ $('.select2').select2();
 
 <script src="{{ asset('assets/plugins/datetimepicker/js/tempusdominus-bootstrap-4.min.js') }}"></script>
 
-<script src="{{ asset('assets/js/app.js') }}"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 @endsection
 

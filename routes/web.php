@@ -23,6 +23,7 @@ use App\Http\Controllers\OldRecordController;
 use App\Http\Controllers\HR\InternalLeadController;
 use App\Http\Controllers\Interviewee\IntervieweeController;
 use App\Http\Controllers\HR\InternalCommentController;
+use App\Http\Controllers\Company\ExperienceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +71,13 @@ Route::get('/add-technology', [TechnologyController::class, 'technologyList'])->
 Route::post('/add-technology', [TechnologyController::class, 'addTechnology'])->name('add.technology.submit');
 Route::get('/edit-technology/{id}', [TechnologyController::class, 'editTechnology'])->name('edit.technology');
 Route::get('/delete-technology/{id}', [TechnologyController::class, 'destroy'])->name('delete.technology');
+
+Route::get('/add-experience', [ExperienceController::class, 'experienceList'])->name('add.experience');
+Route::post('/add-experience', [ExperienceController::class, 'addExperience'])->name('add.experience.submit');
+Route::get('/edit-experience/{id}', [ExperienceController::class, 'editExperience'])->name('edit.experience');
+Route::get('/delete-experience/{id}', [ExperienceController::class, 'destroy'])->name('delete.experience');
+
+
 /*
 |--------------------------------------------------------------------------
 | User Routes

@@ -254,8 +254,6 @@ $(document).ready(function() {
 
 <script src="{{ asset('assets/plugins/datetimepicker/js/tempusdominus-bootstrap-4.min.js') }}"></script>
 
-<script src="{{ asset('assets/js/app.js') }}"></script>
-
 @endsection
 
    

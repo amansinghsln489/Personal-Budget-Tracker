@@ -192,7 +192,21 @@
                                                 <div id="user_resume_error" class="error" style="color: red; font-weight: bold;"></div>
                                             </div>
                                         </div>
-                               </div>        
+                               </div>    
+
+                               <div class="row">
+                                   <div class="col-md-6">
+                                       <div class="form-group">
+                                            <strong><label>Working Experience</label></strong>
+                                            <select class="form-control select2" name="experience">
+                                            <option value="" disabled selected>Select</option>
+                                            @foreach($experiences as $experience)
+                                                    <option value="{{ $experience->experience_id }}">{{ $experience->experience }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -253,8 +267,5 @@ function previewImage(input) {
 <script src="{{ asset('assets/js/moment.min.js') }}"></script>
 
 <script src="{{ asset('assets/plugins/datetimepicker/js/tempusdominus-bootstrap-4.min.js') }}"></script>
-
-<script src="{{ asset('assets/js/app.js') }}"></script>
-
 
 @endsection

@@ -16,6 +16,7 @@ use App\Models\Lead\LeadHistory;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Hr\InternalLead;
 use App\Models\Hr\InternalLeadDetail;
+
 class InternalCommentController extends Controller
 {
    
