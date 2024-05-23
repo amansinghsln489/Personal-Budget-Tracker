@@ -138,9 +138,9 @@
                                                 <a href="{{ route('edit.technology', $technology->technology_id) }}" class="btn btn-primary btn-sm mb-1">
                                                     <i class="far fa-edit"></i>
                                                 </a>
-                                                <a href="{{ route('delete.technology', $technology->technology_id) }}" class="btn btn-danger btn-sm mb-1">
+                                                <!-- <a href="{{ route('delete.technology', $technology->technology_id) }}" class="btn btn-danger btn-sm mb-1">
                                                     <i class="far fa-trash-alt"></i>
-                                                </a>
+                                                </a> -->
                                             </td>
                                         </tr>
                                     @endforeach

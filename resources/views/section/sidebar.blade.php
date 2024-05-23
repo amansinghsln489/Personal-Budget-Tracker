@@ -41,7 +41,7 @@ function isActiveRoute($routeName)
  
  
                 <?php
-                if($user->role == 4 || $user->role == 1){
+                if(true){
                 ?>
                 <!-- Leads Menu -->
                 <!-- <li class="submenu">
@@ -162,7 +162,7 @@ function isActiveRoute($routeName)
                 </li> -->
                 
                    <!-- add interview --> 
-                 <li class="submenu">
+                 <!-- <li class="submenu">
                     <a href="#">
                         <img src="{{ asset('assets/img/sidebar/icon-14.png') }}" alt="icon">
                         <span>Add Interviewee</span>
@@ -173,9 +173,7 @@ function isActiveRoute($routeName)
                         <li><a href="{{ route('interviewee.index') }}" class="{{ isActiveRoute('interviewee.index') }}"><span>View Interviewee</span></a></li>
                       
                     </ul>
-                </li>
-
-
+                </li> -->
 
                 <?php
                 }

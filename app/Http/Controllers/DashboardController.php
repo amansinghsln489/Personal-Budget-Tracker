@@ -29,20 +29,17 @@ class DashboardController extends Controller
        
           
         // Fetch users where the role is 4 Sales Team
-        $users = User::where('role', 4)->get();
-    //    echo "<pre>";
-    //    print_r($users); die;
+        $users = User::where('role', 2)->get();
 
-        // Iterate through users and add count of leads created by each user
         foreach ($users as $user) {
-            $todayLeadCount = Lead::where('lead_created_user_id', $user->user_id)
+            $todayLeadCount = InternalLead::where('created_by',$user->user_id)
                 ->whereDate('created_at', $today)
                 ->count();
-
-            $monthLeadCount = Lead::where('lead_created_user_id', $user->user_id)
+                
+            $monthLeadCount = InternalLead::where('created_by', $user->user_id)
                 ->where('created_at', '>=', $firstDayOfMonth)
                 ->count();
-
+               
             $user->todayLeadCount = $todayLeadCount;
             $user->monthLeadCount = $monthLeadCount;
         }
@@ -72,7 +69,7 @@ class DashboardController extends Controller
             'technology_id',
             DB::raw('COUNT(*) as total'),
             DB::raw('SUM(CASE WHEN status = 6 THEN 1 ELSE 0 END) as selected_total'),
-            DB::raw('SUM(CASE WHEN status = 13 THEN 1 ELSE 0 END) as unselected_total')
+            DB::raw('SUM(CASE WHEN status = 7 THEN 1 ELSE 0 END) as unselected_total')
         )
         ->groupBy('technology_id')
         ->with('technology') // Eager load the technology relationship

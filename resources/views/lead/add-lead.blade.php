@@ -225,7 +225,7 @@
                                         </td>
                                            
                                         <td>
-                                            {{ $lead->interviewer->firstname }} 
+                                            {{ $lead->firstname }} 
                                         </td>
                                     
                                         <td>

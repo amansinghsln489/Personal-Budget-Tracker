@@ -1,6 +1,6 @@
 <style>
 	.bg-blue {
-    background-color: #001f3f;
+    background-color: #2e6cad;
   
 }
 

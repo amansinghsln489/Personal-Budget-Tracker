@@ -30,8 +30,9 @@ class InternalLeadController extends Controller
         $leadStatuss = LeadStatus::all();
         $interview_names = Interviewee::all();
         $experiences = Experience::all();
+        $users = User::where('role', 3)->get();
         
-        return view('HrInternalLead.internal-leads-create', compact('technologies','leadStatuss','interview_names','experiences'));
+        return view('HrInternalLead.internal-leads-create', compact('technologies','leadStatuss','interview_names','experiences','users'));
    
     }
 
@@ -46,6 +47,12 @@ class InternalLeadController extends Controller
             'candidate_name' => 'required|string',
             'candidate_email' => 'required|email|unique:internal_leads,candidate_email',
             'candidate_mobile' => 'required|string',
+            'interview' => 'required|string',
+            'technology_id' => 'required|string',
+            'interview_date' => 'required|string',
+            'experience' => 'required|string',
+            'status' => 'required|string'
+
             // Add validation rules for other fields as needed
         ]);
 
@@ -109,8 +116,8 @@ class InternalLeadController extends Controller
     public function edit(InternalLead $internal_lead)
     {
         $leadStatuss = LeadStatus::all();
-        $interview_names = Interviewee::all();
         $experiences = Experience::all();
+        $interview_names = User::where('role', 3)->get();
         return view('HrInternalLead.internal-leads-edit',compact('internal_lead','leadStatuss','interview_names','experiences'));
     }
 
@@ -125,6 +132,7 @@ class InternalLeadController extends Controller
             'candidate_name' => 'required|string',
             'candidate_email' => 'required|email',
             'candidate_mobile' => 'required|string',
+           
         ]);
     
         $internal_lead->update([

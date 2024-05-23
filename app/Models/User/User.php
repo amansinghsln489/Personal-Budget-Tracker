@@ -24,6 +24,7 @@ class User extends Model
         'phone',
         'role',
         'company',
+        'technologies',
         'user_image',
         'user_resume',
         'user_status',

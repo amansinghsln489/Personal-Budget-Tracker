@@ -3,6 +3,29 @@
 @section('content')
 @section('title', 'Lead')
 
+
+<style>
+	.input-group.editer-box {
+    width: 100%;
+	justify-content: center;
+}
+.input-group.editer-box .ck.ck-editor {
+    width: 93%;
+}
+.input-group.editer-box button.btn.btn-info.send-btn {
+    height: 100%;
+}
+.input-group.editer-box .ck.ck-sticky-panel__content {
+    display: none;
+}
+.user-det-list>li {
+    display: flex;
+    justify-content: space-between;
+}
+.user-det-list>li>span.float-right.text-muted {
+    width: 60%;
+}
+</style>
 <div class="page-wrapper">
 	<div class="chat-main-row">
 		<div class="chat-main-wrapper">
@@ -112,7 +135,7 @@
 											<div class="chat-body">
 												<div class="chat-bubble">
 													<div class="chat-content">
-														<p>{{ $history->comment }}</p>
+														<div><?php echo $comments=$history->comment ?></div>
 														<span class="chat-time">{{ \Carbon\Carbon::parse($history->created_at)->format('h:i A') }}</span>
 
 														<small>lead Status :</small>
@@ -140,10 +163,10 @@
 							<div class="message-bar">
 								<div class="message-inner">
 									<div class="message-area">
-										<div class="input-group">
-											<input type="text" class="form-control" name="lead_comment" placeholder="Type a comment ..." required >
+										<div class="input-group editer-box">
+										<textarea class="form-control" name="lead_comment" rows="3"  placeholder="Candidate Interview Feedback"></textarea>
 											<span class="input-group-append">
-												<button class="btn btn-info" type="submit"><i class="fas fa-paper-plane"></i></button>
+												<button class="btn btn-info send-btn" type="submit"><i class="fas fa-paper-plane"></i></button>
 											</span>
 										</div>
 									</div>
@@ -195,7 +218,7 @@
 														<span class="float-right text-muted">{{ $leadData->candidate_email }}</span>
 													</li>
 													<li>
-													Working Experience: 
+													Working Experience : 
 														<span class="float-right text-muted">{{ $leadData->experienceYear->experience }}</span>
 													</li>
 													<li><strong> -- Detals --</strong></li>
@@ -205,7 +228,7 @@
 													</li>
 													<li>
 														<span>Interviewer Name:</span>
-														<span class="float-right text-muted">{{ $leadData->intervieweeName->name }}</span>
+														<span class="float-right text-muted">{{ $leadData->intervieweeName->firstname }} {{ $leadData->intervieweeName->lastname}}</span>
 													</li>
 													<li>
 														<span>created_by:</span>
@@ -218,20 +241,13 @@
                                                     <span>Resume</span>
                                                     <span class="float-right text-muted">
                                                         @if($leadData->resume)
-                                                            <a href="{{ asset('storage/' . $leadData->resume) }}" download>Download Resume <i class="fas fa-download"></i></a>
+														<a href="{{ asset('storage/' . $leadData->resume) }}" target="_blank">Download<i class="fas fa-download"></i></a>
                                                             @else
                                                             Not upload resume
                                                         @endif
 													</span>
 													</li>
                                                    
-													<li> 
-                                                    <span> Interview Feedback</span>
-                                                    <span class="float-right text-muted">
-														{{ $leadData->candidate_interview_feedback }} 
-														</span>
-													</li>
-                                                    
 													<li>
                                                     <span> Interview Date</span>
                                                     <span class="float-right text-muted">
@@ -247,10 +263,10 @@
 													<li>
                                                     <span> Additional Comments</span>
                                                     <span class="float-right text-muted">
-														{{ $leadData->additional_comments }} 
+													<textarea name="lead_comment" class="form-control" rows="4" readonly data-toggle="popover" title="Lead  Comments" data-content="{{ $leadData->additional_comments }}">{{ $leadData->additional_comments }}</textarea>
+
 														</span>
 													</li>
-													
 													<li><strong>Other Details</strong></li>
 
 													<li>
@@ -341,6 +357,14 @@ $('.select2').select2();
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+<script>
+        ClassicEditor
+            .create(document.querySelector('textarea[name="lead_comment"]'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 @endsection
 
 

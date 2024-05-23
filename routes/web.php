@@ -24,6 +24,7 @@ use App\Http\Controllers\HR\InternalLeadController;
 use App\Http\Controllers\Interviewee\IntervieweeController;
 use App\Http\Controllers\HR\InternalCommentController;
 use App\Http\Controllers\Company\ExperienceController;
+use App\Http\Controllers\ChangePasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -241,4 +242,11 @@ Route::post('/interviewee/{delete}', [IntervieweeController::class, 'destroy'])-
 
 // Internal comment and update route
 Route::post('/comment/add', [InternalCommentController::class, 'store'])->name('comment.add');
+
+/*
+|--------------------------------------------------------------------------
+| Password Update
+|--------------------------------------------------------------------------
+*/
+Route::post('/password', [ChangePasswordController::class, 'update'])->name('password');
 

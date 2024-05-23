@@ -28,7 +28,7 @@
 		| sales team Dashboard
 		|--------------------------------------------------------------------------
 		-->
-			@if ($user->role == 4)
+			@if ($user->role == 2)
 				@include('dashboard.salesTeamDashboard')
 		
 		<!--

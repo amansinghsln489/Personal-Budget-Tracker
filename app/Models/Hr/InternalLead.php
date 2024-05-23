@@ -35,7 +35,7 @@ class InternalLead extends Model
     }
     public function intervieweeName()
     {
-        return $this->belongsTo(Interviewee::class, 'interviewee_id');
+        return $this->belongsTo(User::class, 'interviewee_id');
     }
     public function userName()
     {

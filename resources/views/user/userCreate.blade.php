@@ -107,7 +107,7 @@
 								</div>
 								<div class="col-sm-6">
 									<div class="form-group form-focus">
-										<select class="form-control" name="role" required>
+										<select class="form-control select2" id="role" name="role" onchange="showIntervieweeOptions()" required>
 											<option value="">--Select--</option>
 											@foreach($roles as $role)
 												<option value="{{ $role->role_id }}">{{ $role->role_name }}</option>
@@ -116,6 +116,19 @@
 										<label class="focus-label">Role <span class="text-danger">*</span></label>
 									</div>
 								</div>
+                               
+                                    <div class="col-sm-6" id="interviewee-options">
+                                        <div class="form-group form-focus">
+                                            <select  class="form-control" name="technologies" required>
+                                                <option value="">--Select--</option>
+                                                @foreach($technologys as $technology)
+                                                    <option value="{{ $technology->technology_id }}">{{ $technology->technology_name }}</option>
+                                                @endforeach
+                                            </select>
+                                            <label class="focus-label">Technologies <span class="text-danger">*</span></label>
+                                        </div>
+                                    </div>
+                             
 							
 								<div class="container">
 									<div class="row">
@@ -174,6 +187,25 @@
     </div>
 </div>
 
+<style>
+        /* Initially hide the Technologies dropdown */
+        #interviewee-options {
+            display: none;
+        }
+    </style>
+ <!-- for open column techonology -->
+<script>
+    function showIntervieweeOptions() {
+        var roleDropdown = document.getElementById("role");
+        var intervieweeOptions = document.getElementById("interviewee-options");
+        // Show the interviewee options if "Interviewee" is selected
+        if (roleDropdown.value === "3") {
+            intervieweeOptions.style.display = "block";   
+        }
+    }
+        
+    
+</script>
 <script>
 function previewImage(input) {
     if (input.files && input.files[0]) {

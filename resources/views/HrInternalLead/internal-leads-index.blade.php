@@ -28,6 +28,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
         <!-- Display Toastr messages -->
+     
         <script>
             $(document).ready(function() {
                 @if(session('error'))
@@ -73,7 +74,6 @@
                                         <th>Resume</th>
                                         <th>Interviewee Name</th>
                                         <th>Created_by</th>
-                                        <th>Additional Comments</th>
                                         <th>Created At</th>
                                         <th>Action</th>
                                     </tr>
@@ -85,22 +85,22 @@
                                         <td>{{ $candidate->candidate_name }}</td>
                                         <td>{{ $candidate->candidate_email }}</td>
                                         <td>{{ $candidate->candidate_mobile }}</td>
-                                        <td>{{ $candidate->interview_date }}</td>
+                                        <td class="highlight">{{ \Carbon\Carbon::parse($candidate->interview_date)->format('Y-m-d h:i:s A')}}</td>
                                         <td>{{ $candidate->leadStatus->leadstatusname }}</td>
                                         <td data-label="@lang('Resume')">
                                         @if($candidate->resume)
-                                        <a href="{{ asset('storage/' . $candidate->resume) }}" target="_blank">Download<i class="fas fa-download"></i></a>                                        @else
+                                        <a href="{{ asset('storage/' . $candidate->resume) }}" target="_blank">Download<i class="fas fa-download"></i></a>                                      
+                                          @else
                                            Not upload resume
                                            @endif
                                         </td>
                                         <td>
-                                        @if(!empty( $candidate->intervieweeName->name))
-                                        {{ $candidate->intervieweeName->name }}
+                                        @if(!empty( $candidate->intervieweeName->firstname))
+                                        {{ $candidate->intervieweeName->firstname }} {{ $candidate->intervieweeName->lastname}}
                                         @endif
                                         </td>
-                                        <td>{{ $candidate->userName->firstname}} {{ $candidate->userName->lastname}}</td>
-                                        <td>{{ $candidate->additional_comments }}</td>
-                                        <td>{{ $candidate->created_at }}</td>
+                                        <td>{{ $candidate->userName->firstname}} {{ $candidate->userName->lastname}}</td>  
+                                        <td>{{ \Carbon\Carbon::parse($candidate->created_at)->format('d-m-Y') }}</td>
                                         <td class="text-right">
                                             <a href="{{ route('internal-leads.edit', $candidate->id) }}" class="btn btn-primary btn-sm mb-1">
                                                 <i class="far fa-edit"></i>

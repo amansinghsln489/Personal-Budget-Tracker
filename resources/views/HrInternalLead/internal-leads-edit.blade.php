@@ -120,7 +120,7 @@
                                                 <select class="form-control select2" name="interview">
                                                     <option value="">--Select--</option>
                                                     @foreach($interview_names as $interview_name)
-                                                    <option value="{{ $interview_name->id }}"{{ $interview_name->id ==  $internal_lead->interviewee_id ? 'selected' : '' }}>{{ $interview_name->name }}</option>
+                                                    <option value="{{ $interview_name->user_id }}"{{ $interview_name->user_id ==  $internal_lead->interviewee_id ? 'selected' : '' }}>{{ $interview_name->firstname }} {{ $interview_name->lastname }}</option>
                                                 @endforeach
                                                 </select>
                                             </div>

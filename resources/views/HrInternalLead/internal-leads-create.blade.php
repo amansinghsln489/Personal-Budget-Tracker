@@ -116,11 +116,11 @@
                                     </div>
                                     <div class="col-md-6">
                                             <div class="form-group">
-                                                <strong><label>Interviewee</label></strong>
+                                                <strong><label>Interviewee <span class="text-danger">*</span></label></strong>
                                                 <select class="form-control select2" name="interview">
                                                     <option value="">--Select--</option>
-                                                    @foreach($interview_names as $interview_name)
-                                                        <option value="{{ $interview_name->id }}">{{ $interview_name->name }}</option>
+                                                    @foreach($users as $user)
+                                                        <option value="{{ $user->user_id }}">{{ $user->firstname }} {{ $user->lastname }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -129,7 +129,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <strong><label>Interview Date</label></strong>
+                                            <strong><label>Interview Date <span class="text-danger">*</span></label></strong>
                                             <div class="input-group">
                                                 <input type="datetime-local" class="form-control" name="interview_date" value="{{ old('interview_date') }}">
                                                 <div class="input-group-append">
@@ -142,11 +142,11 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <strong><label>Status</label></strong>
+                                            <strong><label>Status <span class="text-danger">*</span></label></strong>
                                             <select class="form-control select2" name="status">
-                                                <option value="">--Select--</option>
+                                                <option value="" disabled selected>--Select--</option>
                                                 @foreach($leadStatuss as $LeadStatus)
-                                                    <option value="{{ $LeadStatus->leadstatusid }}"{{ $LeadStatus->leadstatusid ==  1 ? 'selected' : '' }}>{{ $LeadStatus->leadstatusname }}</option>
+                                                    <option value="{{ $LeadStatus->leadstatusid }}">{{ $LeadStatus->leadstatusname }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -197,7 +197,7 @@
                                <div class="row">
                                    <div class="col-md-6">
                                        <div class="form-group">
-                                            <strong><label>Working Experience</label></strong>
+                                            <strong><label>Working Experience <span class="text-danger">*</span></label></strong>
                                             <select class="form-control select2" name="experience">
                                             <option value="" disabled selected>Select</option>
                                             @foreach($experiences as $experience)

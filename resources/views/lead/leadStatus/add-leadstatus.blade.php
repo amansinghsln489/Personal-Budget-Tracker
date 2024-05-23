@@ -118,7 +118,7 @@
                                     <tr>
                                         <th>Id</th>
                                         <th>Status Name</th>
-                                        <th>Lead Status Status</th>
+                                        <th>Lead Status </th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -134,10 +134,10 @@
                                             <a href="{{ route('leadstatus.edit', $leadStatus->leadstatusid) }}" class="btn btn-primary btn-sm mb-1">
                                                 <i class="far fa-edit"></i>
                                             </a>
-                                            <button type="submit" data-toggle="modal" data-target="#delete_leadstatus"
+                                            <!-- <button type="submit" data-toggle="modal" data-target="#delete_leadstatus"
                                                 class="btn btn-danger btn-sm mb-1">
                                                 <i class="far fa-trash-alt"></i>
-                                            </button>
+                                            </button> -->
                                         </td>
 
                                     </tr>

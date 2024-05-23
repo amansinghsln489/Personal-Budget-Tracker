@@ -11,6 +11,7 @@ use App\Models\Company\Company;
 use App\Models\Company\Technology;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 
 class UserController extends Controller
@@ -41,8 +42,9 @@ class UserController extends Controller
                 ->get();
         
                 $roles = Role::where('role_status', 1)->get();
+                $technologys = Technology::all();
          
-            return view('user.userCreate', compact('roles', 'users'));
+            return view('user.userCreate', compact('roles', 'users','technologys'));
         } catch (\Exception $e) {
             return $e->getMessage(); // Handle or log the error
         }
@@ -65,6 +67,7 @@ class UserController extends Controller
                 'password' => 'required|string|min:1',
                 'phone' => 'required|string',
                 'role' => 'required',
+                'technologies' => 'required',
                 'user_image' => 'nullable|image', 
             ]);
     
@@ -95,6 +98,7 @@ class UserController extends Controller
             $user->password = Hash::make($validatedData['password']); // Hash the password
             $user->phone = $validatedData['phone'];
             $user->role = $request->input('role');
+            $user->technologies = $request->input('technologies');
             $user->user_image = $imagePath;
             $user->user_status = $request->input('user_status', true);
     
@@ -112,7 +116,8 @@ class UserController extends Controller
     {
         $edituser = User::findOrFail($id);
         $roles = Role::all(); // Assuming Role is your model for user roles
-        return view('user.userEdit', compact('edituser', 'roles'));
+        $technologys = Technology::all();
+        return view('user.userEdit', compact('edituser', 'roles','technologys'));
   
     }
     public function update(Request $request, $id)
@@ -126,7 +131,26 @@ class UserController extends Controller
         $user->email = $request->input('email');
         $user->phone = $request->input('phone');
         $user->role = $request->input('role');
-        
+        $user->technologies = $request->input('technologies');
+
+        if ($request->hasFile('user_image')) {
+            // Validate the image file
+            if ($request->file('user_image')->isValid()) {
+                // Store the new image file and get the path
+                $imagePath = $request->file('user_image')->store('user_images', 'public');
+                
+                // Optionally, delete the old image file if it exists
+                if ($user->user_image) {
+                    Storage::disk('public')->delete($user->user_image);
+                }
+    
+                // Update the user's image path
+                $user->user_image = $imagePath;
+            } else {
+                throw new \Exception('Invalid image file.');
+            }
+        }
+    
         // Check if a new password is provided and update it
         if ($request->has('password')) {
             $user->password = bcrypt($request->input('password'));

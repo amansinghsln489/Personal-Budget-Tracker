@@ -20,6 +20,7 @@
 	<link rel="stylesheet" href="{{ asset('assets/plugins/datetimepicker/css/tempusdominus-bootstrap-4.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/loader.css') }}">
     <link rel="stylesheet" href="{{ asset('css/live-search.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/internal-lead.css') }}">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 	<link href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet">

@@ -141,7 +141,7 @@
             <div class="modal-header">
                 <h4 class="modal-title">Delete Role</h4>
             </div>
-            <form id="delete_role_form" action="{{ route('delete.role', $role->role_id) }}" method="POST">
+            <form id="delete_role_form" action="" method="POST">
                 @csrf
                 <div class="modal-body">
                     <p>Are you sure want to delete this?</p>

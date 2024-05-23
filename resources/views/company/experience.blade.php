@@ -135,10 +135,10 @@
                                                 <a href="{{ route('edit.experience', $experience->experience_id) }}" class="btn btn-primary btn-sm mb-1">
                                                     <i class="far fa-edit"></i>
                                                 </a>
-                                                <a href="{{ route('delete.experience', $experience->experience_id) }}" class="btn btn-danger btn-sm mb-1">
+                                                <!-- <a href="{{ route('delete.experience', $experience->experience_id) }}" class="btn btn-danger btn-sm mb-1">
                                                     <i class="far fa-trash-alt"></i>
-                                                </a>
-                                            </td>
+                                                </a> -->
+                                            </td>   
                                         </tr>
                                     @endforeach
                                 </tbody>

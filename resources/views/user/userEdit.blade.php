@@ -107,7 +107,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group form-focus">
-                                            <select class="form-control" name="role" required>
+                                            <select class="form-control select2" name="role" required>
                                                 <option value="">--Select--</option>
                                                 @foreach($roles as $role)
                                                 <option value="{{ $role->role_id }}" {{ $role->role_id == $edituser->role ? 'selected' : '' }}>{{ $role->role_name }}</option>
@@ -116,7 +116,43 @@
                                             <label class="focus-label">Role <span class="text-danger">*</span></label>
                                         </div>
                                     </div>
+                                   
+                                        @if($edituser->technologies)
+                                            <div class="col-sm-6">
+                                                <div class="form-group form-focus">
+                                                    <select class="form-control select2" name="technologies" required>
+                                                        <option value="">--Select--</option>
+                                                     @foreach($technologys as $technology)
+
+                                                        <option value="{{ $technology->technology_id }}" {{ $technology->technology_id == $edituser->technologies ? 'selected' : '' }}>{{ $technology->technology_name }}</option>
+                                                     @endforeach
+                                                    </select>
+                                                    <label class="focus-label">Technology <span class="text-danger">*</span></label>
+                                                </div>
+                                            </div>
+                                        @endif    
+                                       
+                                   
                                     <!-- Add fields for image upload and preview -->
+                                    <div class="container">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Image</label>
+												<input type="file" name="user_image" accept="image/*" class="form-control" id="user_image" onchange="previewImage(this);">
+												<br>
+											
+												<div id="user_image_error" class="error" style="color: red; font-weight: bold;"></div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Image Preview</label><br>
+												<img id="imagePreview" src="{{ $edituser->user_image ? asset('storage/' . $edituser->user_image) : asset('assets/img/store_logo/placeholder.jpg') }}" alt="Image Preview" width="80" height="80">
+											</div>
+										</div>
+									</div>
+								</div>
                                 </div>
                                 <div class="m-t-20 text-center">
                                     <button type="submit" class="btn btn-primary btn-lg">Update User</button>
