@@ -23,11 +23,31 @@ class DashboardController extends Controller
 
     public function index()
     {
+//         $userTimeInput = "2024-05-25 10:00:00";
+//         $currentServerTime = Carbon::now();
+//         $userTime = Carbon::createFromFormat('Y-m-d H:i:s', $userTimeInput);
+        
+//         if ($currentServerTime < $userTime) {
+//         $timeDifferenceInHours = $currentServerTime->diffInHours($userTime);
+//         $timeDifferenceInMinutes = $currentServerTime->diffInMinutes($userTime) % 60;
+        
+      
+//         $currentIndianTime = $currentServerTime->copy()->setTimezone('Asia/Kolkata');
+        
+//         // Display the results in Indian date and time format
+//         echo "Current Indian time: " . $currentIndianTime->format('d-m-Y H:i:s') . "\n";
+//         echo "User time: " . $userTime->format('d-m-Y H:i:s') . "\n";
+//         echo "Difference: " . $timeDifferenceInHours . " hours and " . $timeDifferenceInMinutes . " minutes\n";
+//         }
+//         else{
+//             echo "invlaid";
+//         }
+// die;
+
+// =========================================================================================
         $today = Carbon::today();
 
         $firstDayOfMonth = Carbon::now()->startOfMonth();
-       
-          
         // Fetch users where the role is 4 Sales Team
         $users = User::where('role', 2)->get();
 
@@ -43,26 +63,31 @@ class DashboardController extends Controller
             $user->todayLeadCount = $todayLeadCount;
             $user->monthLeadCount = $monthLeadCount;
         }
-
-        $interviewees = User::where('role', 3 )->get();
-
-        // interviewee
-
+        $interviewees = User::where('role', 3)->get();
+    
         // Iterate through users and add count of leads created by each user for interviee
         foreach ($interviewees as $interviewee) {
-
-            $todayInterviewCount = Lead::where('interviewee_id', $interviewee->user_id)
-            ->whereDate('interview_date', $today)
-            ->count();
-
-            $monthLeadCount = Lead::where('interviewee_id', $interviewee->user_id)
+            $interviewCounts = InternalLead::selectRaw(
+                'COUNT(*) as total_interviews, 
+                 SUM(CASE WHEN DATE(created_at) = ? THEN 1 ELSE 0 END) as today_interviews',
+                [$today]
+            )->where('interviewee_id', $interviewee->user_id)
+              ->first();
+        
+            $interviewee->total_interviews = $interviewCounts->total_interviews;
+            $interviewee->today_interviews = $interviewCounts->today_interviews;
+        
+            $monthLeadCount = InternalLead::where('interviewee_id', $interviewee->user_id)
                 ->where('created_at', '>=', $firstDayOfMonth)
                 ->count();
-
+        
             $interviewee->monthLeadCount = $monthLeadCount;
-            $interviewee->todayInterviewCount = $todayInterviewCount;
         }
+        $interview_data = InternalLead::where('created_by', $user->user_id)
+        ->get();
 
+        // echo"<pre>";
+        // print_r($interview_data); die;
         $leads = Lead::with(['company', 'vendor', 'interviewer', 'createdUser', 'technology', 'leadStatus'])->get();
         
         $totalInterviews = InternalLead::select(

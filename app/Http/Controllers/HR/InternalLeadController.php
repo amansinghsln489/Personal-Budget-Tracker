@@ -99,6 +99,7 @@ class InternalLeadController extends Controller
 
     public function show( $internal_lead)
     {
+        
         $leadHistories = InternalLeadDetail::where('lead_id',$internal_lead)
         ->orderBy('created_at', 'ASC')
         ->with(['InternalLead','leadStatus', 'userName'])

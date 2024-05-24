@@ -83,13 +83,18 @@
 								<div class="chat-box">
 									<div class="chats">
                                     @foreach($leadHistories as $history)
-									@if ($history->leadCreate_user_role == "Sales Team")
+									@if ($history->leadCreate_user_role == "Humen Resource")
 										<div class="chat chat-left">
 											<div class="chat-avatar">
+											@if(!empty($history->user->user_image))
 												<a href="profile.html" class="avatar">
-													<img alt="John Doe" src="{{ asset('storage/' . $history->user->user_image) }}"
-														class="img-fluid rounded-circle">
+													<img alt="John Doe" src="{{ asset('storage/' . $history->user->user_image) }}" class="img-fluid rounded-circle">
 												</a>
+												
+												@else
+												<span class="avatar"></span>
+					
+											@endif
 												<h5>
 													<small>{{ $history->leadCreate_user_name }}</small>
 													<a href="profile.html"> <span>{{ $history->leadCreate_user_role }}</span></a>
@@ -137,9 +142,11 @@
 													<div class="chat-content">
 														<div><?php echo $comments=$history->comment ?></div>
 														<span class="chat-time">{{ \Carbon\Carbon::parse($history->created_at)->format('h:i A') }}</span>
-
 														<small>lead Status :</small>
-														<i class="typing-text">{{ $history->leadStatus->leadstatusname }}</i>
+														@if(optional($history->leadStatus)->leadstatusname)
+															<i class="typing-text">{{ $history->leadStatus->leadstatusname }}</i>
+														@endif
+														
 														
 													</div>
 													<span></span>

@@ -160,6 +160,12 @@ Route::post('/profiles', [ProfileController::class, 'store'])->name('profiles.st
 Route::get('/profiles/{profile}/edit', [ProfileController::class, 'edit'])->name('profiles.edit');
 Route::put('/profiles/{id}', [ProfileController::class, 'update'])->name('profiles.update');
 
+
+
+
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Lead By CompanyId Ajax Find
@@ -239,6 +245,9 @@ Route::post('/add-interviewee', [IntervieweeController::class, 'store'])->name('
 Route::get('/interviewee/{interviewee}', [IntervieweeController::class, 'edit'])->name('interviewee.editInterviewee');
 Route::post('/interviewee/update', [IntervieweeController::class, 'update'])->name('interviewee.updateInterviewee');
 Route::post('/interviewee/{delete}', [IntervieweeController::class, 'destroy'])->name('interviewee.deleteInterviewee');
+
+Route::get('/condidate/list/{userId}', [IntervieweeController::class, 'show'])->name('condidate.list.show');
+// Route::post('/lead-search/{searchuserId}', [LeadUserController::class, 'searchLeads'])->name('user.leadsearchhow');
 
 // Internal comment and update route
 Route::post('/comment/add', [InternalCommentController::class, 'store'])->name('comment.add');

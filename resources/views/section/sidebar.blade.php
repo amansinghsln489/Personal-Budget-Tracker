@@ -41,7 +41,8 @@ function isActiveRoute($routeName)
  
  
                 <?php
-                if(true){
+               
+                if($user->role == 2 || $user->role == 1){
                 ?>
                 <!-- Leads Menu -->
                 <!-- <li class="submenu">

@@ -159,7 +159,10 @@
                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <strong><label>Candidate Interview Feedback</label></strong>
-                                            <textarea class="form-control" name="candidate_interview_feedback" rows="3"  placeholder="Candidate Interview Feedback">{{ $internal_lead->candidate_interview_feedback }}</textarea>
+                                            <div><?php echo $comments=$internal_lead->candidate_interview_feedback ?></div>
+                                            <textarea class="form-control" name="candidate_interview_feedback" rows="3" placeholder="Candidate Interview Feedback"></textarea>
+
+                                           
                                         </div>
                                     </div> 
                                     <div class="col-md-6">
