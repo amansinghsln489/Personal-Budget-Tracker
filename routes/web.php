@@ -247,6 +247,7 @@ Route::post('/interviewee/update', [IntervieweeController::class, 'update'])->na
 Route::post('/interviewee/{delete}', [IntervieweeController::class, 'destroy'])->name('interviewee.deleteInterviewee');
 
 Route::get('/condidate/list/{userId}', [IntervieweeController::class, 'show'])->name('condidate.list.show');
+
 // Route::post('/lead-search/{searchuserId}', [LeadUserController::class, 'searchLeads'])->name('user.leadsearchhow');
 
 // Internal comment and update route
@@ -258,4 +259,5 @@ Route::post('/comment/add', [InternalCommentController::class, 'store'])->name('
 |--------------------------------------------------------------------------
 */
 Route::post('/password', [ChangePasswordController::class, 'update'])->name('password');
+// Route::get('/events', [DashboardController::class, 'getEverts']);
 

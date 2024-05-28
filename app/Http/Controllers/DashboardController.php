@@ -23,27 +23,6 @@ class DashboardController extends Controller
 
     public function index()
     {
-//         $userTimeInput = "2024-05-25 10:00:00";
-//         $currentServerTime = Carbon::now();
-//         $userTime = Carbon::createFromFormat('Y-m-d H:i:s', $userTimeInput);
-        
-//         if ($currentServerTime < $userTime) {
-//         $timeDifferenceInHours = $currentServerTime->diffInHours($userTime);
-//         $timeDifferenceInMinutes = $currentServerTime->diffInMinutes($userTime) % 60;
-        
-      
-//         $currentIndianTime = $currentServerTime->copy()->setTimezone('Asia/Kolkata');
-        
-//         // Display the results in Indian date and time format
-//         echo "Current Indian time: " . $currentIndianTime->format('d-m-Y H:i:s') . "\n";
-//         echo "User time: " . $userTime->format('d-m-Y H:i:s') . "\n";
-//         echo "Difference: " . $timeDifferenceInHours . " hours and " . $timeDifferenceInMinutes . " minutes\n";
-//         }
-//         else{
-//             echo "invlaid";
-//         }
-// die;
-
 // =========================================================================================
         $today = Carbon::today();
 
@@ -83,11 +62,33 @@ class DashboardController extends Controller
         
             $interviewee->monthLeadCount = $monthLeadCount;
         }
-        $interview_data = InternalLead::where('created_by', $user->user_id)
+        $data = [];
+       
+        $current_user = Auth::user();
+        $userId = $current_user->user_id;
+        $interview_dates = InternalLead::
+        where('interviewee_id', $userId)
         ->get();
-
-        // echo"<pre>";
-        // print_r($interview_data); die;
+        foreach ($interview_dates as $interview_date) {
+            $targetTimeInput = $interview_date->interview_date;
+            $timeZone = Carbon::parse($targetTimeInput)->format('Y-m-d h:i:s A');
+            
+            $currentServerTime = Carbon::now();
+          
+            if($currentServerTime < $targetTimeInput) {
+               
+                $timeDifferenceInSeconds = $currentServerTime->diffInSeconds($targetTimeInput);              
+                $data[] = [
+                    // 'candidateName' => $interview_date->candidate_name,
+                    // 'timeDifferenceInSeconds' => $timeDifferenceInSeconds,
+                    // 'interviewDate' => $timeZone
+                    'title' => 'Interview',
+                    'start' => $timeZone
+                ];
+            }
+        }
+        $jsonInterviewDates = json_encode($data);
+       
         $leads = Lead::with(['company', 'vendor', 'interviewer', 'createdUser', 'technology', 'leadStatus'])->get();
         
         $totalInterviews = InternalLead::select(
@@ -100,7 +101,10 @@ class DashboardController extends Controller
         ->with('technology') // Eager load the technology relationship
         ->get();
     
-        return view('dashboard', compact('users', 'interviewees', 'leads','totalInterviews'));
+        return view('dashboard', compact('users', 'interviewees', 'leads','totalInterviews','jsonInterviewDates'));
+          
     }
+    
 
-}
+
+} 

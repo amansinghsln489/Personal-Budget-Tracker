@@ -3,7 +3,9 @@
     | Interviee Dashboard
     |--------------------------------------------------------------------------
     -->
-    <div class="row">
+   <!-- FullCalendar CSS -->
+
+<div class="row">
 @php
     $backgroundColors = ['#f0f0f0', '#fafafa', '#f5f5f5', '#fcfcfc', '#f9f9f9'];
     $colorIndex = 0;
@@ -27,24 +29,47 @@
                         <h4>Total interviews taken: {{ $interviewee->total_interviews }}</h4>
                         <h4>Scheduled for today: {{ $interviewee->today_interviews }}</h4>
                         <h4>Total interviews this month: {{ $interviewee->monthLeadCount }}</h4>
-                         
-                        <ul class="user-det-list">
-																		
-                            <li>
-                            Candidate Name: <span class="float-right text-muted">Aman</span>
-                            </li>
-                            <li>
-                            Phone Number: 
-                                <span class="float-right text-muted">8960240859</span>
-                            </li>
-                        </ul>
                     </div>
                 </div>
             </a>
         </div>
+        
+     
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+       <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/dist/fullcalendar.min.js"></script>
+   <div id= "clandar"></div>
+
+   <script>
+        $.ajaxSetup({
+        headers: {
+        'X-CSRF-TOKEN': $('meta [name=csrf-token]').attr('content');
+        }
+        });
+        var calendarEl = document.getElementById('clandar');
+            var events = [];
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+            headerToolbar: {
+            left: 'prev, next today',
+            center: 'title',
+            right: 'dayGrid Month, timeGridWeek, timeGridDay'
+            },
+            initialView: 'dayGridMonth',
+            timeZone: 'UTC',
+            events: /events
+            editable: true,
+            });
+            calendar.render();
+</script>
+    
+
+   
+
     @endif
     @php
         $colorIndex++;
     @endphp
 @endforeach
 </div>
+
+
+
