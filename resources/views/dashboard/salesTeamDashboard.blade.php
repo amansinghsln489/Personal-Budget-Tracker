@@ -12,7 +12,7 @@
 	@foreach($users as $user)
 	
 		<div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-			<a href="{{ route('user.leads.show', ['userId' => $user->user_id]) }}">
+			<a href="">
 				<div class="dash-widget dash-widget5" style="background-color: {{ $backgroundColors[$colorIndex % count($backgroundColors)] }};">
 					<div class="profile-img">
 						@if($user->user_image)

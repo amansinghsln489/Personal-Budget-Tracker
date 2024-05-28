@@ -149,9 +149,9 @@
                                         <td>{{ $lead->userName->firstname}} {{ $lead->userName->lastname}}</td>  
                                         <td>{{ \Carbon\Carbon::parse($lead->created_at)->format('d-m-Y') }}</td>
                                         <td class="text-right">
-                                            <a href="{{ route('internal-leads.edit', $lead->id) }}" class="btn btn-primary btn-sm mb-1">
+                                            <!-- <a href="{{ route('internal-leads.edit', $lead->id) }}" class="btn btn-primary btn-sm mb-1">
                                                 <i class="far fa-edit"></i>
-                                            </a>
+                                            </a> -->
                                             <!-- <a href="{{ route('internal-leads.show', $lead->id) }}" class="btn btn-primary btn-sm mb-1">
                                             <i class="far fa-eye"></i>
                                             </a> -->

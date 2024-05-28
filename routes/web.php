@@ -259,5 +259,4 @@ Route::post('/comment/add', [InternalCommentController::class, 'store'])->name('
 |--------------------------------------------------------------------------
 */
 Route::post('/password', [ChangePasswordController::class, 'update'])->name('password');
-// Route::get('/events', [DashboardController::class, 'getEverts']);
 

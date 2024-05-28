@@ -79,15 +79,14 @@ class DashboardController extends Controller
                
                 $timeDifferenceInSeconds = $currentServerTime->diffInSeconds($targetTimeInput);              
                 $data[] = [
-                    // 'candidateName' => $interview_date->candidate_name,
-                    // 'timeDifferenceInSeconds' => $timeDifferenceInSeconds,
-                    // 'interviewDate' => $timeZone
-                    'title' => 'Interview',
-                    'start' => $timeZone
+                    'candidateName' => $interview_date->candidate_name,
+                    'timeDifferenceInSeconds' => $timeDifferenceInSeconds,
+                    'interviewDate' => $timeZone
+                
                 ];
             }
         }
-        $jsonInterviewDates = json_encode($data);
+        // $jsonInterviewDates = json_encode($data);
        
         $leads = Lead::with(['company', 'vendor', 'interviewer', 'createdUser', 'technology', 'leadStatus'])->get();
         
@@ -101,10 +100,14 @@ class DashboardController extends Controller
         ->with('technology') // Eager load the technology relationship
         ->get();
     
-        return view('dashboard', compact('users', 'interviewees', 'leads','totalInterviews','jsonInterviewDates'));
+        return view('dashboard', compact('users', 'interviewees', 'leads','totalInterviews','data'));
           
     }
-    
+    public function getEvents()
+    {
+        $schedules = InternalLead:: all();
+        return response()->json($schedules);
+    }
 
 
 } 

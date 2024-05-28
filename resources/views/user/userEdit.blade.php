@@ -107,7 +107,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group form-focus">
-                                            <select class="form-control select2" name="role" required>
+                                            <select class="form-control select2" id="role" name="role" onchange="showIntervieweeOptions()" required>
                                                 <option value="">--Select--</option>
                                                 @foreach($roles as $role)
                                                 <option value="{{ $role->role_id }}" {{ $role->role_id == $edituser->role ? 'selected' : '' }}>{{ $role->role_name }}</option>
@@ -118,9 +118,9 @@
                                     </div>
                                    
                                         @if($edituser->technologies)
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-6" id="technology-field">
                                                 <div class="form-group form-focus">
-                                                    <select class="form-control select2" name="technologies" required>
+                                                    <select class="form-control"  name="technologies">
                                                         <option value="">--Select--</option>
                                                      @foreach($technologys as $technology)
 
@@ -186,8 +186,33 @@
         </div>
     </div>
 </div>
+<style>
+    /* Initially hide the Technologies dropdown */
+    #interviewee-options {
+        display: none;
+    }
+</style>
 
 <script>
+
+function showIntervieweeOptions() {
+        var roleDropdown = document.getElementById("role");
+        var technologyField = document.getElementById("technology-field");
+
+        // List of role IDs for Administrator and HR
+        var hideForRoles = ["1", "2"]; // Assuming 1 is Administrator and 2 is HR
+
+        if (hideForRoles.includes(roleDropdown.value)) {
+            technologyField.style.display = "none";
+        } else {
+            technologyField.style.display = "block";
+        }
+    }
+
+    // Ensure the field is shown/hidden correctly on page load
+    document.addEventListener("DOMContentLoaded", function() {
+        showIntervieweeOptions();
+    });
 function previewImage(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();

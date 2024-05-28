@@ -67,7 +67,7 @@ class UserController extends Controller
                 'password' => 'required|string|min:1',
                 'phone' => 'required|string',
                 'role' => 'required',
-                'technologies' => 'required',
+                // 'technologies' => 'required',
                 'user_image' => 'nullable|image', 
             ]);
     

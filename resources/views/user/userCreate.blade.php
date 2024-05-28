@@ -76,7 +76,7 @@
 							
 								<div class="col-sm-6">
 									<div class="form-group form-focus">
-										<input type="text" class="form-control" value="{{ old('firstname') }}" name="firstname" required>
+										<input type="text" class="form-control" value="{{ old('firstname') }}" name="firstname" >
 										<label class="focus-label">Firstname <span class="text-danger">*</span></label>
 									</div>
 								</div>
@@ -105,29 +105,35 @@
 										<label class="focus-label">Phone <span class="text-danger">*</span></label>
 									</div>
 								</div>
-								<div class="col-sm-6">
-									<div class="form-group form-focus">
-										<select class="form-control select2" id="role" name="role" onchange="showIntervieweeOptions()" required>
-											<option value="">--Select--</option>
-											@foreach($roles as $role)
-												<option value="{{ $role->role_id }}">{{ $role->role_name }}</option>
-											@endforeach
-										</select>
-										<label class="focus-label">Role <span class="text-danger">*</span></label>
-									</div>
-								</div>
-                               
-                                    <div class="col-sm-6" id="interviewee-options">
-                                        <div class="form-group form-focus">
-                                            <select  class="form-control" name="technologies" required>
-                                                <option value="">--Select--</option>
-                                                @foreach($technologys as $technology)
-                                                    <option value="{{ $technology->technology_id }}">{{ $technology->technology_name }}</option>
-                                                @endforeach
-                                            </select>
-                                            <label class="focus-label">Technologies <span class="text-danger">*</span></label>
-                                        </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group form-focus">
+                                        <select class="form-control select2" id="role" name="role" onchange="showIntervieweeOptions()" required>
+                                            <option value="">--Select--</option>
+                                            @foreach($roles as $role)
+                                                <option value="{{ $role->role_id }}" {{ old('role') == $role->role_id ? 'selected' : '' }}>
+                                                    {{ $role->role_name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <label class="focus-label">Role <span class="text-danger">*</span></label>
                                     </div>
+                                </div>
+                                
+
+                                <div class="col-sm-6" id="interviewee-options">
+                                    <div class="form-group form-focus">
+                                        <select class="form-control" name="technologies">
+                                            <option value="">--Select--</option>
+                                            @foreach($technologys as $technology)
+                                                <option value="{{ $technology->technology_id }}" {{ old('technologies') == $technology->technology_id ? 'selected' : '' }}>
+                                                    {{ $technology->technology_name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <label class="focus-label">Technologies <span class="text-danger">*</span></label>
+                                    </div>
+                                </div>
+
                              
 							
 								<div class="container">
@@ -188,25 +194,29 @@
 </div>
 
 <style>
-        /* Initially hide the Technologies dropdown */
-        #interviewee-options {
-            display: none;
-        }
-    </style>
+    /* Initially hide the Technologies dropdown */
+    #interviewee-options {
+        display: none;
+    }
+</style>
  <!-- for open column techonology -->
-<script>
+ <script>
     function showIntervieweeOptions() {
         var roleDropdown = document.getElementById("role");
         var intervieweeOptions = document.getElementById("interviewee-options");
-        // Show the interviewee options if "Interviewee" is selected
+        // Show the interviewee options if "Interviewee" is selected (assuming role_id 3 is Interviewee)
         if (roleDropdown.value === "3") {
-            intervieweeOptions.style.display = "block";   
+            intervieweeOptions.style.display = "block";
+        } else {
+            intervieweeOptions.style.display = "none";
         }
     }
-        
-    
-</script>
-<script>
+
+    // Call the function on page load to maintain the state
+    document.addEventListener("DOMContentLoaded", function() {
+        showIntervieweeOptions();
+    });
+
 function previewImage(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
@@ -221,14 +231,7 @@ function previewImage(input) {
 
 $(document).ready(function() {
     $('.select2').select2();
-    $('#company_select').change(function(){ 
-        var value = $(this).val();
-        if(value=='other'){
-        $("#other_company_input").css("display", "block");
-        }else{
-        $("#other_company_input").css("display", "none");
-        }
-    });
+  
 });
 </script>
 <script src="{{ asset('assets/js/moment.min.js') }}"></script>

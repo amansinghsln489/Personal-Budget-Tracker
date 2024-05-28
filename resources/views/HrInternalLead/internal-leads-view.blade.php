@@ -86,15 +86,13 @@
 									@if ($history->leadCreate_user_role == "Humen Resource")
 										<div class="chat chat-left">
 											<div class="chat-avatar">
-											@if(!empty($history->user->user_image))
+											
 												<a href="profile.html" class="avatar">
-													<img alt="John Doe" src="{{ asset('storage/' . $history->user->user_image) }}" class="img-fluid rounded-circle">
+													<img alt="John Doe" src="{{ asset('storage/' . $history->userName->user_image) }}" class="img-fluid rounded-circle">
 												</a>
 												
-												@else
-												<span class="avatar"></span>
-					
-											@endif
+												
+											
 												<h5>
 													<small>{{ $history->leadCreate_user_name }}</small>
 													<a href="profile.html"> <span>{{ $history->leadCreate_user_role }}</span></a>
@@ -107,7 +105,7 @@
 											<div class="chat-body">
 												<div class="chat-bubble">
 													<div class="chat-content">
-														<p>{{ $history->comment }}</p>
+														<p><?php echo $comments=$history->comment ?></p>
 														<span class="chat-time">{{ \Carbon\Carbon::parse($history->created_at)->format('h:i A') }}</span>
 
 														<small>lead Status :</small>
@@ -267,6 +265,7 @@
 														{{ $leadData->leadStatus->leadstatusname }} 
 														</span>
 													</li>
+													@if($leadData->additional_comments)
 													<li>
                                                     <span> Additional Comments</span>
                                                     <span class="float-right text-muted">
@@ -274,9 +273,10 @@
 
 														</span>
 													</li>
+													@endif
 													<li><strong>Other Details</strong></li>
 
-													<li>
+													<!-- <li>
 														meeting_link:
 														<span class="float-right text-muted">
 															<span id="meetingLink">{{ $leadData->meeting_link }}</span>
@@ -284,7 +284,7 @@
 																<i class="fas fa-copy"></i>
 															</button>
 														</span>
-													</li>
+													</li> -->
 													
 													<li>source: <span class="float-right text-muted">{{ $leadData->source }}</span></li>
 												</ul>

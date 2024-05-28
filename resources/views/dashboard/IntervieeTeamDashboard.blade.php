@@ -33,37 +33,65 @@
                 </div>
             </a>
         </div>
-        
-     
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-       <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/dist/fullcalendar.min.js"></script>
-   <div id= "clandar"></div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="page-title">Interview Detail</div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <ul class="list-group list-group-flush">
+                            @foreach ($data as $index => $timerData)
+                                <li class="list-group-item list-group-item-info"> 
+                                <h5 id="targetTime{{ $index }}"></h5>  
+                                </li>
+                                <li class="list-group-item">
+                                    <p id="countdown{{ $index }}"></p>
+                                    <p id="totalTime{{ $index }}"></p>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      <script>
+            document.addEventListener('DOMContentLoaded', function() {
+            const data = <?php echo json_encode($data); ?>;
 
-   <script>
-        $.ajaxSetup({
-        headers: {
-        'X-CSRF-TOKEN': $('meta [name=csrf-token]').attr('content');
-        }
-        });
-        var calendarEl = document.getElementById('clandar');
-            var events = [];
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-            headerToolbar: {
-            left: 'prev, next today',
-            center: 'title',
-            right: 'dayGrid Month, timeGridWeek, timeGridDay'
-            },
-            initialView: 'dayGridMonth',
-            timeZone: 'UTC',
-            events: /events
-            editable: true,
+            data.forEach((timerData, index) => {
+                let timeDifferenceInSeconds = timerData.timeDifferenceInSeconds;
+
+                function updateCountdown() {
+                    if (timeDifferenceInSeconds > 0) {
+                        timeDifferenceInSeconds--;
+
+                        let hours = Math.floor(timeDifferenceInSeconds / 3600);
+                        let minutes = Math.floor((timeDifferenceInSeconds % 3600) / 60);
+                        let seconds = timeDifferenceInSeconds % 60;
+
+                        document.getElementById(`countdown${index}`).innerText =
+                            `Left Time: ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+                    } else {
+                        document.getElementById(`countdown${index}`).innerText = 'Time is up!';
+                        clearInterval(countdownIntervals[index]); // Stop the countdown when time is up
+                    }
+                }
+
+                // Initial display
+                document.getElementById(`targetTime${index}`).innerText = `Candidate Name: ${timerData.candidateName}`;
+                document.getElementById(`totalTime${index}`).innerText = `Interview Time: ${timerData.totalTime}`;
+                updateCountdown();
+
+                // Update the countdown every second
+                const countdownInterval = setInterval(updateCountdown, 1000);
+                countdownIntervals.push(countdownInterval); // Store the interval for each timer
             });
-            calendar.render();
-</script>
-    
-
-   
-
+        });
+        const countdownIntervals = []; // To store intervals for each countdown
+    </script> 
     @endif
     @php
         $colorIndex++;
