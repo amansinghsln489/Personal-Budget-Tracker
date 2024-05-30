@@ -117,7 +117,7 @@
                                     <div class="col-md-6">
                                             <div class="form-group">
                                                 <strong><label>Interviewee <span class="text-danger">*</span></label></strong>
-                                                <select class="form-control select2" name="interview">
+                                                <select class="form-control select2" name="interview" required>
                                                     <option value="">--Select--</option>
                                                     @foreach($users as $user)
                                                         <option value="{{ $user->user_id }}">{{ $user->firstname }} {{ $user->lastname }}</option>
@@ -131,7 +131,7 @@
                                         <div class="form-group">
                                             <strong><label>Interview Date <span class="text-danger">*</span></label></strong>
                                             <div class="input-group">
-                                                <input type="datetime-local" class="form-control" name="interview_date" value="{{ old('interview_date') }}">
+                                                <input type="datetime-local" class="form-control" name="interview_date" value="{{ old('interview_date') }}" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">
                                                         <i class="fas fa-calendar"></i>
@@ -156,7 +156,7 @@
                                 <div class="col-md-6">
                                         <div class="form-group">
                                             <strong><label>Technology <span class="text-danger">*</span></label></strong>
-                                            <select class="form-control select2" name="technology_id">
+                                            <select class="form-control select2" name="technology_id" required>
                                                 <option value="">--Select Technologies--</option>
                                                @foreach($technologies as $technology)
                                                     <option value="{{ $technology->technology_id }}" {{ old('technology_id') == $technology->technology_id ? 'selected' : '' }}>{{ $technology->technology_name }}</option>
@@ -198,7 +198,7 @@
                                    <div class="col-md-6">
                                        <div class="form-group">
                                             <strong><label>Working Experience <span class="text-danger">*</span></label></strong>
-                                            <select class="form-control select2" name="experience">
+                                            <select class="form-control select2" name="experience" >
                                             <option value="" disabled selected>Select</option>
                                             @foreach($experiences as $experience)
                                                     <option value="{{ $experience->experience_id }}">{{ $experience->experience }}</option>
@@ -267,5 +267,50 @@ function previewImage(input) {
 <script src="{{ asset('assets/js/moment.min.js') }}"></script>
 
 <script src="{{ asset('assets/plugins/datetimepicker/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    const firstnameInput = document.querySelector('input[name="candidate_name"]');
+    const emailInput = document.querySelector('input[name="candidate_email"]');
+    const mobileInput = document.querySelector('input[name="candidate_mobile"]');
+
+    firstnameInput.addEventListener('input', validateName);
+    emailInput.addEventListener('input', validateEmail);
+    mobileInput.addEventListener('input', validateMobile);
+
+    function validateName(event) {
+        const input = event.target;
+        const pattern = /^[A-Za-z\s]+$/;
+        const multipleSpacesPattern = /\s\s+/; // To prevent multiple consecutive spaces
+        const startEndSpacesPattern = /^\s|\s$/; // To prevent spaces at the start or end
+
+        if (!pattern.test(input.value) || multipleSpacesPattern.test(input.value) || startEndSpacesPattern.test(input.value)) {
+            input.setCustomValidity('Please enter only alphabetic characters and single spaces between words.');
+        } else {
+            input.setCustomValidity('');
+        }
+    }
+
+    function validateEmail(event) {
+        const input = event.target;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(input.value)) {
+            input.setCustomValidity('Please enter a valid email address.');
+        } else {
+            input.setCustomValidity('');
+        }
+    }
+    function validateMobile(event) {
+       
+        const input = event.target;
+        const mobilePattern = /^[0-9]{10}$/;
+        if (!mobilePattern.test(input.value)) {
+            input.setCustomValidity('Please enter a valid 10-digit mobile number.');
+        } else {
+            input.setCustomValidity('');
+        }
+    }
+});
+</script>
 
 @endsection

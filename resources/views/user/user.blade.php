@@ -71,7 +71,7 @@
 										<tr>
 											
 											<th style="display: none;">id</th>		
-											<th>user_id</th>
+											
 											<th>Name</th>
 											<th>Email</th>
 											<th>Phone</th>
@@ -85,10 +85,7 @@
 										@foreach($users as $user)
 										<tr>
 											<td style="display: none;">{{ $loop->iteration }}</td>
-											<td>
-												<a href="#" class="avatar">{{ $user->user_id }}</a>
-												<h2><a href="#">{{ $user->firstname }} <span>{{ $user->role_name }}</span></a></h2>
-											</td>
+											
 											<td>{{ $user->firstname }} {{ $user->lastname }}</td>
 											<td>{{ $user->email }}</td>
 											<td>{{ $user->phone }}</td>
@@ -171,9 +168,29 @@
 					"responsive": true,
 					"lengthChange": false,
 					"autoWidth": false,
-					"buttons": ["pdf", "print", "excel"],
-					"order": [[0, "desc"]],
-					"pageLength": 10 
+					"buttons": [
+                    {
+                        extend: 'print',
+                        exportOptions: {
+                            columns:  [0,1,2,3,4]
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: [0,1,2,3,4]
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        exportOptions: {
+                            columns:  [0,1,2,3,4] 
+                        }
+                    },
+                    'colvis'
+                ]
+					
+					
 				}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 			});
 		</script>

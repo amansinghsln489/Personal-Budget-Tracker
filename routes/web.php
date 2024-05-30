@@ -160,12 +160,6 @@ Route::post('/profiles', [ProfileController::class, 'store'])->name('profiles.st
 Route::get('/profiles/{profile}/edit', [ProfileController::class, 'edit'])->name('profiles.edit');
 Route::put('/profiles/{id}', [ProfileController::class, 'update'])->name('profiles.update');
 
-
-
-
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Lead By CompanyId Ajax Find
@@ -174,16 +168,6 @@ Route::put('/profiles/{id}', [ProfileController::class, 'update'])->name('profil
 Route::get('/leadsbycompanyid', [LeadByCompanyController::class, 'index']);
 
 });
-/*
-|--------------------------------------------------------------------------
-| Vendor Registration
-|--------------------------------------------------------------------------
-*/
-Route::get('/vendors', [VendorController::class, 'index'])->name('vendors.index');
-Route::get('/vendors/create', [VendorController::class, 'create'])->name('vendors.createVendor');
-Route::post('/add-vendor', [VendorController::class, 'store'])->name('add.vendor.submit');
-Route::get('/vendors/{vendor}', [VendorController::class, 'edit'])->name('vendors.editVendor');
-Route::post('/vendors/update', [VendorController::class, 'update'])->name('vendors.updateVendor');
 
 /*
 |--------------------------------------------------------------------------
@@ -239,16 +223,7 @@ Route::prefix('hr')->group(function () {
 | interviewee Registration
 |--------------------------------------------------------------------------
 */
-Route::get('/interviewee', [IntervieweeController::class, 'index'])->name('interviewee.index');
-Route::get('/interviewee/create', [IntervieweeController::class, 'create'])->name('interviewee.createInterviewee');
-Route::post('/add-interviewee', [IntervieweeController::class, 'store'])->name('add.interviewee.submit');
-Route::get('/interviewee/{interviewee}', [IntervieweeController::class, 'edit'])->name('interviewee.editInterviewee');
-Route::post('/interviewee/update', [IntervieweeController::class, 'update'])->name('interviewee.updateInterviewee');
-Route::post('/interviewee/{delete}', [IntervieweeController::class, 'destroy'])->name('interviewee.deleteInterviewee');
-
 Route::get('/condidate/list/{userId}', [IntervieweeController::class, 'show'])->name('condidate.list.show');
-
-// Route::post('/lead-search/{searchuserId}', [LeadUserController::class, 'searchLeads'])->name('user.leadsearchhow');
 
 // Internal comment and update route
 Route::post('/comment/add', [InternalCommentController::class, 'store'])->name('comment.add');

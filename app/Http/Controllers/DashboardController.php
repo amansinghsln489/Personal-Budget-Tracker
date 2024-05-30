@@ -23,7 +23,7 @@ class DashboardController extends Controller
 
     public function index()
     {
-// =========================================================================================
+
         $today = Carbon::today();
 
         $firstDayOfMonth = Carbon::now()->startOfMonth();
@@ -71,7 +71,7 @@ class DashboardController extends Controller
         ->get();
         foreach ($interview_dates as $interview_date) {
             $targetTimeInput = $interview_date->interview_date;
-            $timeZone = Carbon::parse($targetTimeInput)->format('Y-m-d h:i:s A');
+            $timeZone = Carbon::parse($targetTimeInput)->format('d-M-Y h:i:s A');
             
             $currentServerTime = Carbon::now();
           
@@ -86,8 +86,7 @@ class DashboardController extends Controller
                 ];
             }
         }
-        // $jsonInterviewDates = json_encode($data);
-       
+        
         $leads = Lead::with(['company', 'vendor', 'interviewer', 'createdUser', 'technology', 'leadStatus'])->get();
         
         $totalInterviews = InternalLead::select(
@@ -103,11 +102,4 @@ class DashboardController extends Controller
         return view('dashboard', compact('users', 'interviewees', 'leads','totalInterviews','data'));
           
     }
-    public function getEvents()
-    {
-        $schedules = InternalLead:: all();
-        return response()->json($schedules);
-    }
-
-
 } 

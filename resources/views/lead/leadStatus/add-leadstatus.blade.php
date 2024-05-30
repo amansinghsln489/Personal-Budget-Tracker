@@ -8,19 +8,19 @@
         <div class="page-header">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                    <h5 class="text-uppercase mb-0 mt-0 page-title">Lead Status</h5>
+                    <h5 class="text-uppercase mb-0 mt-0 page-title">Candidate Status</h5>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                     <ul class="breadcrumb float-right p-0 mb-0">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fas fa-home"></i> Home</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('add.leadstatus') }}">Lead</a></li>
-                        <li class="breadcrumb-item"><span>Lead Status</span></li>
+                        <li class="breadcrumb-item"><span>Candidate Status</span></li>
                     </ul>
                 </div>
             </div>
             @if(isset($editleadStatus))
                 <div class="col-sm-12 col-12 text-left add-btn-col">
-                    <a href="{{ route('add.leadstatus') }}" class="btn btn-primary float-right btn-rounded"><i class="fas fa-plus"></i> Add New Lead Status </a>
+                    <a href="{{ route('add.leadstatus') }}" class="btn btn-primary float-right btn-rounded"><i class="fas fa-plus"></i> Add New Candidate Status </a>
                 </div>
             @endif
 
@@ -60,11 +60,11 @@
                                     <div class="col-auto">
                                     @if(isset($editleadStatus))
                                         <div class="page-title">
-                                                Update Lead Status 
+                                                Update Candidate Status 
                                         </div>
                                     @else
                                         <div class="page-title">
-                                            Add Lead Status
+                                            Add Candidate Status
                                         </div>
                                     @endif
 
@@ -78,8 +78,8 @@
                                     @method('PUT')
                                 @endif
                                 <div class="form-group">
-                                    <label style="font-weight: bold;">LeadStatus Name<span style="color: red;"> *</span></label>
-                                    <input type="text" class="form-control" placeholder="Enter the lead status name" name="leadstatusname" id="leadstatusname" value="{{ isset($editleadStatus) ? $editleadStatus->leadstatusname : '' }}">
+                                    <label style="font-weight: bold;">Candidate Status Name<span style="color: red;"> *</span></label>
+                                    <input type="text" class="form-control" placeholder="Enter the Candidate status name" name="leadstatusname" id="leadstatusname" value="{{ isset($editleadStatus) ? $editleadStatus->leadstatusname : '' }}">
                                     <div id="leadstatusname_error" class="error" style="color: red; font-weight: bold;"></div>
                                 </div>
                                 @if(isset($editleadStatus))
@@ -92,7 +92,7 @@
                                     </div>
                                 @endif
                                 <div class="form-group text-center custom-mt-form-group">
-                                    <button class="btn btn-primary mr-2" type="submit" name="submit">{{ isset($editleadStatus) ? 'Update' : 'Add' }} Lead Status</button>
+                                    <button class="btn btn-primary mr-2" type="submit" name="submit">{{ isset($editleadStatus) ? 'Update' : 'Add' }} Candidate Status</button>
                                     <button class="btn btn-secondary" type="reset">Reset</button>
                                 </div>
                             </form>
@@ -106,7 +106,7 @@
                         <div class="row align-items-center">
                             <div class="col-auto">
                                 <div class="page-title">
-                                Add Lead Status
+                                Add Candidate Status
                                 </div>
                             </div>
                         </div>
@@ -118,7 +118,7 @@
                                     <tr>
                                         <th>Id</th>
                                         <th>Status Name</th>
-                                        <th>Lead Status </th>
+                                        <th>Candidate Status </th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>

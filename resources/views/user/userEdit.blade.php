@@ -240,7 +240,51 @@ $(document).ready(function() {
 <script src="{{ asset('assets/js/moment.min.js') }}"></script>
 
 <script src="{{ asset('assets/plugins/datetimepicker/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    const firstnameInput = document.querySelector('input[name="firstname"]');
+    const lastnameInput = document.querySelector('input[name="lastname"]');
+    const emailInput = document.querySelector('input[name="email"]');
+    const mobileInput = document.querySelector('input[name="phone"]');
 
+    firstnameInput.addEventListener('input', validateName);
+    lastnameInput.addEventListener('input', validateName);
+    emailInput.addEventListener('input', validateEmail);
+    mobileInput.addEventListener('input', validateMobile);
+
+    function validateName(event) {
+        const input = event.target;
+        const pattern = /^[A-Za-z\s]+$/;
+        const multipleSpacesPattern = /\s\s+/; // To prevent multiple consecutive spaces
+        const startEndSpacesPattern = /^\s|\s$/; // To prevent spaces at the start or end
+
+        if (!pattern.test(input.value) || multipleSpacesPattern.test(input.value) || startEndSpacesPattern.test(input.value)) {
+            input.setCustomValidity('Please enter only alphabetic characters and single spaces between words.');
+        } else {
+            input.setCustomValidity('');
+        }
+    }
+
+    function validateEmail(event) {
+        const input = event.target;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(input.value)) {
+            input.setCustomValidity('Please enter a valid email address.');
+        } else {
+            input.setCustomValidity('');
+        }
+    }
+    function validateMobile(event) {
+        const input = event.target;
+        const mobilePattern = /^[0-9]{10}$/;
+        if (!mobilePattern.test(input.value)) {
+            input.setCustomValidity('Please enter a valid 10-digit mobile number.');
+        } else {
+            input.setCustomValidity('');
+        }
+    }
+});
+</script>
 
 @endsection
 

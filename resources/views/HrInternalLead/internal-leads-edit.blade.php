@@ -3,6 +3,12 @@
 @section('content')
 @section('title', 'Candidate')
 
+<style>
+.ck-reset_all :not(.ck-reset_all-excluded *), .ck.ck-reset_all {
+
+    display: none;
+}
+</style>
 <div class="page-wrapper">
     <div class="content container-fluid">
         <div class="page-header">
@@ -158,9 +164,13 @@
                                 <div class="row">
                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <strong><label>Candidate Interview Feedback</label></strong>
-                                            <div><?php echo $comments=$internal_lead->candidate_interview_feedback ?></div>
-                                            <textarea class="form-control" name="candidate_interview_feedback" rows="3" placeholder="Candidate Interview Feedback"></textarea>
+                                        <strong><label>Technology <span class="text-danger">*</span></label></strong>
+                                            <select class="form-control select2" name="technology_id" required>
+                                                <option value="">Select Technologies</option>
+                                               @foreach($technologies as $technology)
+                                                    <option value="{{ $technology->technology_id }}" {{$internal_lead->technology_id  == $technology->technology_id ? 'selected' : '' }}>{{ $technology->technology_name }}</option>
+                                                @endforeach
+                                            </select>
 
                                            
                                         </div>
@@ -179,6 +189,21 @@
                                     </div> 
 
                                 </div>   
+
+                              
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                         <strong><label>Candidate Interview Feedback</label></strong>
+                                            <textarea  class="form-control" name="candidate_interview_feedback" rows="3" placeholder="Candidate Interview Feedback">
+                                            
+                                            </textarea>
+
+                                       </div>
+                                    </div>
+                                 </div>
+
+                               
 
                                 <div class="row">
                                     <div class="col-md-12">
@@ -230,4 +255,57 @@
 
 <script src="{{ asset('assets/plugins/datetimepicker/js/tempusdominus-bootstrap-4.min.js') }}"></script>
 
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    const firstnameInput = document.querySelector('input[name="candidate_name"]');
+    const emailInput = document.querySelector('input[name="candidate_email"]');
+    const mobileInput = document.querySelector('input[name="candidate_mobile"]');
+
+    firstnameInput.addEventListener('input', validateName);
+    emailInput.addEventListener('input', validateEmail);
+    mobileInput.addEventListener('input', validateMobile);
+
+    function validateName(event) {
+        const input = event.target;
+        const pattern = /^[A-Za-z\s]+$/;
+        const multipleSpacesPattern = /\s\s+/; // To prevent multiple consecutive spaces
+        const startEndSpacesPattern = /^\s|\s$/; // To prevent spaces at the start or end
+
+        if (!pattern.test(input.value) || multipleSpacesPattern.test(input.value) || startEndSpacesPattern.test(input.value)) {
+            input.setCustomValidity('Please enter only alphabetic characters and single spaces between words.');
+        } else {
+            input.setCustomValidity('');
+        }
+    }
+
+    function validateEmail(event) {
+        const input = event.target;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(input.value)) {
+            input.setCustomValidity('Please enter a valid email address.');
+        } else {
+            input.setCustomValidity('');
+        }
+    }
+    function validateMobile(event) {
+       
+        const input = event.target;
+        const mobilePattern = /^[0-9]{10}$/;
+        if (!mobilePattern.test(input.value)) {
+            input.setCustomValidity('Please enter a valid 10-digit mobile number.');
+        } else {
+            input.setCustomValidity('');
+        }
+    }
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+<script>
+        ClassicEditor
+            .create(document.querySelector('textarea[name="candidate_interview_feedback"]'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 @endsection

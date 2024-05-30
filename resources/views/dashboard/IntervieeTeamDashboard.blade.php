@@ -41,17 +41,25 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                            <ul class="list-group list-group-flush">
-                            @foreach ($data as $index => $timerData)
-                                <li class="list-group-item list-group-item-info"> 
-                                <h5 id="targetTime{{ $index }}"></h5>  
-                                </li>
+                           @if($data)
+                                @foreach ($data as $index => $timerData)
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item list-group-item-info"> 
+                                        <h5 id="targetTime{{ $index }}"></h5>  
+                                        </li>
+                                        <li class="list-group-item">
+                                            <p id="countdown{{ $index }}"></p>
+                                            <p id="totalTime{{ $index }}"></p>
+                                        </li>
+                                    </ul>
+                                    @endforeach
+                                @else
                                 <li class="list-group-item">
-                                    <p id="countdown{{ $index }}"></p>
-                                    <p id="totalTime{{ $index }}"></p>
+                                    <p >Today is not any interview</p>
+                                   
                                 </li>
-                                @endforeach
-                            </ul>
+                            @endif
+
                         </div>
                     </div>
                 </div>
@@ -82,7 +90,7 @@
 
                 // Initial display
                 document.getElementById(`targetTime${index}`).innerText = `Candidate Name: ${timerData.candidateName}`;
-                document.getElementById(`totalTime${index}`).innerText = `Interview Time: ${timerData.totalTime}`;
+                document.getElementById(`totalTime${index}`).innerText = `Interview Time: ${timerData.interviewDate}`;
                 updateCountdown();
 
                 // Update the countdown every second

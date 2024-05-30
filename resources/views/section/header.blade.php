@@ -17,8 +17,8 @@
 			<ul class="nav float-left search-dropdown-box">
 				<li class="nav-item dropdown d-none d-sm-block">
 					<div class="top-nav-search">
-						<input class="dropdown-toggle nav-link form-control" data-toggle="dropdown" type="text" class="dropdown-toggle nav-link" placeholder="Search here" onkeyup="liveSearch()">
-						<button class="btn" type="submit"><i class="fa fa-search"></i></button>
+						<!-- <input class="dropdown-toggle nav-link form-control" data-toggle="dropdown" type="text" class="dropdown-toggle nav-link" placeholder="Search here" onkeyup="liveSearch()">
+						<button class="btn" type="submit"><i class="fa fa-search"></i></button> -->
 
 						<div class="dropdown-menu notifications" id="search-results">
 							<div class="topnav-dropdown-header">

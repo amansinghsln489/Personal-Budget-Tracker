@@ -895,9 +895,9 @@
                     <div class="dash-widget dash-widget5" style="background-color: {{ $backgroundColors[$colorIndex % count($backgroundColors)] }};">
                         
 						<div class="dash-widget-info text-right">
-                        <strong><span>Total Interview {{ $totalInterview->technology->technology_name }}  : {{ $totalInterview->total }}</span></strong>
-                        <h5>Total Condidate Selected {{ $totalInterview->technology->technology_name }}    : {{ $totalInterview->selected_total }} </h5>
-                        <span>Total Condidate Rejected : {{ $totalInterview->technology->technology_name }}  : {{ $totalInterview->unselected_total }} </span>
+                        <strong><span>Total Interview in {{ $totalInterview->technology->technology_name }}  : {{ $totalInterview->total }}</span></strong>
+                        <h5>Total Condidate Selected in {{ $totalInterview->technology->technology_name }}    : {{ $totalInterview->selected_total }} </h5>
+                        <span>Total Condidate Rejected in  {{ $totalInterview->technology->technology_name }}  : {{ $totalInterview->unselected_total }} </span>
                     </div>
                     </div>
                 </a>

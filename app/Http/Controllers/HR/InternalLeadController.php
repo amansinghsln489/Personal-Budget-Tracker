@@ -82,9 +82,11 @@ class InternalLeadController extends Controller
         ]);
 
         $lastCreatedId = $internalLead->id;
- 
+        $candidate_interview_feedback = $request->input('candidate_interview_feedback');
 
-        // Insert data into LeadHistory table
+        if(!empty($candidate_interview_feedback)){
+
+// Insert data into LeadHistory table
         $leadHistory = new InternalLeadDetail();
         $leadHistory->lead_id = $lastCreatedId;
         $leadHistory->comment =$request->input('candidate_interview_feedback');
@@ -93,6 +95,9 @@ class InternalLeadController extends Controller
         $leadHistory->leadCreate_user_name = $userName;
         $leadHistory->leadCreate_user_role = $roleName;
         $leadHistory->save();
+        }
+
+        
     
         return redirect()->route('internal-leads.index')->with('success', 'Candidate created successfully.');
     }
@@ -118,8 +123,9 @@ class InternalLeadController extends Controller
     {
         $leadStatuss = LeadStatus::all();
         $experiences = Experience::all();
+        $technologies = Technology::all();
         $interview_names = User::where('role', 3)->get();
-        return view('HrInternalLead.internal-leads-edit',compact('internal_lead','leadStatuss','interview_names','experiences'));
+        return view('HrInternalLead.internal-leads-edit',compact('internal_lead','leadStatuss','interview_names','experiences','technologies'));
     }
 
     public function update(Request $request, InternalLead $internal_lead)
@@ -141,15 +147,18 @@ class InternalLeadController extends Controller
             'candidate_email' => $request->input('candidate_email'),
             'candidate_mobile' => $request->input('candidate_mobile'),
             'interviewee_id' => $request->input('interview'),
-            'candidate_interview_feedback' => $request->input('candidate_interview_feedback'),
+            'candidate_interview_feedback' =>  $request->input('candidate_interview_feedback'),
             'interview_date' => $request->input('interview_date'),
             'status' => $request->input('status'),
+            'technology_id' => $request->input('technology_id'),
             'additional_comments' => $request->input('additional_comments'),
         ]);
     
         // Get the ID of the updated internal lead
         $lastCreatedId = $internal_lead->id;
-    
+        $candidate_interview_feedback = $request->input('candidate_interview_feedback');
+        
+        if(!empty($candidate_interview_feedback)){
         // Insert data into InternalLeadDetail table
         $leadHistory = new InternalLeadDetail();
         $leadHistory->lead_id = $lastCreatedId;
@@ -159,6 +168,7 @@ class InternalLeadController extends Controller
         $leadHistory->leadCreate_user_name = $userName;
         $leadHistory->leadCreate_user_role = $roleName;
         $leadHistory->save();
+        }
     
         // Redirect back with success message
         return redirect()->route('internal-leads.index')->with('success', 'Internal Lead updated successfully');

@@ -7,15 +7,15 @@
         <div class="page-header">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                    <h5 class="text-uppercase mb-0 mt-0 page-title"> Lead Lists of  {{ $userLeadcreators->firstname }} {{ $userLeadcreators->lastname }}
+                    <h5 class="text-uppercase mb-0 mt-0 page-title"> Candidate Lists of  {{ $userLeadcreators->firstname }} {{ $userLeadcreators->lastname }}
                   
                     </h5>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                     <ul class="breadcrumb float-right p-0 mb-0">
                         <li class="breadcrumb-item"><a href="dashboard.php"><i class="fas fa-home"></i> Home</a></li>
-                        <li class="breadcrumb-item"><a href="add-card.php">Lead</a></li>
-                        <li class="breadcrumb-item"><span> Add Lead</span></li>
+                        <li class="breadcrumb-item"><a href="add-card.php">Candidate</a></li>
+                        <li class="breadcrumb-item"><span> Add Candidate</span></li>
                     </ul>
                 </div>
             </div>
@@ -193,35 +193,50 @@
         </div>
     </div>
 </div>
-<script>
-		$(function () {
-			$("#example1").DataTable({
-				"responsive": true,
-				"lengthChange": false,
-				"autoWidth": false,
-				"buttons": ["pdf", "print", "excel"],
-				"order": [[0, "desc"]],
-				"pageLength": 10 
-			}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-		});
-</script>
-<script>
-function previewImage(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
 
-        reader.onload = function(e) {
-            $('#imagePreview').attr('src', e.target.result);
+<script>
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#imagePreview').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
         }
-
-        reader.readAsDataURL(input.files[0]);
     }
-}
-</script>
-<script>
-$(document).ready(function() {
-    $('.select2').select2();
-});
+    $(document).ready(function() {
+        $('.select2').select2();
+    });
+    $(function () {
+            $("#example1").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": [
+                    {
+                        extend: 'print',
+                        exportOptions: {
+                            columns:  [1, 2, 3, 4, 5, 7, 8, 9]
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5, 7, 8, 9]
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        exportOptions: {
+                            columns:  [1, 2, 3, 4, 5, 7, 8, 9] 
+                        }
+                    },
+                    'colvis'
+                ]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
 </script>
 
 <script src="{{ asset('assets/js/moment.min.js') }}"></script>

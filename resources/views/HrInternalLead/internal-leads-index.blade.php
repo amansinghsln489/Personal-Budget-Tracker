@@ -55,7 +55,7 @@
                         <div class="row align-items-center">
                             <div class="col-auto">
                                 <div class="page-title">
-                                    Candidate Lists
+                                  All  Candidate Lists
                                 </div>
                             </div>
                         </div>
@@ -72,8 +72,8 @@
                                         <th>Interview Date</th>
                                         <th>Status</th>
                                         <th>Resume</th>
-                                        <th>Interviewee Name</th>
-                                        <th>Created_by</th>
+                                        <th>Interviewer Name</th>
+                                        <th>Created</th>
                                         <th>Created At</th>
                                         <th>Action</th>
                                     </tr>
@@ -85,7 +85,7 @@
                                         <td>{{ $candidate->candidate_name }}</td>
                                         <td>{{ $candidate->candidate_email }}</td>
                                         <td>{{ $candidate->candidate_mobile }}</td>
-                                        <td class="highlight">{{ \Carbon\Carbon::parse($candidate->interview_date)->format('Y-m-d h:i:s A')}}</td>
+                                        <td class="highlight">{{ \Carbon\Carbon::parse($candidate->interview_date)->format('d-M-Y h:i:s A')}}</td>
                                         <td>{{ $candidate->leadStatus->leadstatusname }}</td>
                                         <td data-label="@lang('Resume')">
                                         @if($candidate->resume)
@@ -149,24 +149,39 @@
 </div>
 
 <script>
-$(function () {
-    $("#example1").DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "buttons": ["pdf"]
-        // "order": [[0, "desc"]] 
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-});
-
-$(document).ready(function() {
-    $('.select2').select2();
-
-});
-
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": [
+                    {
+                        extend: 'print',
+                        exportOptions: {
+                            columns:  [1, 2, 3, 4, 5, 7, 8, 9]
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5, 7, 8, 9]
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        exportOptions: {
+                            columns:  [1, 2, 3, 4, 5, 7, 8, 9] 
+                        }
+                    },
+                    'colvis'
+                ]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
 </script>
 
 <script src="{{ asset('assets/js/moment.min.js') }}"></script>
-
 <script src="{{ asset('assets/plugins/datetimepicker/js/tempusdominus-bootstrap-4.min.js') }}"></script>
 @endsection

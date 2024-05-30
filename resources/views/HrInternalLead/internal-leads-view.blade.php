@@ -84,48 +84,50 @@
 									<div class="chats">
                                     @foreach($leadHistories as $history)
 									@if ($history->leadCreate_user_role == "Humen Resource")
+									@if(!is_null($history->comment) && $history->comment !== '')
 										<div class="chat chat-left">
 											<div class="chat-avatar">
 											
-												<a href="profile.html" class="avatar">
+												<a href="" class="avatar">
 													<img alt="John Doe" src="{{ asset('storage/' . $history->userName->user_image) }}" class="img-fluid rounded-circle">
 												</a>
-												
-												
-											
 												<h5>
 													<small>{{ $history->leadCreate_user_name }}</small>
-													<a href="profile.html"> <span>{{ $history->leadCreate_user_role }}</span></a>
+													<a href=""> <span>{{ $history->leadCreate_user_role }}</span></a>
 												</h5>
 												<small> 
 													{{ \Carbon\Carbon::parse($history->created_at)->format('d M Y') }}
 												</small>
 
 											</div>
+											
 											<div class="chat-body">
 												<div class="chat-bubble">
 													<div class="chat-content">
+													
 														<p><?php echo $comments=$history->comment ?></p>
 														<span class="chat-time">{{ \Carbon\Carbon::parse($history->created_at)->format('h:i A') }}</span>
 
 														<small>lead Status :</small>
+														@if(optional($history->leadStatus)->leadstatusname)
 														<i class="typing-text">{{ $history->leadStatus->leadstatusname }}</i>
-														
+														@endif
 													</div>
 													<span></span>
 												</div>
 											</div>
 										</div>
+										@endif
 										@else
 										<div class="chat chat-right">
 											<div class="chat-avatar">
-												<a href="profile.html" class="avatar">
+												<a href="" class="avatar">
 													<img alt="John Doe" src="{{ asset('storage/' . $history->userName->user_image) }}"
 														class="img-fluid rounded-circle">
 												</a>
 												<h5>
 													<small>{{ $history->leadCreate_user_name }}</small>
-													<a href="profile.html">
+													<a href="">
 															<small>
 															{{ $history->leadCreate_user_role }}
 															</small>
@@ -138,12 +140,14 @@
 											<div class="chat-body">
 												<div class="chat-bubble">
 													<div class="chat-content">
+									                    
 														<div><?php echo $comments=$history->comment ?></div>
 														<span class="chat-time">{{ \Carbon\Carbon::parse($history->created_at)->format('h:i A') }}</span>
 														<small>lead Status :</small>
 														@if(optional($history->leadStatus)->leadstatusname)
 															<i class="typing-text">{{ $history->leadStatus->leadstatusname }}</i>
 														@endif
+														
 														
 														
 													</div>
@@ -236,7 +240,7 @@
 														<span class="float-right text-muted">{{ $leadData->intervieweeName->firstname }} {{ $leadData->intervieweeName->lastname}}</span>
 													</li>
 													<li>
-														<span>created_by:</span>
+														<span>Created Candidate:</span>
 														<span class="float-right text-muted">
 														{{ $leadData->userName->firstname}} {{ $leadData->userName->lastname}} 
 														</span>
@@ -256,8 +260,9 @@
 													<li>
                                                     <span> Interview Date</span>
                                                     <span class="float-right text-muted">
-														{{ $leadData->interview_date }} 
-														</span>
+													{{ \Carbon\Carbon::parse($leadData->interview_date)->format('d-M-Y h:i:s A')}}
+														
+												    </span>
 													</li>
 													<li>
                                                     <span>Status</span>

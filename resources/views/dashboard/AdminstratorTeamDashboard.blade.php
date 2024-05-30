@@ -27,7 +27,7 @@
                             <strong><span>{{ $user->firstname }} {{ $user->lastname }}</span></strong>
                             <!-- You can use the countLeads() method to get the count -->
                             <h3>Today : {{ $user->todayLeadCount }}</h3>
-                            <span>Total Lead in this month : {{ $user->monthLeadCount }}</span>
+                            <span>Total Candidate in this month : {{ $user->monthLeadCount }}</span>
                         </div>
                     </div>
                 </a>
