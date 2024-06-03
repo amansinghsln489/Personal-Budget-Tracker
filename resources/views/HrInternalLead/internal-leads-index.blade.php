@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 @section('title', 'Candidate')
 
@@ -18,11 +17,55 @@
                     </ul>
                 </div>
             </div>
-            
             <div class="col-sm-12 col-12 text-left add-btn-col">
                 <a href="{{ route('internal-leads.create') }}" class="btn btn-primary float-right btn-rounded"><i class="fas fa-plus"></i> Add New Candidate </a>
             </div>
         </div>
+        <form class="m-b-30" method="POST" action="{{ route('candidate-searchs') }}" enctype="multipart/form-data">
+         @csrf
+            <div class="row filter-row">
+                <div class="col-sm-6 col-md-3">
+                    <div class="form-group form-focus">
+                        <div class="input-group">
+                            <input class="form-control " type="date" data-toggle="datetimepicker" name="start_date" required>
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <label class="focus-label">From</label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="form-group form-focus">
+                        <div class="input-group">
+                            <input class="form-control" type="date" data-toggle="datetimepicker" name="end_date" required>
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <label class="focus-label">To</label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="form-group form-focus select-focus">
+                        <select class="form-control" name="status"  required>
+                        <option value="">--Select--</option>
+                            @foreach($leadStatuss as $LeadStatus)
+                                <option value="{{ $LeadStatus->leadstatusid }}">{{ $LeadStatus->leadstatusname }}</option>
+                            @endforeach
+                        </select>
+                        <label class="focus-label">Status</label>
+                    </div>
+                </div>
+            <div class="col-sm-6 col-md-3">
+           <button class="btn btn-search rounded btn-block mb-3">Search</button>
+            </div>
+            </div>
+        <form>
 
         <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -89,7 +132,17 @@
                                         <td>{{ $candidate->leadStatus->leadstatusname }}</td>
                                         <td data-label="@lang('Resume')">
                                         @if($candidate->resume)
-                                        <a href="{{ asset('storage/' . $candidate->resume) }}" target="_blank">Download<i class="fas fa-download"></i></a>                                      
+                                        @php
+                                            $extension = pathinfo($candidate->resume, PATHINFO_EXTENSION);
+                                        @endphp
+
+                                        @if (in_array($extension, ['pdf']))
+                                        <img src="{{ asset('assets/img/pdf.png') }}" alt="Pdf" style="height:30px;"/>
+                                        <a href="{{ asset('storage/' . $candidate->resume) }}" target="_blank">Download<i class="fas fa-download"></i></a>  
+                                        @elseif(in_array($extension, ['docx']))  
+                                        <img src="{{ asset('assets/img/docx.png') }}" alt="docx" style="height:30px;"/>
+                                        <a href="{{ asset('storage/' . $candidate->resume) }}" target="_blank">Download<i class="fas fa-download"></i></a>
+                                        @endif
                                           @else
                                            Not upload resume
                                            @endif
@@ -163,12 +216,14 @@
                     },
                     {
                         extend: 'excel',
+                        text: '<img src="{{ asset('assets/img/excel.png') }}" alt="Excel" style="height:20px;"/> Excel',
                         exportOptions: {
                             columns: [1, 2, 3, 4, 5, 7, 8, 9]
                         }
                     },
                     {
                         extend: 'pdf',
+                        text: '<img src="{{ asset('assets/img/pdf.png') }}" alt="Pdf" style="height:20px;"/> Pdf',
                         exportOptions: {
                             columns:  [1, 2, 3, 4, 5, 7, 8, 9] 
                         }
@@ -182,6 +237,11 @@
         });
 </script>
 
+
+
 <script src="{{ asset('assets/js/moment.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/datetimepicker/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+
+
+
 @endsection

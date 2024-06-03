@@ -35,9 +35,9 @@
 						<div class="navbar">
 							<div class="user-details mr-auto">
 								<div class="float-left user-img m-r-10">
-									<a href="#" title="Mike Litorus"><img src="assets/img/user.jpg"
+									 <a href="#" title="Mike Litorus"><img src="assets/img/user.jpg"
 											alt="" class="w-40 rounded-circle"><span
-											class="status online"></span></a>
+											></span></a> 
 								</div>
 								<div class="user-info float-left">
 									<a href="#" title="Mike Litorus"><span class="font-bold"></span> </a>
@@ -87,10 +87,15 @@
 									@if(!is_null($history->comment) && $history->comment !== '')
 										<div class="chat chat-left">
 											<div class="chat-avatar">
-											
-												<a href="" class="avatar">
+											@if($history->user_image)
+											   <a href="" class="avatar">
 													<img alt="John Doe" src="{{ asset('storage/' . $history->userName->user_image) }}" class="img-fluid rounded-circle">
 												</a>
+												@else
+													<span class="avatar">{{ strtoupper(substr($user->firstname, 0, 1)) }}{{ strtoupper(substr($user->lastname, 0, 1)) }}</span>
+												@endif
+											
+												
 												<h5>
 													<small>{{ $history->leadCreate_user_name }}</small>
 													<a href=""> <span>{{ $history->leadCreate_user_role }}</span></a>
@@ -121,10 +126,17 @@
 										@else
 										<div class="chat chat-right">
 											<div class="chat-avatar">
-												<a href="" class="avatar">
+
+
+											@if($user->user_image)
+											   <a href="" class="avatar">
 													<img alt="John Doe" src="{{ asset('storage/' . $history->userName->user_image) }}"
 														class="img-fluid rounded-circle">
 												</a>
+												@else
+													<span class="avatar">{{ strtoupper(substr($user->firstname, 0, 1)) }}{{ strtoupper(substr($user->lastname, 0, 1)) }}</span>
+												@endif
+												
 												<h5>
 													<small>{{ $history->leadCreate_user_name }}</small>
 													<a href="">
@@ -281,15 +293,7 @@
 													@endif
 													<li><strong>Other Details</strong></li>
 
-													<!-- <li>
-														meeting_link:
-														<span class="float-right text-muted">
-															<span id="meetingLink">{{ $leadData->meeting_link }}</span>
-															<button class="btn btn-sm btn-outline-primary" onclick="copyMeetingLink()">
-																<i class="fas fa-copy"></i>
-															</button>
-														</span>
-													</li> -->
+													
 													
 													<li>source: <span class="float-right text-muted">{{ $leadData->source }}</span></li>
 												</ul>
@@ -297,9 +301,9 @@
 
 												<div class="col-sm-12 col-12 text-left add-btn-col">
 													@if(auth()->user()->role != 3)
-														<a href="{{ route('internal-leads.edit', $leadData->id) }}" class="btn btn-warning float-right btn-rounded"><i class="far fa-edit"></i>Edit Lead </a>
-														<a href="{{ route('internal-leads.index') }}" class="btn btn-danger float-right btn-rounded"><i class="far fa-eye"></i>All Lead </a>
-														<a href="{{ route('internal-leads.create') }}" class="btn btn-primary float-right btn-rounded"><i class="fas fa-plus"></i>New Lead </a>
+														<a href="{{ route('internal-leads.edit', $leadData->id) }}" class="btn btn-warning float-right btn-rounded"><i class="far fa-edit"></i>Edit Candidate </a>
+														<a href="{{ route('internal-leads.index') }}" class="btn btn-danger float-right btn-rounded"><i class="far fa-eye"></i>All Candidate </a>
+														<a href="{{ route('internal-leads.create') }}" class="btn btn-primary float-right btn-rounded"><i class="fas fa-plus"></i>New Candidate </a>
 													@endif
 												</div>
 											</div>

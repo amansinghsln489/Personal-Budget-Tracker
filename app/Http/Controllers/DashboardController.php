@@ -87,7 +87,7 @@ class DashboardController extends Controller
             }
         }
         
-        $leads = Lead::with(['company', 'vendor', 'interviewer', 'createdUser', 'technology', 'leadStatus'])->get();
+        
         
         $totalInterviews = InternalLead::select(
             'technology_id',
@@ -99,7 +99,7 @@ class DashboardController extends Controller
         ->with('technology') // Eager load the technology relationship
         ->get();
     
-        return view('dashboard', compact('users', 'interviewees', 'leads','totalInterviews','data'));
+        return view('dashboard', compact('users', 'interviewees','totalInterviews','data'));
           
     }
 } 

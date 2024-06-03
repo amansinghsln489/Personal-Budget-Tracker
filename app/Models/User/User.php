@@ -28,6 +28,8 @@ class User extends Model
         'user_image',
         'user_resume',
         'user_status',
+        'is_forgot_password',
+        'is_flag'
     ];
 
         /**

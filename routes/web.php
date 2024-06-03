@@ -25,6 +25,7 @@ use App\Http\Controllers\Interviewee\IntervieweeController;
 use App\Http\Controllers\HR\InternalCommentController;
 use App\Http\Controllers\Company\ExperienceController;
 use App\Http\Controllers\ChangePasswordController;
+use App\Http\Controllers\ForgotPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,10 @@ use App\Http\Controllers\ChangePasswordController;
 Route::get('/', function () {
     return view('auth.login');
 });
+
+
+
+
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
 
@@ -56,18 +61,12 @@ Route::match(['post', 'get'], 'logout', [LoginController::class, 'logout'])->nam
 */
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-
+    
 /*
 |--------------------------------------------------------------------------
 | Company Routes
 |--------------------------------------------------------------------------
 */
-Route::get('/add-company', [CompanyController::class, 'companyList'])->name('add.company');
-Route::post('/add-company', [CompanyController::class, 'companyNameAdd'])->name('add.company.submit');
-Route::get('/edit-company/{id}', [CompanyController::class, 'editCompany'])->name('edit.company');
-Route::get('/delete-company/{id}', [CompanyController::class, 'destroy'])->name('delete.company');
-
 Route::get('/add-technology', [TechnologyController::class, 'technologyList'])->name('add.technology');
 Route::post('/add-technology', [TechnologyController::class, 'addTechnology'])->name('add.technology.submit');
 Route::get('/edit-technology/{id}', [TechnologyController::class, 'editTechnology'])->name('edit.technology');
@@ -177,31 +176,7 @@ Route::get('/leadsbycompanyid', [LeadByCompanyController::class, 'index']);
 Route::get('/profile', [UserProfileController::class, 'showUserProfile'])->name('user.profile');
 Route::put('/profile', [UserProfileController::class, 'update'])->name('user.profile.update');
 
-/*
-|--------------------------------------------------------------------------
-| history profile
-|--------------------------------------------------------------------------
-*/
-Route::get('/call-history/show', [CallHistoryController::class, 'show'])->name('callhistory.show');
 
-Route::get('/call-history', [CallHistoryController::class, 'index'])->name('callhistory.index');
-Route::post('/call-history', [CallHistoryController::class, 'store'])->name('callhistory.store');
-Route::get('/call-history/{id}/edit', [CallHistoryController::class, 'edit'])->name('callhistory.edit');
-Route::put('/call-history/{id}', [CallHistoryController::class, 'update'])->name('callhistory.update');
-Route::delete('/call-history/{id}', [CallHistoryController::class, 'destroy'])->name('callhistory.destroy');
-
-Route::get('call-history/{id}/details', [CallHistoryController::class, 'viewCallDetails'])->name('callhistory.viewCallDetails');
-
-Route::post('/save-comment', [CallHistoryController::class, 'saveComment'])->name('save.comment');
-
-/*
-|--------------------------------------------------------------------------
-| Old Record view
-|--------------------------------------------------------------------------
-*/
-Route::get('/magento', [OldRecordController::class, 'magento'])->name('magento');
-Route::get('/java', [OldRecordController::class, 'java'])->name('java');
-Route::get('/Python', [OldRecordController::class, 'Python'])->name('Python');
 
 /*
 |--------------------------------------------------------------------------
@@ -216,6 +191,10 @@ Route::prefix('hr')->group(function () {
     Route::get('internal-leads/{internal_lead}/edit', [InternalLeadController::class, 'edit'])->name('internal-leads.edit');
     Route::post('internal-leads/{internal_lead}', [InternalLeadController::class, 'update'])->name('internal-leads.update');
     Route::delete('internal-leads/{internal_lead}', [InternalLeadController::class, 'destroy'])->name('internal-leads.destroy');
+    Route::post('candidate-searchs', [InternalLeadController::class, 'search'])->name('candidate-searchs');
+
+
+  
 });
 
 /*
@@ -224,14 +203,24 @@ Route::prefix('hr')->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::get('/condidate/list/{userId}', [IntervieweeController::class, 'show'])->name('condidate.list.show');
+Route::post('candidate-search/{userId}', [IntervieweeController::class, 'search'])->name('candidate-search');
 
 // Internal comment and update route
 Route::post('/comment/add', [InternalCommentController::class, 'store'])->name('comment.add');
 
 /*
 |--------------------------------------------------------------------------
-| Password Update
+| Password Update 
 |--------------------------------------------------------------------------
 */
 Route::post('/password', [ChangePasswordController::class, 'update'])->name('password');
+/*
+|--------------------------------------------------------------------------
+| Password Update using Email
+|--------------------------------------------------------------------------
+*/
+Route::get('forgot-password', [ForgotPasswordController::class, 'showLoginForm'])->name('forgot-password');
+Route::post('password-email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password-email');
+Route::get('reset/{id}', [ForgotPasswordController::class, 'reset'])->name('reset');
+Route::post('forgot_password_change_process',[ForgotPasswordController::class,'forgot_password_change_process'])->name('forgot_password_change_process');
 

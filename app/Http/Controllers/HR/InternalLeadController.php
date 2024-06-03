@@ -22,17 +22,37 @@ class InternalLeadController extends Controller
     public function index()
     {
         $candidates = InternalLead::with(['leadStatus','intervieweeName','userName'])->get();
-        return view('HrInternalLead.internal-leads-index', compact('candidates'));
+        $leadStatuss = LeadStatus::all();
+        return view('HrInternalLead.internal-leads-index', compact('candidates','leadStatuss'));
     }
+    public function search(Request $request)
+    {
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'status' => 'required',
+        ]); 
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+        $status = $request->input('status');
+
+    $leadStatuss = LeadStatus::all();
+    $candidates = InternalLead::whereBetween('created_at', [$start_date, $end_date ])
+    ->where('status', $status)
+    ->get();
+   
+    return view('HrInternalLead.internal-leads-index', compact('candidates','leadStatuss'));
+    }
+
     public function create()
     {
         $technologies = Technology::all();
         $leadStatuss = LeadStatus::all();
-        $interview_names = Interviewee::all();
+       
         $experiences = Experience::all();
         $users = User::where('role', 3)->get();
         
-        return view('HrInternalLead.internal-leads-create', compact('technologies','leadStatuss','interview_names','experiences','users'));
+        return view('HrInternalLead.internal-leads-create', compact('technologies','leadStatuss','experiences','users'));
    
     }
 
@@ -141,7 +161,7 @@ class InternalLeadController extends Controller
             'candidate_mobile' => 'required|string',
            
         ]);
-    
+       
         $internal_lead->update([
             'candidate_name' => $request->input('candidate_name'),
             'candidate_email' => $request->input('candidate_email'),
@@ -151,6 +171,7 @@ class InternalLeadController extends Controller
             'interview_date' => $request->input('interview_date'),
             'status' => $request->input('status'),
             'technology_id' => $request->input('technology_id'),
+            'experience' => $request->input('experience'),
             'additional_comments' => $request->input('additional_comments'),
         ]);
     

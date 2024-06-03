@@ -17,61 +17,62 @@ use App\Models\Hr\InternalLead;
 class IntervieweeController extends Controller
 {
        
-            public function show($userId)
-            {
-                $today = Carbon::today()->toDateString(); 
+    public function show($userId)
+    {
+        $today = Carbon::today()->toDateString(); 
+
+        // Find the user by ID Sales Team
+        $userLeadcreators = User::findOrFail($userId);
+       
+        $leadStatuss = LeadStatus::all();
+        /*
+        |--------------------------------------------------------------------------
+        |  This is applied for the Interview they not see other user data form the url 
+        |--------------------------------------------------------------------------
+        */
+        $current_user = Auth::user();
+        if($current_user->role == 3){
+
+            $userId = $current_user->user_id;
+            $userLeadcreators = User::findOrFail($userId);
+
+        }
+        /*
+        |--------------------------------------------------------------------------
+        |  For Sales Team
+        |--------------------------------------------------------------------------
+        */
+            if ($userLeadcreators->role == 3) {  
+            $leads = InternalLead::with([ 'leadStatus','intervieweeName','userName'])
+            ->where('interviewee_id', $userId)
+            ->get();
+
+        } 
         
-                // Find the user by ID Sales Team
-                $userLeadcreators = User::findOrFail($userId);
-                $LeadStatuss = LeadStatus::where('leadstatusstatus', 1)->get();
-                
-                /*
-                |--------------------------------------------------------------------------
-                |  This is applied for the Interview they not see other user data form the url 
-                |--------------------------------------------------------------------------
-                */
-                $current_user = Auth::user();
-                if($current_user->role == 3){
+        return view('interviewee.interview_index', compact('userLeadcreators','leads','leadStatuss'));
+    }
+    public function search(Request $request,$userId)
+    {
         
-                    $userId = $current_user->user_id;
-                    $userLeadcreators = User::findOrFail($userId);
-        
-                }
-                /*
-                |--------------------------------------------------------------------------
-                |  For Sales Team
-                |--------------------------------------------------------------------------
-                */
-                if($userLeadcreators->role == 4){
-                    $leads = Lead::with(['company', 'vendor', 'interviewer', 'createdUser', 'technology', 'leadStatus'])
-                    ->where('lead_created_user_id', $userId)
-                    ->get();
-        
-                /*
-                |--------------------------------------------------------------------------
-                | Interviee Team
-                |--------------------------------------------------------------------------
-                */
-                }elseif ($userLeadcreators->role == 3) {  
-                    $leads = InternalLead::with([ 'leadStatus','intervieweeName','userName'])
-                    ->where('interviewee_id', $userId)
-                    ->get();
-        
-                /*
-                |--------------------------------------------------------------------------
-                | For Adminstator
-                |--------------------------------------------------------------------------
-                */
-                } else {
-                    $leads = Lead::with(['company', 'vendor', 'interviewer', 'createdUser', 'technology', 'leadStatus'])
-                    ->where('lead_created_user_id', $userId)
-                    ->get();
-        
-                }
-               
-                return view('interviewee.interview_index', compact('userLeadcreators', 'leads', 'LeadStatuss'));
-            }
-            
+
+        $userLeadcreators = User::findOrFail($userId);
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'status' => 'required',
+        ]); 
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+        $status = $request->input('status');
+
+        $leadStatuss = LeadStatus::all();
+        $leads = InternalLead::whereBetween('created_at', [$start_date, $end_date ])
+        ->where('status', $status)
+        ->where('interviewee_id', $userId)
+        ->get();
+    
+        return view('interviewee.interview_index', compact('leads','leadStatuss','userLeadcreators'));
+    }        
       
 
 }

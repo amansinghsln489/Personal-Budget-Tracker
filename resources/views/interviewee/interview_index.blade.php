@@ -59,38 +59,51 @@
                 </div>
             </div>
 
-            <!-- <form class="m-b-30" method="POST" action="{{ route('user.leadsearchhow', ['searchuserId' => $userLeadcreators->user_id]) }}" enctype="multipart/form-data">
-                @csrf
-                <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus">
-                            <input class="form-control datetimepicker-input floating datetimepicker" type="text" name="from_date" data-toggle="datetimepicker" value="{{ isset($selectedValues['from_date']) ? $selectedValues['from_date'] : '' }}">
-                            <label class="focus-label">From</label>
+            <form class="m-b-30" method="POST" action="{{ route('candidate-search',$userLeadcreators->user_id ) }}" enctype="multipart/form-data">
+            @csrf
+            <div class="row filter-row">
+                <div class="col-sm-6 col-md-3">
+                    <div class="form-group form-focus">
+                        <div class="input-group">
+                            <input class="form-control " type="date" data-toggle="datetimepicker" name="start_date" required>
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus">
-                            <input class="form-control datetimepicker-input datetimepicker floating" type="text" name="to_date" data-toggle="datetimepicker" value="{{ isset($selectedValues['to_date']) ? $selectedValues['to_date'] : '' }}">
-                            <label class="focus-label">To</label>
-                        </div>
-                    </div>
-                
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus">
-                        <select class="form-control select2" name="interview_status">
-                            <option value="">--Select--</option>
-                            @foreach($LeadStatuss as $LeadStatus)
-                                <option value="{{ $LeadStatus->leadstatusid }}" {{ isset($selectedValues['interview_status']) && $selectedValues['interview_status'] == $LeadStatus->leadstatusid ? 'selected' : '' }}>{{ $LeadStatus->leadstatusname }}</option>
-                            @endforeach
-                        </select>
-                            <label class="focus-label">Interview Status</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <button type="submit" class="btn btn-search rounded btn-block mb-3">Search</button>
+                        <label class="focus-label">From</label>
                     </div>
                 </div>
-            </form> -->
+                <div class="col-sm-6 col-md-3">
+                    <div class="form-group form-focus">
+                        <div class="input-group">
+                            <input class="form-control" type="date" data-toggle="datetimepicker" name="end_date" required>
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <label class="focus-label">To</label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="form-group form-focus select-focus">
+                        <select class="form-control" name="status"  required>
+                        <option value="">--Select--</option>
+                            @foreach($leadStatuss as $LeadStatus)
+                                <option value="{{ $LeadStatus->leadstatusid }}">{{ $LeadStatus->leadstatusname }}</option>
+                            @endforeach
+                        </select>
+                        <label class="focus-label">Status</label>
+                    </div>
+                </div>
+            <div class="col-sm-6 col-md-3">
+           <button class="btn btn-search rounded btn-block mb-3">Search</button>
+            </div>
+            </div>
+        <form>
 
             <div class="row">
                 <div class="col-lg-12 d-flex">
@@ -99,13 +112,15 @@
                             <div class="row align-items-center">
                                 <div class="col-auto">
                                     <div class="page-title">
-                                        Condidate Lists
+                                        Candidate Lists
                                     </div>
                                 </div>
                             </div>
                         </div>
+                       
                         <div class="card-body">
                             <div class="table-responsive">
+                            
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead class="thead-dark">
                                         <tr>
@@ -136,7 +151,19 @@
                                         <td>{{ $lead->leadStatus->leadstatusname }}</td>
                                         <td data-label="@lang('Resume')">
                                         @if($lead->resume)
-                                        <a href="{{ asset('storage/' . $lead->resume) }}" target="_blank">Download<i class="fas fa-download"></i></a>                                      
+
+                                        @php
+                                            $extension = pathinfo($lead->resume, PATHINFO_EXTENSION);
+                                        @endphp
+
+                                        @if (in_array($extension, ['pdf']))
+                                        <img src="{{ asset('assets/img/pdf.png') }}" alt="Pdf" style="height:30px;"/>
+                                        <a href="{{ asset('storage/' . $lead->resume) }}" target="_blank">Download<i class="fas fa-download"></i></a>  
+                                        @elseif(in_array($extension, ['docx']))  
+                                        <img src="{{ asset('assets/img/docx.png') }}" alt="docx" style="height:30px;"/>
+                                        <a href="{{ asset('storage/' . $lead->resume) }}" target="_blank">Download<i class="fas fa-download"></i></a>
+                                        @endif
+                                                                              
                                           @else
                                            Not upload resume
                                            @endif
@@ -223,12 +250,14 @@
                     },
                     {
                         extend: 'excel',
+                        text: '<img src="{{ asset('assets/img/excel.png') }}" alt="Excel" style="height:20px;"/> Excel',
                         exportOptions: {
                             columns: [1, 2, 3, 4, 5, 7, 8, 9]
                         }
                     },
                     {
                         extend: 'pdf',
+                        text: '<img src="{{ asset('assets/img/pdf.png') }}" alt="Pdf" style="height:20px;"/> Pdf',
                         exportOptions: {
                             columns:  [1, 2, 3, 4, 5, 7, 8, 9] 
                         }

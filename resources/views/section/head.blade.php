@@ -29,3 +29,15 @@
 	<link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
 
+
+	<link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/img/favicon.png') }}">
+	<link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/img/excel.png') }}">
+	<link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/img/pdf.png') }}">
+	<link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/img/docx.png') }}">
+
+
+
+
+
+
+

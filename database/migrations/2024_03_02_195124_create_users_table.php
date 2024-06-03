@@ -21,6 +21,8 @@ class CreateUsersTable extends Migration
             $table->string('technologies')->nullable();
             $table->string('user_image')->nullable();
             $table->string('user_resume')->nullable();
+            $table->string('is_forgot_password')->nullable();
+            $table->string('is_flag')->nullable();
             $table->tinyInteger('user_status')->default(1);
             $table->rememberToken();
             $table->timestamps();

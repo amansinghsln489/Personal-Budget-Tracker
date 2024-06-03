@@ -67,14 +67,17 @@
                                 <button type="submit" class="btn btn-primary btn-block account-btn">Login</button>
                             </div>
                             <div class="text-center">
-                                <a href="">Forgot your password?</a>
+                                <a href="{{ route('forgot-password') }}" class="btn btn-secondary btn-block account-btn">Forgot your password?</a>
                             </div>
+
                         </form>
+                       
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>

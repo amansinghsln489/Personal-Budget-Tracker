@@ -177,12 +177,14 @@
                     },
                     {
                         extend: 'excel',
+						text: '<img src="{{ asset('assets/img/excel.png') }}" alt="Excel" style="height:20px;"/> Excel',
                         exportOptions: {
                             columns: [0,1,2,3,4]
                         }
                     },
                     {
                         extend: 'pdf',
+						text: '<img src="{{ asset('assets/img/pdf.png') }}" alt="Pdf" style="height:20px;"/> Pdf',
                         exportOptions: {
                             columns:  [0,1,2,3,4] 
                         }
