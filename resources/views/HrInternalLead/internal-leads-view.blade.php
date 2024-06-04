@@ -224,7 +224,7 @@
 											<div class="chat-profile-info">
                                           
 												<ul class="user-det-list">
-													<h3 class="text-uppercase">Condidate Details</h3>
+													<h3 class="text-uppercase">Candidate Details</h3>
 													
 													<li>
 													Candidate Name: <span class="float-right text-muted">{{ $leadData->candidate_name }}</span>
@@ -262,7 +262,24 @@
                                                     <span>Resume</span>
                                                     <span class="float-right text-muted">
                                                         @if($leadData->resume)
-														<a href="{{ asset('storage/' . $leadData->resume) }}" target="_blank">Download<i class="fas fa-download"></i></a>
+														@php
+															$extension = pathinfo($leadData->resume, PATHINFO_EXTENSION);
+														@endphp
+
+														@if (in_array($extension, ['pdf']))
+														<a href="{{ asset('storage/' . $leadData->resume) }}" target="_blank">
+															<img src="{{ asset('assets/img/pdf.png') }}" alt="Pdf" style="height:30px;"/>
+															Download
+															<i class="fas fa-download"></i>
+														</a>
+														@elseif(in_array($extension, ['docx']))  
+														<a href="{{ asset('storage/' . $leadData->resume) }}" target="_blank">
+															<img src="{{ asset('assets/img/docx.png') }}" alt="docx" style="height:30px;"/>
+															Download
+															<i class="fas fa-download"></i>
+														</a>
+														@endif
+														
                                                             @else
                                                             Not upload resume
                                                         @endif

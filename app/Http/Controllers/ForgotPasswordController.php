@@ -45,7 +45,6 @@ class ForgotPasswordController extends Controller
     }
     public function reset(Request $request,$id)
     {
-        
         $result=DB::table('users')  
             ->where(['is_flag'=>$id])
             ->where(['is_forgot_password'=>1])

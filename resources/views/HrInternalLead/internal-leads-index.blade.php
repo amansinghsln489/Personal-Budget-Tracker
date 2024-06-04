@@ -137,11 +137,17 @@
                                         @endphp
 
                                         @if (in_array($extension, ['pdf']))
-                                        <img src="{{ asset('assets/img/pdf.png') }}" alt="Pdf" style="height:30px;"/>
-                                        <a href="{{ asset('storage/' . $candidate->resume) }}" target="_blank">Download<i class="fas fa-download"></i></a>  
+                                        <a href="{{ asset('storage/' . $candidate->resume) }}" target="_blank">
+                                            <img src="{{ asset('assets/img/pdf.png') }}" alt="Pdf" style="height:30px;"/>
+                                            Download
+                                            <i class="fas fa-download"></i>
+                                        </a>
                                         @elseif(in_array($extension, ['docx']))  
-                                        <img src="{{ asset('assets/img/docx.png') }}" alt="docx" style="height:30px;"/>
-                                        <a href="{{ asset('storage/' . $candidate->resume) }}" target="_blank">Download<i class="fas fa-download"></i></a>
+                                        <a href="{{ asset('storage/' . $candidate->resume) }}" target="_blank">
+                                            <img src="{{ asset('assets/img/docx.png') }}" alt="docx" style="height:30px;"/>
+                                            Download
+                                            <i class="fas fa-download"></i>
+                                        </a>
                                         @endif
                                           @else
                                            Not upload resume

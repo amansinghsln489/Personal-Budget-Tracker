@@ -5,9 +5,7 @@ function isActiveRoute($routeName)
  
     return request()->routeIs($routeName) ? 'active' : '';
 }
- 
 ?>
- 
 <div class="sidebar" id="sidebar">
     <div class="sidebar-inner slimscroll">
         <div id="sidebar-menu" class="sidebar-menu">
@@ -19,7 +17,6 @@ function isActiveRoute($routeName)
             </div>
             <ul class="sidebar-ul">
                 <li class="menu-title">Menu</li>
- 
                 <li class="{{ isActiveRoute('dashboard') }}">
                     <a href="{{ route('dashboard') }}">
                         <img src="{{ asset('assets/img/sidebar/icon-1.png') }}" alt="icon">
