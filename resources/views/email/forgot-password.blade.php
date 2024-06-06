@@ -10,6 +10,9 @@
                         <a href=""><img src="{{ asset('assets/img/logo1.png') }}" alt="SchoolAdmin"></a>
                         </a>
                     </div>
+                    <div id="loader" class="spinner-border" style="width: 3rem; height: 3rem; display: none;" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
                  <div id="forgot_msg"></div>
                     <form id="forgot-password-form">
                    
@@ -38,11 +41,12 @@
 <script>
     $(document).ready(function() {
        
-        $('#forgot-password-form').on('submit', function(e) {
+        $('#forgot-password-form').on('submit', function(e){
            
             e.preventDefault();
         
             var email = $('input[name="email"]').val();
+            $('#loader').show();  // Show the loader
 
             $.ajax({
                 url: '{{ route('password-email') }}',
@@ -52,13 +56,15 @@
                     email: email
                 },
                 success: function(response) {
-                    console.log(response);
-                    $('#forgot_msg').html( '<div class="alert alert-success">' + response.msg + '</div>' );
+                    if(response.status === 'success') {
+                        $('#forgot_msg').html('<div class="alert alert-success">' + response.msg + '</div>');
+                    } else {
+                        $('#forgot_msg').html('<div class="alert alert-danger">' + response.msg + '</div>');
+                    }
                 },
-                error: function(response) {
-                   
-                    $('#forgot_msg').html('<div class="alert alert-danger">' + response.msg + '</div>');
-                }
+                complete: function() {
+                    $('#loader').hide();  // Hide the loader when the request completes
+                },
                
             });
         });

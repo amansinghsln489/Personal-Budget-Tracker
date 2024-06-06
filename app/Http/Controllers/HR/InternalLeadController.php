@@ -192,7 +192,7 @@ class InternalLeadController extends Controller
         }
     
         // Redirect back with success message
-        return redirect()->route('internal-leads.index')->with('success', 'Internal Lead updated successfully');
+        return redirect()->route('internal-leads.index')->with('success', 'Candidate updated successfully');
     }
     
 

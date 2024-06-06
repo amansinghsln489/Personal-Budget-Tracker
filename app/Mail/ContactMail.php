@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Mail;
-
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+
 
 class ContactMail extends Mailable
 {
@@ -16,12 +16,11 @@ class ContactMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public $rand_id; // Add this property to hold the random ID
+    public $rand_id; 
     public function __construct($rand_id)
     {
         $this->rand_id = $rand_id; // Store the random ID
     }
-   
     /**
      * Get the message envelope.
      */
@@ -40,11 +39,11 @@ class ContactMail extends Mailable
         return new Content(
             view: 'email.contact',
             with: [
-                'rand_id' => $this->rand_id, // Pass the random ID to the view
+                'rand_id' => $this->rand_id,
+               
             ],
         );
     }
-
     /**
      * Get the attachments for the message.
      *
@@ -54,4 +53,5 @@ class ContactMail extends Mailable
     {
         return [];
     }
+   
 }
