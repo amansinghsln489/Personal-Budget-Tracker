@@ -17,7 +17,7 @@
 
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 
 <body>
@@ -43,6 +43,28 @@
             });
         @endif
     });
+    $(function(){
+    
+    $('#eye').click(function(){
+           
+          if($(this).hasClass('fa-eye-slash')){
+               
+            $(this).removeClass('fa-eye-slash');
+              
+            $(this).addClass('fa-eye');
+              
+            $('#password').attr('type','text');
+                
+          }else{
+             
+            $(this).removeClass('fa-eye');
+              
+            $(this).addClass('fa-eye-slash');  
+             
+            $('#password').attr('type','password');
+          }
+      });
+  }); 
 </script>
 	<div class="main-wrapper">
 		<div class="account-page">
@@ -61,7 +83,15 @@
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input type="password" id="password" name="password" class="form-control" required>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-eye-slash" id="eye"></i></span>
+                                    <input type="password" class="form-control" name="password" aria-label="Password" aria-describedby="basic-addon1" id="password" required>
+                                    </div>
+
+
+                               
+                                <!-- <input type="password" id="password" name="password" class="form-control" required> -->
+                                
                             </div>
                             <div class="form-group text-center custom-mt-form-group">
                                 <button type="submit" class="btn btn-primary btn-block account-btn">Login</button>
@@ -77,7 +107,6 @@
 			</div>
 		</div>
 	</div>
-   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
@@ -86,7 +115,7 @@
 
     <script src="{{ asset('assets/js/jquery.slimscroll.js') }}"></script>
 
-    <script src="{{ asset('assets/js/app.js') }}"></script>
+   
 </body>
 
 </html>

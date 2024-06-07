@@ -43,7 +43,7 @@ function isActiveRoute($routeName)
                <!-- Internal Leads Menu -->
                 <li class="submenu">
                     <a href="#">
-                        <img src="{{ asset('assets/img/sidebar/icon-14.png') }}" alt="icon">
+                        <img src="{{ asset('assets/img/sidebar/icon-10.png') }}" alt="icon">
                         <span>Candidate</span>
                         <span class="menu-arrow"></span>
                     </a>
