@@ -66,7 +66,7 @@
             </div>
             </div>
         <form>
-
+     
         <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
@@ -208,11 +208,13 @@
 </div>
 
 <script>
-        $(function () {
-            $("#example1").DataTable({
+   
+         $(document).ready(function() {
+            var table =  $("#example1").DataTable({
                 "responsive": true,
                 "lengthChange": false,
                 "autoWidth": false,
+                "bStateSave": true,
                 "buttons": [
                     {
                         extend: 'print',
@@ -224,7 +226,7 @@
                         extend: 'excel',
                         text: '<img src="{{ asset('assets/img/excel.png') }}" alt="Excel" style="height:20px;"/> Excel',
                         exportOptions: {
-                            columns: [1, 2, 3, 4, 5, 7, 8, 9]
+                         columns: [1, 2, 3, 4, 5, 7, 8, 9]
                         }
                     },
                     {
@@ -236,8 +238,10 @@
                     },
                     'colvis'
                 ]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        });
+             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+          });
+           
+        
         $(document).ready(function() {
             $('.select2').select2();
         });

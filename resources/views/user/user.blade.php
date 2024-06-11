@@ -168,6 +168,7 @@
 					"responsive": true,
 					"lengthChange": false,
 					"autoWidth": false,
+					"bStateSave": true,
 					"buttons": [
                     {
                         extend: 'print',
