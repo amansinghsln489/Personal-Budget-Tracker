@@ -46,10 +46,6 @@ use App\Http\Controllers\ForgotPasswordController;
 Route::get('/', function () {
     return view('auth.login');
 });
-
-
-
-
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
 
@@ -183,27 +179,26 @@ Route::put('/profile', [UserProfileController::class, 'update'])->name('user.pro
 | internal-leads
 |--------------------------------------------------------------------------
 */
-Route::prefix('hr')->group(function () {
     Route::get('internal-leads', [InternalLeadController::class, 'index'])->name('internal-leads.index');
-    Route::get('internal-leads/create', [InternalLeadController::class, 'create'])->name('internal-leads.create');
-    Route::post('internal-leads', [InternalLeadController::class, 'store'])->name('internal-leads.store');
+    Route::post('internal-leads', [InternalLeadController::class, 'index'])->name('internal-leads.index');
+    Route::get('internal-leads-create', [InternalLeadController::class, 'create'])->name('internal-leads.create');
+    Route::post('internal-leads-store', [InternalLeadController::class, 'store'])->name('internal-leads.store');
     Route::get('internal-leads/{internal_lead}', [InternalLeadController::class, 'show'])->name('internal-leads.show');
     Route::get('internal-leads/{internal_lead}/edit', [InternalLeadController::class, 'edit'])->name('internal-leads.edit');
     Route::post('internal-leads/{internal_lead}', [InternalLeadController::class, 'update'])->name('internal-leads.update');
-    Route::delete('internal-leads/{internal_lead}', [InternalLeadController::class, 'destroy'])->name('internal-leads.destroy');
-    Route::post('candidate-searchs', [InternalLeadController::class, 'search'])->name('candidate-searchs');
-
-
-  
-});
-
+    Route::delete('internal-leads/{internal_lead}', [InternalLeadController::class, 'destroy'])->name('internal-leads.destroy'); 
 /*
 |--------------------------------------------------------------------------
 | interviewee Registration
 |--------------------------------------------------------------------------
 */
+
 Route::get('/condidate/list/{userId}', [IntervieweeController::class, 'show'])->name('condidate.list.show');
-Route::post('candidate-search/{userId}', [IntervieweeController::class, 'search'])->name('candidate-search');
+Route::post('/condidate/list/{userId}', [IntervieweeController::class, 'show'])->name('condidate.list.show');
+Route::get('/condidate/interviewer/{candidatelist}', [IntervieweeController::class, 'candidateList'])->name('condidate.list.all');
+Route::post('/condidate/interviewer/{candidatelist}', [IntervieweeController::class, 'candidateList'])->name('condidate.list.all');
+Route::get('condidate/view/{candidatelist}', [IntervieweeController::class, 'view'])->name('condidate-leads.view');
+
 
 // Internal comment and update route
 Route::post('/comment/add', [InternalCommentController::class, 'store'])->name('comment.add');

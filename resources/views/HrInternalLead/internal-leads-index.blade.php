@@ -21,13 +21,22 @@
                 <a href="{{ route('internal-leads.create') }}" class="btn btn-primary float-right btn-rounded"><i class="fas fa-plus"></i> Add New Candidate </a>
             </div>
         </div>
-        <form class="m-b-30" method="POST" action="{{ route('candidate-searchs') }}" enctype="multipart/form-data">
+        @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+        <form id="filter-form"class="m-b-30" method="POST" action="{{ route('internal-leads.index') }}" enctype="multipart/form-data">
          @csrf
             <div class="row filter-row">
                 <div class="col-sm-6 col-md-3">
                     <div class="form-group form-focus">
                         <div class="input-group">
-                            <input class="form-control " type="date" data-toggle="datetimepicker" name="start_date" required>
+                            <input class="form-control " type="date" data-toggle="datetimepicker" name="start_date" value="{{ request()->get('start_date', '') }}">
                             <div class="input-group-append">
                                 <span class="input-group-text">
                                     <i class="fa fa-calendar"></i>
@@ -40,7 +49,7 @@
                 <div class="col-sm-6 col-md-3">
                     <div class="form-group form-focus">
                         <div class="input-group">
-                            <input class="form-control" type="date" data-toggle="datetimepicker" name="end_date" required>
+                            <input class="form-control" type="date" data-toggle="datetimepicker" name="end_date" value="{{ request()->get('end_date', '') }}">
                             <div class="input-group-append">
                                 <span class="input-group-text">
                                     <i class="fa fa-calendar"></i>
@@ -52,27 +61,41 @@
                 </div>
                 <div class="col-sm-6 col-md-3">
                     <div class="form-group form-focus select-focus">
-                        <select class="form-control" name="status"  required>
+                        <select class="form-control" name="status"  >
                         <option value="">--Select--</option>
-                            @foreach($leadStatuss as $LeadStatus)
-                                <option value="{{ $LeadStatus->leadstatusid }}">{{ $LeadStatus->leadstatusname }}</option>
+                            @foreach($leadStatuss as $leadStatus)    
+                                <option value="{{ $leadStatus->leadstatusid }}" {{ isset($selectedValues['interview_status']) && $selectedValues['interview_status'] == $leadStatus->leadstatusid ? 'selected' : '' }}>{{ $leadStatus->leadstatusname }}</option>
                             @endforeach
                         </select>
                         <label class="focus-label">Status</label>
                     </div>
                 </div>
-            <div class="col-sm-6 col-md-3">
-           <button class="btn btn-search rounded btn-block mb-3">Search</button>
+            <div class="col-sm-6 col-md-2">
+               <button class="btn btn-search rounded btn-block mb-3">Search</button>
             </div>
+            <div class="col-sm-6 col-md-1">
+            <button  id="reset-button" class="btn btn-search rounded btn-block mb-3">Reset</button>
+            </div>
+            
             </div>
         <form>
-     
+       
+        
         <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
         <!-- Display Toastr messages -->
      
         <script>
+            
+          $(document).ready(function() {
+                $('#reset-button').click(function() {
+                    $('input[name="start_date"]').val('');
+                    $('input[name="end_date"]').val('');
+                    $('select').prop('selectedIndex', 0);
+                
+                });
+            });
             $(document).ready(function() {
                 @if(session('error'))
                     toastr.error("{{ session('error') }}", "", { 
@@ -208,7 +231,6 @@
 </div>
 
 <script>
-   
          $(document).ready(function() {
             var table =  $("#example1").DataTable({
                 "responsive": true,

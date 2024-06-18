@@ -19,31 +19,32 @@ use App\Models\Company\Experience;
 
 class InternalLeadController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $candidates = InternalLead::with(['leadStatus','intervieweeName','userName'])->get();
+        $query = InternalLead::with(['leadStatus','intervieweeName','userName']);
         $leadStatuss = LeadStatus::all();
-        return view('HrInternalLead.internal-leads-index', compact('candidates','leadStatuss'));
-    }
-    public function search(Request $request)
-    {
-        $request->validate([
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-            'status' => 'required',
-        ]); 
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
-        $status = $request->input('status');
+        $interviewStatus = $request->input('status');
+        
+        if (!empty($interviewStatus)){
+            $query->where('status', $interviewStatus);
 
-    $leadStatuss = LeadStatus::all();
-    $candidates = InternalLead::whereBetween('created_at', [$start_date, $end_date ])
-    ->where('status', $status)
-    ->get();
-   
-    return view('HrInternalLead.internal-leads-index', compact('candidates','leadStatuss'));
+            if (!empty($start_date) && !empty($end_date)) {
+                $query->whereBetween('created_at', [$start_date, $end_date]);
+            }
+            
+        }
+        $candidates = $query->get();
+
+        $selectedValues = [
+           
+            'interview_status' => $interviewStatus,
+        ];
+
+        return view('HrInternalLead.internal-leads-index', compact('candidates','leadStatuss','selectedValues'));
+       
     }
-
     public function create()
     {
         $technologies = Technology::all();

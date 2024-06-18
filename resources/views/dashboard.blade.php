@@ -52,6 +52,8 @@
 		| Sales Team Today Lead 
 		|--------------------------------------------------------------------------
 		-->
+
+		@if ($user->role == 2 || $user->role == 1)
 	    <div class="page-header">
           <div class="row">
 				<div class="col-md-6">
@@ -67,7 +69,7 @@
         @endphp
         @foreach($totalInterviews as $totalInterview)
             <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-                <a href="">
+                <a href="{{ route('condidate.list.all', ['candidatelist' => $totalInterview->technology_id]) }}">
                     <div class="dash-widget dash-widget5" style="background-color: {{ $backgroundColors[$colorIndex % count($backgroundColors)] }};">
                         
 						<div class="dash-widget-info text-right">
@@ -88,6 +90,7 @@
 	</div>
 
 </div>
+@endif
 <script>
 	$(function () {
 		$("#example1").DataTable({

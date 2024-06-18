@@ -63,7 +63,7 @@
                 </div>
             </div>
 
-            <form id="filter-form" class="m-b-30" method="POST" action="{{ route('condidate.list.show',$userLeadcreators->user_id ) }}" enctype="multipart/form-data">
+            <form id="filter-form" class="m-b-30" method="POST" action="{{ route('condidate.list.all',$candidatelist ) }}" enctype="multipart/form-data">
             @csrf
             <div class="row filter-row">
             
@@ -148,9 +148,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-
-
-
                                         @foreach($leads as $lead)
                                         <tr>
                                         <td>{{ $lead->id }}</td>
@@ -192,8 +189,6 @@
                                         <td>{{ $lead->userName->firstname}} {{ $lead->userName->lastname}}</td>  
                                         <td>{{ \Carbon\Carbon::parse($lead->created_at)->format('d-m-Y') }}</td>
                                         <td class="text-right">
-                                          
-
                                                 <a href="{{ route('condidate-leads.view', $lead->id) }}" class="btn btn-warning btn-sm mb-1">
                                                     <i class="far fa-eye"></i>
                                                 </a>
@@ -292,30 +287,6 @@
                 });
             });
     </script>
-   
-    <script>
-          $(document).ready(function() {
-      
-            $('#datetimepicker1').datetimepicker({
-                format: 'YYYY/MM/DD', // 'L' for localized date format, can be 'YYYY-MM-DD' for a specific format
-                icons: {
-                    time: 'far fa-clock',
-                    date: 'far fa-calendar',
-                    up: 'fas fa-arrow-up',
-                    down: 'fas fa-arrow-down',
-                    previous: 'fas fa-chevron-left',
-                    next: 'fas fa-chevron-right',
-                    today: 'fas fa-calendar-check',
-                    clear: 'fas fa-trash-alt',
-                    close: 'fas fa-times'
-                },
-                // To disable the time picker and show only the date picker
-                pickTime: false
-            });
-        
-    });
-    </script>
-
 @endsection
 
    

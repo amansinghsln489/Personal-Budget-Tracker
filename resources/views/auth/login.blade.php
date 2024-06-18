@@ -87,11 +87,7 @@
                                     <span class="input-group-text" id="basic-addon1"><i class="fa fa-eye-slash" id="eye"></i></span>
                                     <input type="password" class="form-control" name="password" aria-label="Password" aria-describedby="basic-addon1" id="password" required>
                                     </div>
-
-
-                               
-                                <!-- <input type="password" id="password" name="password" class="form-control" required> -->
-                                
+                                <!-- <input type="password" id="password" name="password" class="form-control" required> -->   
                             </div>
                             <div class="form-group text-center custom-mt-form-group">
                                 <button type="submit" class="btn btn-primary btn-block account-btn">Login</button>

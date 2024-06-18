@@ -1,9 +1,8 @@
 <style>
-	.bg-blue {
-    background-color: #2e6cad;
-  
-}
-
+	.bg-blue
+	{
+       background-color: #2e6cad; 
+    }
 </style>
 <div class="header-outer">
 	<div class="header bg-blue">
@@ -17,8 +16,8 @@
 			<ul class="nav float-left search-dropdown-box">
 				<li class="nav-item dropdown d-none d-sm-block">
 					<div class="top-nav-search">
-						<!-- <input class="dropdown-toggle nav-link form-control" data-toggle="dropdown" type="text" class="dropdown-toggle nav-link" placeholder="Search here" onkeyup="liveSearch()">
-						<button class="btn" type="submit"><i class="fa fa-search"></i></button> -->
+						<input class="dropdown-toggle nav-link form-control" data-toggle="dropdown" type="text" class="dropdown-toggle nav-link" placeholder="Search here" onkeyup="liveSearch()">
+						<button class="btn" type="submit"><i class="fa fa-search"></i></button>
 
 						<div class="dropdown-menu notifications" id="search-results">
 							<div class="topnav-dropdown-header">
@@ -29,9 +28,9 @@
 									
 								</ul>
 							</div>
-							<div class="topnav-dropdown-footer">
-								<a href="{{ route('view.lead') }}">View all Leads</a>
-							</div>
+							<!-- <div class="topnav-dropdown-footer">
+								<a href="{{ route('internal-leads.index') }}">View all Candidate</a>
+							</div> -->
 						</div>
 					</div>
 				</li>
@@ -81,3 +80,4 @@
 		</div>
 	</div>
 </div>
+

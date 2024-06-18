@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Interviewee;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Company\Technology;
@@ -12,18 +11,15 @@ use App\Models\Lead\LeadStatus;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Hr\InternalLead;
-
-
+use App\Models\Hr\InternalLeadDetail;
 class IntervieweeController extends Controller
-{
-       
-    public function show($userId)
+{  
+    
+    public function show(Request $request,$userId)
     {
         $today = Carbon::today()->toDateString(); 
-
         // Find the user by ID Sales Team
         $userLeadcreators = User::findOrFail($userId);
-       
         $leadStatuss = LeadStatus::all();
         /*
         |--------------------------------------------------------------------------
@@ -32,47 +28,126 @@ class IntervieweeController extends Controller
         */
         $current_user = Auth::user();
         if($current_user->role == 3){
-
+          
             $userId = $current_user->user_id;
             $userLeadcreators = User::findOrFail($userId);
-
+            $start_date = $request->input('start_date');
+            $end_date = $request->input('end_date');
+            $interviewStatus = $request->input('status');
+        if ($userLeadcreators->role == 3) {  
+            $query = InternalLead::with([ 'leadStatus','intervieweeName','userName']);
+            if($userId){
+               $query ->where('interviewee_id', $userId);
+            }
+            if (!empty($interviewStatus)){
+                $query->where('status', $interviewStatus);
+    
+                if (!empty($start_date) && !empty($end_date)) {
+                    $query->whereBetween('created_at', [$start_date, $end_date]);
+                }   
+            }
+            $leads= $query->get();
+            $selectedValues = [
+                'interview_status' => $interviewStatus,
+            ];
+        } 
+        return view('interviewee.interview_index', compact('userLeadcreators','leads','leadStatuss','selectedValues'));
         }
         /*
         |--------------------------------------------------------------------------
         |  For Sales Team
         |--------------------------------------------------------------------------
         */
-            if ($userLeadcreators->role == 3) {  
-            $leads = InternalLead::with([ 'leadStatus','intervieweeName','userName'])
-            ->where('interviewee_id', $userId)
-            ->get();
-
-        } 
-        
-        return view('interviewee.interview_index', compact('userLeadcreators','leads','leadStatuss'));
-    }
-    public function search(Request $request,$userId)
-    {
-        
-
-        $userLeadcreators = User::findOrFail($userId);
-        $request->validate([
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-            'status' => 'required',
-        ]); 
+        $current_user = Auth::user();
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
-        $status = $request->input('status');
-
-        $leadStatuss = LeadStatus::all();
-        $leads = InternalLead::whereBetween('created_at', [$start_date, $end_date ])
-        ->where('status', $status)
-        ->where('interviewee_id', $userId)
-        ->get();
+        $interviewStatus = $request->input('status');
+        if($current_user->role == 2){
+            $query = InternalLead::with([ 'leadStatus','intervieweeName','userName']);
+            if($userId){
+                $query ->where('created_by', $userId);
+             }
+             if (!empty($interviewStatus)){
+                $query->where('status', $interviewStatus);
     
-        return view('interviewee.interview_index', compact('leads','leadStatuss','userLeadcreators'));
-    }        
-      
+                if (!empty($start_date) && !empty($end_date)) {
+                    $query->whereBetween('created_at', [$start_date, $end_date]);
+                }    
+            }
+            $leads= $query->get();
+            $selectedValues = [
+                'interview_status' => $interviewStatus,
+            ];
+            return view('interviewee.interview_index', compact('userLeadcreators','leads','leadStatuss','selectedValues'));
+        }
+        $current_user = Auth::user();
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+        $interviewStatus = $request->input('status');
+        if($current_user->role == 1)
+        {
+            $query = InternalLead::with([ 'leadStatus','intervieweeName','userName']);
+            if ($userId) {
+                $query->where(function($q) use ($userId) {
+                    $q->where('created_by', $userId)
+                      ->orWhere('interviewee_id', $userId);
+                     
+                });
+            }
+            if (!empty($interviewStatus)){
+                $query->where('status', $interviewStatus);
+                if (!empty($start_date) && !empty($end_date)) {
+                    $query->whereBetween('created_at', [$start_date, $end_date]);
+                }  
+            }
+            $leads= $query->get();
+            $selectedValues = [
+                'interview_status' => $interviewStatus,
+            ];
+            return view('interviewee.interview_index', compact('userLeadcreators','leads','leadStatuss','selectedValues'));
+        }
+    }
+    public function candidateList(Request $request,$candidatelist)
+    {
+        $current_user = Auth::user();
+        $userId = $current_user->user_id;
+        $userLeadcreators = User::findOrFail($userId);
+        $leadStatuss = LeadStatus::all();
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+        $interviewStatus = $request->input('status');
+        $query = InternalLead::with([ 'leadStatus','intervieweeName','userName']);
+        if($candidatelist){
+            $query ->where('technology_id', $candidatelist);
+         }
+            
+            if (!empty($interviewStatus)){
+                $query->where('status', $interviewStatus);
+    
+                if (!empty($start_date) && !empty($end_date)){
+                    $query->whereBetween('created_at', [$start_date, $end_date]);
+                }   
+            }
+            $leads= $query->get();
+            $selectedValues = [
+                'interview_status' => $interviewStatus,
+            ];
+        return view('interviewee.technology_candidate_list', compact('userLeadcreators','leads','leadStatuss','selectedValues','candidatelist'));
+    }
+    public function view( $candidatelist)
+    {
+        
+        $leadHistories = InternalLeadDetail::where('lead_id',$candidatelist)
+        ->orderBy('created_at', 'ASC')
+        ->with(['InternalLead','leadStatus', 'userName'])
+        // Load the user relationship
+        ->get();
+        $leadDatas = InternalLead::with(['leadStatus', 'intervieweeName', 'userName','technology','experienceYear'])
+        ->where('id','=', $candidatelist)
+        ->get();
+         
+        return view('interviewee.candidate_view',compact('leadDatas','leadHistories'));
 
+
+    } 
 }
