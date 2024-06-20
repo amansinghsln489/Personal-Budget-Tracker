@@ -53,54 +53,9 @@
 		|--------------------------------------------------------------------------
 		-->
 
-@if ($user->role == 2 || $user->role == 1)
-    <div class="page-header">
-        <div class="row">
-            <div class="col-md-6">
-                <h3 class="page-title mb-0">Candidate Technology</h3>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        @php
-        // Define an array of light background colors
-        $backgroundColors = ['#ffe5e5', '#e5ffe5', '#e5e5ff', '#ffffcc', '#ccffff'];
-        $colorIndex = 0;
-        @endphp
-        <div class="col-md-12">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Technology</th>
-                        <th>Total Interviews</th>
-                        <th>Total Candidates Selected</th>
-                        <th>Total Candidates Rejected</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($totalInterviews as $totalInterview)
-                        <tr style="background-color: {{ $backgroundColors[$colorIndex % count($backgroundColors)] }};">
-                            <td>
-                                {{ $totalInterview->technology->technology_name }}
-                            </td>
-                            <td>{{ $totalInterview->total }}</td>
-                            <td>{{ $totalInterview->selected_total }}</td>
-                            <td>{{ $totalInterview->unselected_total }}</td>
-                            <td>
-                                <a href="{{ route('condidate.list.all', ['candidatelist' => $totalInterview->technology_id]) }}">View More Details</a>
-                            </td>
-                        </tr>
-                        @php
-                            $colorIndex++;
-                        @endphp
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
+
     @include('section/notification') 
-@endif
+
 <!-- ============================================================================================================ -->
 
 <!-- =================================================================================================================== -->

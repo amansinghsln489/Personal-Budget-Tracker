@@ -20,6 +20,7 @@ class IntervieweeController extends Controller
         $today = Carbon::today()->toDateString(); 
         // Find the user by ID Sales Team
         $userLeadcreators = User::findOrFail($userId);
+      
         $leadStatuss = LeadStatus::all();
         /*
         |--------------------------------------------------------------------------
@@ -27,17 +28,22 @@ class IntervieweeController extends Controller
         |--------------------------------------------------------------------------
         */
         $current_user = Auth::user();
-        if($current_user->role == 3){
-          
-            $userId = $current_user->user_id;
-            $userLeadcreators = User::findOrFail($userId);
+        if($current_user->role == 3 || $current_user->role == 2){
+         
+            // $userId = $current_user->user_id;
+         
+            // $userLeadcreators = User::findOrFail($userId);
+
+           
             $start_date = $request->input('start_date');
             $end_date = $request->input('end_date');
             $interviewStatus = $request->input('status');
-        if ($userLeadcreators->role == 3) {  
+        if ($userLeadcreators->role == 3 || $userLeadcreators->role == 2) {  
+          
             $query = InternalLead::with([ 'leadStatus','intervieweeName','userName']);
             if($userId){
-               $query ->where('interviewee_id', $userId);
+                
+                $leadsQuery = $query->where('interviewee_id', $userId);
             }
             if (!empty($interviewStatus)){
                 $query->where('status', $interviewStatus);
@@ -47,12 +53,12 @@ class IntervieweeController extends Controller
                 }   
             }
             $leads= $query->get();
+
+          
             $selectedValues = [
                 'interview_status' => $interviewStatus,
             ];   
         } 
-        
-
         return view('interviewee.interview_index', compact('userLeadcreators','leads','leadStatuss','selectedValues'));
         }
         /*
