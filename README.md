@@ -1,11 +1,40 @@
-# InternalLeadManagement
-Hr Lead Management System
+# Laravel HRLM Project README
 
-HR Lead Management System
-Welcome to the HR Lead Management System project repository! This system is built using Laravel 10 and is designed to help HR departments manage internal leads effectively.
+Welcome to the Laravel HRLM project! This README provides essential setup instructions, commands, and configurations.
 
-Features
-Candidate Management: Easily add, edit, and delete candidate information including name, email, mobile number, interview data, feedback, and status.
-Lead Tracking: Keep track of lead status and update it as needed.
-Internal Communication: Communicate internally about leads and candidates through comments and feedback.
-Configuration: Manage technologies, roles, and lead statuses for better organization and tracking.
+## Firewall and IP Forwarding Setup
+
+### Check Firewall Status and Allow Port 8000
+
+```bash
+sudo ufw status
+sudo ufw allow 8000/tcp
+
+# Start Laravel Development Server
+
+php artisan serve --host=0.0.0.0 --port=8000
+
+# Verify IP Address
+ip addr show | grep inet
+
+
+# Accessing Your Laravel Application
+http://192.168.29.147:8000/dashboard
+
+
+
+
+# Wi-Fi Network Configuration
+# Ensure that your Wi-Fi network is not blocking connections. Adjust settings as necessary to allow access to your Laravel application.
+
+php artisan cache:clear
+php artisan route:cache
+
+##########################################################################################3
+Git commands
+
+git clone https://github.com/ashutoshbluethink/InternalLeadManagement
+
+username: ashutoshbluethink
+password: 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
+
