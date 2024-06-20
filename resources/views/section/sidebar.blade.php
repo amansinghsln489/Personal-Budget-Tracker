@@ -24,10 +24,9 @@ function isActiveRoute($routeName)
                     </a>
                 </li>
  
-                <?php
+                
+                @if($user->role == 2 || $user->role == 1)
                
-                if($user->role == 2 || $user->role == 1){
-                ?>
                 <li class="submenu">
                     <a href="#"><img src="{{ asset('assets/img/sidebar/icon-2.png') }}" alt="icon"><span> User</span>
                         <span class="menu-arrow"></span></a>
@@ -68,9 +67,7 @@ function isActiveRoute($routeName)
                         <li><a href="{{ route('add.leadstatus') }}" class="{{ isActiveRoute('add.leadstatus') }}"><span>Add Candidate Status</span></a></li>
                     </ul>
                 </li>
-                <?php
-                }
-                ?>
+               @endif
             </ul>
         </div>
     </div>

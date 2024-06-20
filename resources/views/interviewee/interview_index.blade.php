@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
 @section('title', 'Lead')
+
 <div class="page-wrapper">
     <div class="content container-fluid">
         <div class="page-header">
@@ -23,6 +24,207 @@
                 </div>
             </div>
         </div>
+
+        <!-- ================================================================================================================= -->
+        <div id="custom-page-header">
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="lead-status-cards">
+                @php
+                    $statusMapping = [
+                        1 => ['badgeClass' => 'badge-secondary', 'iconClass' => 'fas fa-phone', 'cardClass' => 'bg-light-secondary'],
+                        2 => ['badgeClass' => 'badge-primary', 'iconClass' => 'fas fa-search', 'cardClass' => 'bg-light-primary'],
+                        3 => ['badgeClass' => 'badge-info', 'iconClass' => 'fas fa-cog', 'cardClass' => 'bg-light-info'],
+                        4 => ['badgeClass' => 'badge-success', 'iconClass' => 'fas fa-file-alt', 'cardClass' => 'bg-light-success'],
+                        5 => ['badgeClass' => 'badge-warning', 'iconClass' => 'fas fa-file-signature', 'cardClass' => 'bg-light-warning'],
+                        6 => ['badgeClass' => 'badge-danger', 'iconClass' => 'fas fa-file-invoice', 'cardClass' => 'bg-light-danger'],
+                        7 => ['badgeClass' => 'badge-danger', 'iconClass' => 'fas fa-times-circle', 'cardClass' => 'bg-light-danger'],
+                        8 => ['badgeClass' => 'badge-dark', 'iconClass' => 'fas fa-users', 'cardClass' => 'bg-light-dark'],
+                        9 => ['badgeClass' => 'badge-info', 'iconClass' => 'fas fa-check-circle', 'cardClass' => 'bg-light-success']
+                    ];
+                @endphp
+
+                @foreach ($leads->groupBy('status') as $statusId => $groupedLeads)
+                    @php
+                        $badgeClass = $statusMapping[$statusId]['badgeClass'] ?? 'badge-secondary';
+                        $iconClass = $statusMapping[$statusId]['iconClass'] ?? 'fas fa-info-circle';
+                        $cardClass = $statusMapping[$statusId]['cardClass'] ?? 'bg-light-secondary';
+                        $leadStatusName = $groupedLeads->first()->leadStatus->leadstatusname ?? 'Unknown';
+                    @endphp
+
+                    <div class="lead-status-card text-center {{ $cardClass }}">
+                        <a target="_blank" href="" class="lead-status-card-link">
+                            <div class="card-body">
+                                <span class="badge {{ $badgeClass }} mb-2">
+                                    <i class="{{ $iconClass }}"></i>
+                                </span>
+                                <h6 class="card-title">{{ $leadStatusName }}</h6>
+                                <p class="card-text">{{ $groupedLeads->count() }}</p>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+
+                {{-- Total Leads Card --}}
+                <div class="lead-status-card text-center bg-light-primary">
+                    <div class="card-body">
+                        <span class="badge badge-primary mb-2">
+                            <i class="fas fa-list"></i> {{-- FontAwesome icon --}}
+                        </span>
+                        <h6 class="card-title">Total Candidate</h6>
+                        <p class="card-text">{{ $leads->count() }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <style>
+       
+       #custom-page-header {
+           padding: 5px;
+           background-color: #f8f9fa;
+           margin-bottom: 20px;
+       }
+    
+       #custom-page-header .page-title {
+           font-size: 1.5rem;
+           font-weight: bold;
+       }
+    
+       #custom-page-header .lead-status-cards {
+           display: flex;
+           justify-content: space-between;
+           flex-wrap: wrap; /* Allow wrapping */
+           gap: 0.5rem; /* Adjust the gap as needed */
+       }
+    
+       #custom-page-header .lead-status-card {
+           flex: 0 0 12%; /* Adjust the width percentage as needed to fit all cards in one row */
+           min-width: 100px; /* Minimum width of the cards */
+           max-width: 150px; /* Maximum width of the cards */
+           border: none;
+           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+           border-radius: 0.5rem;
+           padding: 1rem;
+           position: relative;
+           overflow: hidden;
+           transition: transform 0.3s ease;
+       }
+    
+       #custom-page-header .lead-status-card:hover {
+           transform: scale(1.05);
+       }
+    
+       #custom-page-header .card-body {
+           padding: 1rem;
+       }
+    
+       #custom-page-header .card-title {
+           font-size: 0.875rem; /* Smaller font size */
+           font-weight: 600;
+       }
+    
+       #custom-page-header .card-text {
+           font-size: 1rem; /* Smaller font size */
+           font-weight: bold;
+       }
+    
+       #custom-page-header .badge {
+           font-size: 1rem; /* Smaller font size */
+           padding: 0.25rem 0.5rem; /* Smaller padding */
+           border-radius: 0.5rem;
+       }
+    
+       @media (max-width: 1200px) {
+           #custom-page-header .lead-status-card {
+               flex: 0 0 20%;
+           }
+       }
+    
+       @media (max-width: 992px) {
+           #custom-page-header .lead-status-card {
+               flex: 0 0 30%;
+           }
+       }
+    
+       @media (max-width: 768px) {
+           #custom-page-header .lead-status-card {
+               flex: 0 0 45%;
+           }
+       }
+    
+       @media (max-width: 576px) {
+           #custom-page-header .lead-status-card {
+               flex: 0 0 100%;
+           }
+       }
+   /* this is lead status base search fileter end */
+    
+    
+   /* Lead Status table css those are show the interview status */
+    
+   .badge-link {
+       text-decoration: none;
+   }
+   .badge-custom {
+       font-size: 0.8rem;
+       display: inline-flex;
+       align-items: center;
+       justify-content: center;
+       padding: 0.25rem 0.5rem;
+       border-radius: 0.5rem;
+       transition: background-color 0.3s ease, transform 0.3s ease;
+   }
+   .badge-custom i {
+       margin-right: 0.25rem;
+   }
+   .badge-custom:hover {
+       transform: scale(1.05);
+   }
+   .badge-primary {
+       background-color: #007bff;
+       color: #fff;
+   }
+   .badge-secondary {
+       background-color: #6c757d;
+       color: #fff;
+   }
+   .badge-info {
+       background-color: #17a2b8;
+       color: #fff;
+   }
+   .badge-success {
+       background-color: #28a745;
+       color: #fff;
+   }
+   .badge-warning {
+       background-color: #ffc107;
+       color: #212529;
+   }
+   .badge-danger {
+       background-color: #dc3545;
+       color: #fff;
+   }
+   .badge-dark {
+       background-color: #343a40;
+       color: #fff;
+   }
+   .badge-light {
+       background-color: #f8f9fa;
+       color: #212529;
+   }
+    
+   /* Lead Status table css those are show the interview status */
+    
+             </style>
+
+
+
+
+<!-- =============================================================================================================== -->
+
         
         <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -293,28 +495,7 @@
             });
     </script>
    
-    <script>
-          $(document).ready(function() {
-      
-            $('#datetimepicker1').datetimepicker({
-                format: 'YYYY/MM/DD', // 'L' for localized date format, can be 'YYYY-MM-DD' for a specific format
-                icons: {
-                    time: 'far fa-clock',
-                    date: 'far fa-calendar',
-                    up: 'fas fa-arrow-up',
-                    down: 'fas fa-arrow-down',
-                    previous: 'fas fa-chevron-left',
-                    next: 'fas fa-chevron-right',
-                    today: 'fas fa-calendar-check',
-                    clear: 'fas fa-trash-alt',
-                    close: 'fas fa-times'
-                },
-                // To disable the time picker and show only the date picker
-                pickTime: false
-            });
-        
-    });
-    </script>
+ 
 
 @endsection
 

@@ -18,7 +18,7 @@
 						<li class="breadcrumb-item"><span>Dashboard</span></li>
 					
 					</ul>
-					<!--<p><i aria-hidden="true" class="fas fa-calendar-alt"></i> December 6, 2018</p>-->
+					<!-- <p><i aria-hidden="true" class="fas fa-calendar-alt"></i> December 6, 2018</p>   -->
 				</div>
 			</div>
 		</div>
@@ -53,44 +53,59 @@
 		|--------------------------------------------------------------------------
 		-->
 
-		@if ($user->role == 2 || $user->role == 1)
-	    <div class="page-header">
-          <div class="row">
-				<div class="col-md-6">
-					<h3 class="page-title mb-0">Total Interview</h3>
-				</div>
-          </div>
-       </div>
-	<div class="row">
+@if ($user->role == 2 || $user->role == 1)
+    <div class="page-header">
+        <div class="row">
+            <div class="col-md-6">
+                <h3 class="page-title mb-0">Candidate Technology</h3>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         @php
         // Define an array of light background colors
         $backgroundColors = ['#ffe5e5', '#e5ffe5', '#e5e5ff', '#ffffcc', '#ccffff'];
         $colorIndex = 0;
         @endphp
-        @foreach($totalInterviews as $totalInterview)
-            <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-                <a href="{{ route('condidate.list.all', ['candidatelist' => $totalInterview->technology_id]) }}">
-                    <div class="dash-widget dash-widget5" style="background-color: {{ $backgroundColors[$colorIndex % count($backgroundColors)] }};">
-                        
-						<div class="dash-widget-info text-right">
-                        <strong><span>Total Interview in {{ $totalInterview->technology->technology_name }}  : {{ $totalInterview->total }}</span></strong>
-                        <h5>Total Condidate Selected in {{ $totalInterview->technology->technology_name }}    : {{ $totalInterview->selected_total }} </h5>
-                        <span>Total Condidate Rejected in  {{ $totalInterview->technology->technology_name }}  : {{ $totalInterview->unselected_total }} </span>
-                    </div>
-                    </div>
-                </a>
-            </div>
-            @php
-                $colorIndex++;
-            @endphp
-        @endforeach	
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Technology</th>
+                        <th>Total Interviews</th>
+                        <th>Total Candidates Selected</th>
+                        <th>Total Candidates Rejected</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($totalInterviews as $totalInterview)
+                        <tr style="background-color: {{ $backgroundColors[$colorIndex % count($backgroundColors)] }};">
+                            <td>
+                                {{ $totalInterview->technology->technology_name }}
+                            </td>
+                            <td>{{ $totalInterview->total }}</td>
+                            <td>{{ $totalInterview->selected_total }}</td>
+                            <td>{{ $totalInterview->unselected_total }}</td>
+                            <td>
+                                <a href="{{ route('condidate.list.all', ['candidatelist' => $totalInterview->technology_id]) }}">View More Details</a>
+                            </td>
+                        </tr>
+                        @php
+                            $colorIndex++;
+                        @endphp
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
-	
-		@include('section/notification') 
-	</div>
-
-</div>
+    @include('section/notification') 
 @endif
+<!-- ============================================================================================================ -->
+
+<!-- =================================================================================================================== -->
+
+
 <script>
 	$(function () {
 		$("#example1").DataTable({

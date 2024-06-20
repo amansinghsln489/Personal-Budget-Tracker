@@ -157,7 +157,8 @@ class UserController extends Controller
         }
         $user->save();
     
-        return redirect()->back()->with('success', 'User updated successfully.');
+        return redirect()->route('view.user')->with('success', 'User updated successfully.');
+
     }
 
 }

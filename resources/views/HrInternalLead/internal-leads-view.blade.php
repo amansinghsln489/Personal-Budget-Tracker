@@ -113,7 +113,7 @@
 														<p><?php echo $comments=$history->comment ?></p>
 														<span class="chat-time">{{ \Carbon\Carbon::parse($history->created_at)->format('h:i A') }}</span>
 
-														<small>lead Status :</small>
+														<small>Candidate Status :</small>
 														@if(optional($history->leadStatus)->leadstatusname)
 														<i class="typing-text">{{ $history->leadStatus->leadstatusname }}</i>
 														@endif

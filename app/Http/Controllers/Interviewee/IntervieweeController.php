@@ -49,8 +49,10 @@ class IntervieweeController extends Controller
             $leads= $query->get();
             $selectedValues = [
                 'interview_status' => $interviewStatus,
-            ];
+            ];   
         } 
+        
+
         return view('interviewee.interview_index', compact('userLeadcreators','leads','leadStatuss','selectedValues'));
         }
         /*
