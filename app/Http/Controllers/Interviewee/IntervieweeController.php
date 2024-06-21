@@ -39,11 +39,14 @@ class IntervieweeController extends Controller
             $end_date = $request->input('end_date');
             $interviewStatus = $request->input('status');
         if ($userLeadcreators->role == 3 || $userLeadcreators->role == 2) {  
-          
+            
             $query = InternalLead::with([ 'leadStatus','intervieweeName','userName']);
             if($userId){
-                
-                $leadsQuery = $query->where('interviewee_id', $userId);
+                $query->where(function($q) use ($userId) {
+                    $q->where('created_by', $userId)
+                      ->orWhere('interviewee_id', $userId);
+                     
+                });
             }
             if (!empty($interviewStatus)){
                 $query->where('status', $interviewStatus);
