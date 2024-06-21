@@ -70,7 +70,7 @@
                                 </div>
                             @endif
                          
-                            <form class="m-b-30" method="POST" action="{{ route('internal-leads.store') }}" enctype="multipart/form-data">
+                            <form  class="m-b-30" method="POST" action="{{ route('internal-leads.store') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6">
@@ -86,11 +86,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6">                                  
                                         <div class="form-group">
                                             <strong><label>Candidate Email <span class="text-danger">*</span></label></strong>
+                                            <span id="email-error" class="input-group-text" style="color: red; display: none;">Email already exists</span>
                                             <div class="input-group">
-                                                <input type="email" class="form-control" name="candidate_email" placeholder="Candidate Email" value="{{ old('candidate_email') }}" required>
+                                                <input type="email" class="form-control" id ="candidate_email" name="candidate_email" placeholder="Candidate Email" value="{{ old('candidate_email') }}" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">
                                                         <i class="fas fa-envelope"></i>
@@ -102,10 +103,11 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="form-group">
+                                        <div class="form-group">                     
                                             <strong><label>Candidate Mobile <span class="text-danger">*</span></label></strong>
+                                            <span id="mobile-error" class="input-group-text" style="color: red; display: none;">Mobile number already exists</span>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" name="candidate_mobile" placeholder="Candidate Mobile" value="{{ old('candidate_mobile') }}" required>
+                                                <input type="text" class="form-control" id="candidate_mobile" name="candidate_mobile" placeholder="Candidate Mobile" value="{{ old('candidate_mobile') }}" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">
                                                         <i class="fas fa-phone"></i>
@@ -120,7 +122,9 @@
                                                 <select class="form-control select2" name="interview" required>
                                                     <option value="">--Select--</option>
                                                     @foreach($users as $user)
-                                                        <option value="{{ $user->user_id }}">{{ $user->firstname }} {{ $user->lastname }}</option>
+                                                    <option value="{{ $user->user_id }}" {{ old('interview') == $user->user_id ? 'selected' : '' }}>
+                                                        {{ $user->firstname }} {{ $user->lastname }}
+                                                    </option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -146,7 +150,8 @@
                                             <select class="form-control select2" name="status">
                                                 <option value="" disabled selected>--Select--</option>
                                                 @foreach($leadStatuss as $LeadStatus)
-                                                    <option value="{{ $LeadStatus->leadstatusid }}">{{ $LeadStatus->leadstatusname }}</option>
+                                                <option value="{{ $LeadStatus->leadstatusid }}" {{ old('status') == $LeadStatus->leadstatusid ? 'selected' : '' }}>
+                                                {{ $LeadStatus->leadstatusname }}                                              
                                                 @endforeach
                                             </select>
                                         </div>
@@ -164,26 +169,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                  <!-- <div class="col-md-6">
-                                        <div class="form-group">
-                                            <strong><label>Candidate Interview Feedback</label></strong>
-                                            <textarea class="form-control" name="candidate_interview_feedback" rows="3" placeholder="Candidate Interview Feedback">{{ old('candidate_interview_feedback') }}</textarea>
-                                        </div>
-                                    </div> -->
-                                    <!-- <div class="col-md-3">
-											<div class="form-group">
-												<label>Image</label>
-												<input type="file" name="user_image" accept="image/*" class="form-control" id="user_image" onchange="previewImage(this);">
-												<br>											
-												<div id="user_image_error" class="error" style="color: red; font-weight: bold;"></div>
-											</div>
-										</div>
-										<div class="col-md-3">
-											<div class="form-group">
-												<label>Image Preview</label><br>
-												<img id="imagePreview" src="{{ asset('assets/img/store_logo/placeholder.jpg') }}" alt="Image Preview" width="80" height="80">
-											</div>
-										</div> -->
                                         <div class="col-md-6">
                                             <div class="form-group">
                                             <strong><label>Upload Candidate Resume</label></strong>
@@ -191,6 +176,7 @@
                                                 <br>
                                                 <div id="user_resume_error" class="error" style="color: red; font-weight: bold;"></div>
                                             </div>
+                                           
                                         </div>
                                </div>    
 
@@ -201,7 +187,8 @@
                                             <select class="form-control select2" name="experience" >
                                             <option value="" disabled selected>Select</option>
                                             @foreach($experiences as $experience)
-                                                    <option value="{{ $experience->experience_id }}">{{ $experience->experience }}</option>
+                                            <option value="{{ $experience->experience_id }}" {{ old('experience') == $experience->experience_id ? 'selected' : '' }}>
+                                             {{ $experience->experience }}
                                                 @endforeach
                                             </select>
                                         </div>
@@ -312,5 +299,41 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
 });
 </script>
+<script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
+<script>
+        $(document).ready(function() {
+           
+            $('#candidate_email, #candidate_mobile').on('blur', function() {
+                var candidate_email = $(this).val();
+                var candidate_mobile = $(this).val();
+               
+                $.ajax({
+                    url: '{{ route("check.email") }}',
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        candidate_email: candidate_email,
+                        candidate_mobile: candidate_mobile
+                    },
+                    success: function(response) {
+                        if(response.email_exists) {
+                            $('#email-error').show();
+                        } else {
+                            $('#email-error').hide();
+                        }
+                        if(response.mobile_exists) {
+                            $('#mobile-error').show();
+                        } else {
+                            $('#mobile-error').hide();
+                        }
+                    }
+               });
+            
+           
+               
+            });  
+        });
+        
+    </script>
 
 @endsection

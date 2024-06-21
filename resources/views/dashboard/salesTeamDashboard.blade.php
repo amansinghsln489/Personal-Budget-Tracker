@@ -113,7 +113,7 @@
                            <img src="{{ asset('storage/' . $interviewee->user_image) }}" alt="Image of {{ $interviewee->firstname }} {{ $interviewee->lastname }}" width="50" height="50">
                        </td>
                        <td>
-                           {{ $interviewee->firstname }} {{ $interviewee->lastname }} {{ $interviewee->user_id }}
+                           {{ $interviewee->firstname }} {{ $interviewee->lastname }} 
                        </td>
                            <td>{{ $interviewee->total_interviews }}</td>
                            <td>{{ $interviewee->today_interviews }}</td>

@@ -254,7 +254,7 @@
 														@endif
 														
                                                             @else
-                                                            Not upload resume
+                                                           empty
                                                         @endif
 													</span>
 													</li>

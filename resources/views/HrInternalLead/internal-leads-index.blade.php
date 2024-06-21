@@ -131,10 +131,9 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th>Id</th>                                      
+                                                                            
                                         <th> Name</th>
                                         <th>Email</th>
-                                        <th>Mobile</th>
                                         <th>Interview Date</th>
                                         <th>Status</th>
                                         <th>Resume</th>
@@ -146,10 +145,11 @@
                                 <tbody>
                                     @foreach($candidates as $candidate)
                                     <tr>
-                                        <td>{{ $candidate->id }}</td>
+                                        
                                         <td>{{ $candidate->candidate_name }}</td>
-                                        <td>{{ $candidate->candidate_email }}</td>
-                                        <td>{{ $candidate->candidate_mobile }}</td>
+                                        <td>{{ $candidate->candidate_email }}<br>
+                                        {{ $candidate->candidate_mobile }}
+                                        </td>
                                         <td class="highlight">{{ \Carbon\Carbon::parse($candidate->interview_date)->format('d-M-Y h:i A')}}</td>
                                         <td>{{ $candidate->leadStatus->leadstatusname }}</td>
                                         <td data-label="@lang('Resume')">

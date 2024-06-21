@@ -8,7 +8,7 @@
             @if(!empty($userLeadcreators))
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                
-                    <h5 class="text-uppercase mb-0 mt-0 page-title"> Candidate Lists of  {{ $userLeadcreators->firstname }} {{ $userLeadcreators->lastname }}</h5>
+                    <h5 class="text-uppercase mb-0 mt-0 page-title"> Candidate Lists  </h5>
                 @else
                     <h5 class="text-uppercase mb-0 mt-0 page-title"> Candidate Lists of  </h5>
                 @endif
@@ -133,27 +133,24 @@
                             
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead class="thead-dark">
-                                        <tr>
-                                        <th>Id</th>                                      
-                                        <th>Candidate Name</th>
+                                        <tr>                                
+                                        <th> Name</th>
                                         <th>Email</th>
-                                        <th>Mobile</th>
                                         <th>Interview Date</th>
                                         <th>Status</th>
                                         <th>Resume</th>
-                                        <th>Interviewee Name</th>
-                                        <th>Created_by</th>
-                                        <th>Created At</th>
+                                        <th>Interviewee</th>
+                                        <th>Created </th>
                                         <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($leads as $lead)
                                         <tr>
-                                        <td>{{ $lead->id }}</td>
                                         <td>{{ $lead->candidate_name }}</td>
-                                        <td>{{ $lead->candidate_email }}</td>
-                                        <td>{{ $lead->candidate_mobile }}</td>
+                                        <td>{{ $lead->candidate_email }}<br>
+                                        {{ $lead->candidate_mobile }}
+                                        </td>
                                         <td class="highlight">{{ \Carbon\Carbon::parse($lead->interview_date)->format('Y-m-d h:i:s A')}}</td>
                                         <td>{{ $lead->leadStatus->leadstatusname }}</td>
                                         <td data-label="@lang('Resume')">
@@ -178,16 +175,21 @@
                                         @endif
                                                                               
                                           @else
-                                           Not upload resume
+                                         Empty
                                            @endif
                                         </td>
                                         <td>
                                         @if(!empty( $lead->intervieweeName->firstname))
-                                        {{ $lead->intervieweeName->firstname }} {{ $lead->intervieweeName->lastname}}
+                                        <span title="{{ $lead->intervieweeName->firstname }} {{ $lead->intervieweeName->lastname }}">
+                                                    {{ $lead->intervieweeName->firstname }}
+                                                </span>
                                         @endif
                                         </td>
-                                        <td>{{ $lead->userName->firstname}} {{ $lead->userName->lastname}}</td>  
-                                        <td>{{ \Carbon\Carbon::parse($lead->created_at)->format('d-m-Y') }}</td>
+                                        <td><span title="{{ $lead->userName->firstname }} {{ $lead->userName->lastname }}">
+                                                    {{ $lead->userName->firstname }}
+                                                </span><br>  
+                                         {{ \Carbon\Carbon::parse($lead->created_at)->format('d-m-Y') }}
+                                        </td>
                                         <td class="text-right">
                                                 <a href="{{ route('condidate-leads.view', $lead->id) }}" class="btn btn-warning btn-sm mb-1">
                                                     <i class="far fa-eye"></i>

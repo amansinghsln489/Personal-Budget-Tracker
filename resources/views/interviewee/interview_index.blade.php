@@ -189,7 +189,7 @@
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead class="thead-dark">
                                         <tr>
-                                        <th>Id</th>                                      
+                                                                      
                                         <th> Name</th>
                                         <th>Email</th>
                                         <th>Mobile</th>
@@ -208,10 +208,13 @@
 
                                         @foreach($leads as $lead)
                                         <tr>
-                                        <td>{{ $lead->id }}</td>
+                                       
                                         <td>{{ $lead->candidate_name }}</td>
-                                        <td>{{ $lead->candidate_email }}</td>
-                                        <td>{{ $lead->candidate_mobile }}</td>
+                                    
+                                        <td>{{ $lead->candidate_email }}<br>
+                                           {{ $lead->candidate_mobile }}
+                                       </td>
+                                        <td></td>
                                         <td class="highlight">{{ \Carbon\Carbon::parse($lead->interview_date)->format('d-M-Y h:i A')}}</td>
                                         <td>{{ $lead->leadStatus->leadstatusname }}</td>
                                         <td data-label="@lang('Resume')">
