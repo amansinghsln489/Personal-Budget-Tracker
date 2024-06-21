@@ -134,4 +134,30 @@ color: #212529;
 
 /* Lead Status table css those are show the interview status */
 
-   
+	.input-group.editer-box {
+    width: 100%;
+	justify-content: center;
+}
+.input-group.editer-box .ck.ck-editor {
+    width: 93%;
+}
+.input-group.editer-box button.btn.btn-info.send-btn {
+    height: 100%;
+}
+.input-group.editer-box .ck.ck-sticky-panel__content {
+    display: none;
+}
+.user-det-list>li {
+    display: flex;
+    justify-content: space-between;
+}
+.user-det-list>li>span.float-right.text-muted {
+    width: 60%;
+}
+
+
+
+td span {
+    cursor: pointer; /* Changes cursor to indicate the text is interactive */
+}
+

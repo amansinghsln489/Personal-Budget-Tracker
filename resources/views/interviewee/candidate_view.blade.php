@@ -4,28 +4,7 @@
 @section('title', 'Lead')
 
 
-<style>
-	.input-group.editer-box {
-    width: 100%;
-	justify-content: center;
-}
-.input-group.editer-box .ck.ck-editor {
-    width: 93%;
-}
-.input-group.editer-box button.btn.btn-info.send-btn {
-    height: 100%;
-}
-.input-group.editer-box .ck.ck-sticky-panel__content {
-    display: none;
-}
-.user-det-list>li {
-    display: flex;
-    justify-content: space-between;
-}
-.user-det-list>li>span.float-right.text-muted {
-    width: 60%;
-}
-</style>
+
 <div class="page-wrapper">
 	<div class="chat-main-row">
 		<div class="chat-main-wrapper">
@@ -113,7 +92,7 @@
 														<p><?php echo $comments=$history->comment ?></p>
 														<span class="chat-time">{{ \Carbon\Carbon::parse($history->created_at)->format('h:i A') }}</span>
 
-														<small>lead Status :</small>
+														<small>Candidate Status :</small>
 														@if(optional($history->leadStatus)->leadstatusname)
 														<i class="typing-text">{{ $history->leadStatus->leadstatusname }}</i>
 														@endif
@@ -155,7 +134,7 @@
 									                    
 														<div><?php echo $comments=$history->comment ?></div>
 														<span class="chat-time">{{ \Carbon\Carbon::parse($history->created_at)->format('h:i A') }}</span>
-														<small>lead Status :</small>
+														<small>Candidate Status :</small>
 														@if(optional($history->leadStatus)->leadstatusname)
 															<i class="typing-text">{{ $history->leadStatus->leadstatusname }}</i>
 														@endif
@@ -214,13 +193,7 @@
 								<div class="table-row">
 									<div class="table-body">
 										<div class="table-content">
-											<div class="chat-profile-img">
-												<div class="invoice-details">
-													
-												</div>
-												<br>
 											
-											</div>
 											<div class="chat-profile-info">
                                           
 												<ul class="user-det-list">
@@ -269,7 +242,7 @@
 														@if (in_array($extension, ['pdf']))
 														<a href="{{ asset('storage/' . $leadData->resume) }}" target="_blank">
 															<img src="{{ asset('assets/img/pdf.png') }}" alt="Pdf" style="height:30px;"/>
-															Download
+															View
 															<i class="fas fa-download"></i>
 														</a>
 														@elseif(in_array($extension, ['docx']))  
@@ -318,9 +291,9 @@
 
 												<div class="col-sm-12 col-12 text-left add-btn-col">
 													@if(auth()->user()->role != 3)
-														<a href="{{ route('internal-leads.edit', $leadData->id) }}" class="btn btn-warning float-right btn-rounded"><i class="far fa-edit"></i>Edit Candidate </a>
+														<a href="{{ route('internal-leads.edit', $leadData->id) }}" class="btn btn-warning float-right btn-rounded"><i class="far fa-edit"></i>Edit </a>
 														
-														<a href="{{ route('internal-leads.create') }}" class="btn btn-primary float-right btn-rounded"><i class="fas fa-plus"></i>New Candidate </a>
+														<a href="{{ route('internal-leads.create') }}" class="btn btn-primary float-right btn-rounded"><i class="fas fa-plus"></i>New  </a>
 													@endif
 												</div>
 											</div>

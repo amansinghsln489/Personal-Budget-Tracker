@@ -155,7 +155,7 @@
 									                    
 														<div><?php echo $comments=$history->comment ?></div>
 														<span class="chat-time">{{ \Carbon\Carbon::parse($history->created_at)->format('h:i A') }}</span>
-														<small>lead Status :</small>
+														<small>Candidate Status :</small>
 														@if(optional($history->leadStatus)->leadstatusname)
 															<i class="typing-text">{{ $history->leadStatus->leadstatusname }}</i>
 														@endif
@@ -195,8 +195,6 @@
 							</div>
 						</div>
 					</form>
-					
-
 				</div>
 			</div>
 			<div class="col-lg-3 message-view chat-profile-view chat-sidebar" id="chat_sidebar">
@@ -214,13 +212,7 @@
 								<div class="table-row">
 									<div class="table-body">
 										<div class="table-content">
-											<div class="chat-profile-img">
-												<div class="invoice-details">
-													
-												</div>
-												<br>
 											
-											</div>
 											<div class="chat-profile-info">
                                           
 												<ul class="user-det-list">
@@ -269,7 +261,7 @@
 														@if (in_array($extension, ['pdf']))
 														<a href="{{ asset('storage/' . $leadData->resume) }}" target="_blank">
 															<img src="{{ asset('assets/img/pdf.png') }}" alt="Pdf" style="height:30px;"/>
-															Download
+															View
 															<i class="fas fa-download"></i>
 														</a>
 														@elseif(in_array($extension, ['docx']))  
@@ -303,24 +295,20 @@
 													<li>
                                                     <span> Additional Comments</span>
                                                     <span class="float-right text-muted">
-													<textarea name="lead_comment" class="form-control" rows="4" readonly data-toggle="popover" title="Lead  Comments" data-content="{{ $leadData->additional_comments }}">{{ $leadData->additional_comments }}</textarea>
+													<textarea name="lead_comment" class="form-control" rows="2" readonly data-toggle="popover" title="Lead  Comments" data-content="{{ $leadData->additional_comments }}">{{ $leadData->additional_comments }}</textarea>
 
 														</span>
 													</li>
 													@endif
-													<li><strong>Other Details</strong></li>
-
 													
-													
-													<li>source: <span class="float-right text-muted">{{ $leadData->source }}</span></li>
 												</ul>
                                                 @endforeach
 
 												<div class="col-sm-12 col-12 text-left add-btn-col">
 													@if(auth()->user()->role != 3)
-														<a href="{{ route('internal-leads.edit', $leadData->id) }}" class="btn btn-warning float-right btn-rounded"><i class="far fa-edit"></i>Edit Candidate </a>
-														<a href="{{ route('internal-leads.index') }}" class="btn btn-danger float-right btn-rounded"><i class="far fa-eye"></i>All Candidate </a>
-														<a href="{{ route('internal-leads.create') }}" class="btn btn-primary float-right btn-rounded"><i class="fas fa-plus"></i>New Candidate </a>
+														<a href="{{ route('internal-leads.edit', $leadData->id) }}" class="btn btn-warning float-right btn-rounded"><i class="far fa-edit"></i>Edit  </a>
+														<a href="{{ route('internal-leads.index') }}" class="btn btn-danger float-right btn-rounded"><i class="far fa-eye"></i>All  </a>
+														<a href="{{ route('internal-leads.create') }}" class="btn btn-primary float-right btn-rounded"><i class="fas fa-plus"></i>New </a>
 													@endif
 												</div>
 											</div>

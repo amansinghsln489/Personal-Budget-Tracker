@@ -132,15 +132,14 @@
                                 <thead class="thead-dark">
                                     <tr>
                                         <th>Id</th>                                      
-                                        <th>Candidate Name</th>
+                                        <th> Name</th>
                                         <th>Email</th>
                                         <th>Mobile</th>
                                         <th>Interview Date</th>
                                         <th>Status</th>
                                         <th>Resume</th>
-                                        <th>Interviewer Name</th>
+                                        <th>Interviewer</th>
                                         <th>Created</th>
-                                        <th>Created At</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -151,7 +150,7 @@
                                         <td>{{ $candidate->candidate_name }}</td>
                                         <td>{{ $candidate->candidate_email }}</td>
                                         <td>{{ $candidate->candidate_mobile }}</td>
-                                        <td class="highlight">{{ \Carbon\Carbon::parse($candidate->interview_date)->format('d-M-Y h:i:s A')}}</td>
+                                        <td class="highlight">{{ \Carbon\Carbon::parse($candidate->interview_date)->format('d-M-Y h:i A')}}</td>
                                         <td>{{ $candidate->leadStatus->leadstatusname }}</td>
                                         <td data-label="@lang('Resume')">
                                         @if($candidate->resume)
@@ -162,7 +161,7 @@
                                         @if (in_array($extension, ['pdf']))
                                         <a href="{{ asset('storage/' . $candidate->resume) }}" target="_blank">
                                             <img src="{{ asset('assets/img/pdf.png') }}" alt="Pdf" style="height:30px;"/>
-                                            Download
+                                           View
                                             <i class="fas fa-download"></i>
                                         </a>
                                         @elseif(in_array($extension, ['docx']))  
@@ -173,23 +172,27 @@
                                         </a>
                                         @endif
                                           @else
-                                           Not upload resume
+                                           empty
                                            @endif
                                         </td>
                                         <td>
-                                        @if(!empty( $candidate->intervieweeName->firstname))
-                                        {{ $candidate->intervieweeName->firstname }} {{ $candidate->intervieweeName->lastname}}
-                                        @endif
+                                            @if(!empty($candidate->intervieweeName->firstname))
+                                                <span title="{{ $candidate->intervieweeName->firstname }} {{ $candidate->intervieweeName->lastname }}">
+                                                    {{ $candidate->intervieweeName->firstname }}
+                                                </span>
+                                            @endif
                                         </td>
-                                        <td>{{ $candidate->userName->firstname}} {{ $candidate->userName->lastname}}</td>  
-                                        <td>{{ \Carbon\Carbon::parse($candidate->created_at)->format('d-m-Y') }}</td>
+                                        <td><span title="{{ $candidate->userName->firstname }} {{ $candidate->userName->lastname }}">
+                                                    {{ $candidate->userName->firstname }}
+                                                </span><br>  
+                                         {{ \Carbon\Carbon::parse($candidate->created_at)->format('d-m-Y') }}
+                                        </td>
+                                       
                                         <td class="text-right">
                                             <a href="{{ route('internal-leads.edit', $candidate->id) }}" class="btn btn-primary btn-sm mb-1">
                                                 <i class="far fa-edit"></i>
                                             </a>
-                                            <!-- <a href="{{ route('internal-leads.show', $candidate->id) }}" class="btn btn-primary btn-sm mb-1">
-                                            <i class="far fa-eye"></i>
-                                            </a> -->
+                                          
 
                                                 <a href="{{ route('internal-leads.show', $candidate->id) }}" class="btn btn-warning btn-sm mb-1">
                                                     <i class="far fa-eye"></i>
@@ -229,6 +232,7 @@
         </div>
     </div>
 </div>
+
 
 <script>
          $(document).ready(function() {

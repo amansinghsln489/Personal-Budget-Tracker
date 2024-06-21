@@ -190,15 +190,15 @@
                                     <thead class="thead-dark">
                                         <tr>
                                         <th>Id</th>                                      
-                                        <th>Candidate Name</th>
+                                        <th> Name</th>
                                         <th>Email</th>
                                         <th>Mobile</th>
                                         <th>Interview Date</th>
                                         <th>Status</th>
                                         <th>Resume</th>
-                                        <th>Interviewee Name</th>
+                                        <th>Interviewee </th>
                                         <th>Created_by</th>
-                                        <th>Created At</th>
+                                        <!-- <th>Created At</th> -->
                                         <th>Action</th>
                                         </tr>
                                     </thead>
@@ -212,7 +212,7 @@
                                         <td>{{ $lead->candidate_name }}</td>
                                         <td>{{ $lead->candidate_email }}</td>
                                         <td>{{ $lead->candidate_mobile }}</td>
-                                        <td class="highlight">{{ \Carbon\Carbon::parse($lead->interview_date)->format('Y-m-d h:i:s A')}}</td>
+                                        <td class="highlight">{{ \Carbon\Carbon::parse($lead->interview_date)->format('d-M-Y h:i A')}}</td>
                                         <td>{{ $lead->leadStatus->leadstatusname }}</td>
                                         <td data-label="@lang('Resume')">
                                         @if($lead->resume)
@@ -236,16 +236,21 @@
                                         @endif
                                                                               
                                           @else
-                                           Not upload resume
+                                           Empty
                                            @endif
                                         </td>
                                         <td>
                                         @if(!empty( $lead->intervieweeName->firstname))
-                                        {{ $lead->intervieweeName->firstname }} {{ $lead->intervieweeName->lastname}}
+                                        <span title="{{ $lead->intervieweeName->firstname }} {{ $lead->intervieweeName->lastname }}">
+                                                    {{ $lead->intervieweeName->firstname }}
+                                                </span>
                                         @endif
                                         </td>
-                                        <td>{{ $lead->userName->firstname}} {{ $lead->userName->lastname}}</td>  
-                                        <td>{{ \Carbon\Carbon::parse($lead->created_at)->format('d-m-Y') }}</td>
+                                        <td><span title="{{ $lead->userName->firstname }} {{ $lead->userName->lastname }}">
+                                                    {{ $lead->userName->firstname }}
+                                                </span><br>  
+                                         {{ \Carbon\Carbon::parse($lead->created_at)->format('d-m-Y') }}
+                                        </td>
                                         <td class="text-right">
                                           
 
