@@ -64,25 +64,19 @@ class InternalLeadController extends Controller
         $userName = $user->firstname . ' ' . $user->lastname;
         $roleName = Role::find($user->role)->role_name;
 
-       
-    $errors = [
-        'candidate_email.unique' => 'The email has already been taken.',
-        'candidate_mobile.unique' => 'The mobile number already exists.',
-    ];
+        $request->validate([
+            'candidate_name' => 'required|string',
+            'candidate_email' => 'required|email|unique:internal_leads,candidate_email',
+            'candidate_mobile' => 'required|string',
+            'interview' => 'required|string',
+            'technology_id' => 'required|string',
+            'interview_date' => 'required|string',
+            'experience' => 'required|string',
+            'status' => 'required|string'
 
-    // Validate the request data
-    $validatedData = $request->validate([
-        'candidate_name' => 'required|string',
-        'candidate_email' => 'required|email|unique:internal_leads,candidate_email',
-        'candidate_mobile' => 'required|digits:10|unique:internal_leads,candidate_mobile',
-        'interview' => 'required|string',
-        'technology_id' => 'required|string',
-        'interview_date' => 'required|string',
-        'experience' => 'required|string',
-        'status' => 'required|string'
-        // Add validation rules for other fields as needed
-    ], $errors);
-       
+            // Add validation rules for other fields as needed
+        ]);
+
         $resumePath = null;
         if ($request->hasFile('user_resume')) {
             // Validate the resume file
@@ -92,6 +86,7 @@ class InternalLeadController extends Controller
                 throw new \Exception('Invalid resume file.');
             }
         }
+      
         $internalLead = InternalLead::create([
             'candidate_name' => $request->input('candidate_name'),
             'candidate_email' => $request->input('candidate_email'),
@@ -106,6 +101,7 @@ class InternalLeadController extends Controller
             'status' => $request->input('status'),
             'additional_comments' => $request->input('additional_comments'),
         ]);
+
         $lastCreatedId = $internalLead->id;
         $candidate_interview_feedback = $request->input('candidate_interview_feedback');
 
@@ -129,6 +125,7 @@ class InternalLeadController extends Controller
 
     public function show( $internal_lead)
     {
+        
         $leadHistories = InternalLeadDetail::where('lead_id',$internal_lead)
         ->orderBy('created_at', 'ASC')
         ->with(['InternalLead','leadStatus', 'userName'])
@@ -199,26 +196,9 @@ class InternalLeadController extends Controller
         return redirect()->route('internal-leads.index')->with('success', 'Candidate updated successfully');
     }
     
-    
+
     public function destroy(InternalLead $internal_lead)
     {
         // Your code to remove a specific internal lead from the database
     }
-    
-        public function checkEmail(Request $request)
-    {
-        $email = $request->input('candidate_email');
-        $mobile = $request->input('candidate_mobile');
-        $emailExists = InternalLead::where('candidate_email', $email)->exists();
-        $mobileExists = InternalLead::where('candidate_mobile', $mobile)->exists();
-        return response()->json([
-            'email_exists' => $emailExists,
-            'mobile_exists' => $mobileExists
-        ]);
-
-        
-       
-       
-    }
-    
 }

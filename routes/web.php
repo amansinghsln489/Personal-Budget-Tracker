@@ -186,8 +186,7 @@ Route::put('/profile', [UserProfileController::class, 'update'])->name('user.pro
     Route::get('internal-leads/{internal_lead}', [InternalLeadController::class, 'show'])->name('internal-leads.show');
     Route::get('internal-leads/{internal_lead}/edit', [InternalLeadController::class, 'edit'])->name('internal-leads.edit');
     Route::post('internal-leads/{internal_lead}', [InternalLeadController::class, 'update'])->name('internal-leads.update');
-    Route::delete('internal-leads/{internal_lead}', [InternalLeadController::class, 'destroy'])->name('internal-leads.destroy');
-    Route::post('check-email', [InternalLeadController::class, 'checkEmail'])->name('check.email'); 
+    Route::delete('internal-leads/{internal_lead}', [InternalLeadController::class, 'destroy'])->name('internal-leads.destroy'); 
 /*
 |--------------------------------------------------------------------------
 | interviewee Registration
