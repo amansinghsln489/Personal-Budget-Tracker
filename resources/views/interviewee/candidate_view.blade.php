@@ -276,7 +276,7 @@
 													<li>
                                                     <span> Additional Comments</span>
                                                     <span class="float-right text-muted">
-													<textarea name="lead_comment" class="form-control" rows="4" readonly data-toggle="popover" title="Lead  Comments" data-content="{{ $leadData->additional_comments }}">{{ $leadData->additional_comments }}</textarea>
+													<textarea name="lead_comment" class="form-control" rows="2" readonly data-toggle="popover" title="Lead  Comments" data-content="{{ $leadData->additional_comments }}">{{ $leadData->additional_comments }}</textarea>
 
 														</span>
 													</li>
