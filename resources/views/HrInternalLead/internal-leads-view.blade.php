@@ -270,6 +270,12 @@
 															Download
 															<i class="fas fa-download"></i>
 														</a>
+														@elseif(in_array($extension, ['doc']))  
+														<a href="{{ asset('storage/' . $leadData->resume) }}" target="_blank">
+															<img src="{{ asset('assets/img/docx.png') }}" alt="docx" style="height:30px;"/>
+															Download
+															<i class="fas fa-download"></i>
+														</a>
 														@endif
 														
                                                             @else

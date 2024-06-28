@@ -86,8 +86,8 @@
                </tbody>
            </table>
        </div>
-
-       <div class="col-md-6">
+       
+       <div class="col-md-6 ">
            <div class="page-header">
                <div class="row">
                    <div class="col-md-6">
@@ -132,8 +132,11 @@
                    @endforeach
                </tbody>
            </table>
+           <div class="d-flex justify-content-end mt-2">
+                {{ $interviewees->links('pagination::default') }}
+            </div>
        </div>
-
+      
    </div>
    @include('section/notification') 
    

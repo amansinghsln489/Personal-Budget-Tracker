@@ -197,3 +197,48 @@ td span {
             transform: translate(-50%, 0px);
         }
     }
+
+    /* pagination css */
+   
+    .pagination {
+        display: flex;
+        justify-content: end;
+        padding-left: 0;
+        list-style: none;
+        border-radius: .25rem;
+    }
+
+    .pagination li {
+        margin: 0 5px;
+    }
+
+    .pagination li a, .pagination li span {
+        display: block;
+        padding: 0.75rem 1.25rem;
+        color: #007bff;
+        text-decoration: none;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+        margin-left: -1px;
+        line-height: 1.25;
+    }
+
+    .pagination li a:hover, .pagination li span:hover {
+        background-color: #e9ecef;
+        color: #0056b3;
+    }
+
+    .pagination li.active span {
+        z-index: 1;
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .pagination li.disabled span {
+        color: #6c757d;
+        pointer-events: none;
+        background-color: #fff;
+        border-color: #dee2e6;
+    }
+           

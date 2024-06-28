@@ -42,8 +42,8 @@ class DashboardController extends Controller
             $user->todayLeadCount = $todayLeadCount;
             $user->monthLeadCount = $monthLeadCount;
         }
-        $interviewees = User::where('role', 3)->get();
-    
+        // $interviewees = User::where('role', 3)->get();
+        $interviewees = User::where('role', 3)->paginate(4);
         // Iterate through users and add count of leads created by each user for interviee
         foreach ($interviewees as $interviewee) {
             $interviewCounts = InternalLead::selectRaw(

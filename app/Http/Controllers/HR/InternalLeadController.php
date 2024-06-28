@@ -84,11 +84,27 @@ class InternalLeadController extends Controller
         // Add validation rules for other fields as needed
     ], $errors);
        
+        // $resumePath = null;
+        // if ($request->hasFile('user_resume')) {
+        //     // Validate the resume file
+        //     if ($request->file('user_resume')->isValid()) {
+        //         $resumePath = $request->file('user_resume')->store('resumes', 'public');
+        //     } else {
+        //         throw new \Exception('Invalid resume file.');
+        //     }
+        // }
         $resumePath = null;
         if ($request->hasFile('user_resume')) {
             // Validate the resume file
             if ($request->file('user_resume')->isValid()) {
-                $resumePath = $request->file('user_resume')->store('resumes', 'public');
+                // Sanitize the candidate name to be used in the file path
+                $candidateName = preg_replace('/[^A-Za-z0-9\-]/', '_', $request->input('candidate_name'));
+                
+                // Generate a unique file name
+                $fileName = $candidateName . '_' . time() . '.' . $request->file('user_resume')->getClientOriginalExtension();
+                
+                // Store the resume in the 'resumes' directory within 'public' storage, with the customized file name
+                $resumePath = $request->file('user_resume')->storeAs('resumes', $fileName, 'public');
             } else {
                 throw new \Exception('Invalid resume file.');
             }
@@ -170,9 +186,14 @@ class InternalLeadController extends Controller
         if ($request->hasFile('user_resume')) {
             // Validate the image file
             if ($request->file('user_resume')->isValid()) {
-                // Store the new image file and get the path
-                $imagePath = $request->file('user_resume')->store('resumes', 'public');
+                $candidateName = preg_replace('/[^A-Za-z0-9\-]/', '_', $request->input('candidate_name'));
                 
+                // Generate a unique file name
+                $fileName = $candidateName . '_' . time() . '.' . $request->file('user_resume')->getClientOriginalExtension();
+                
+                // Store the resume in the 'resumes' directory within 'public' storage, with the customized file name
+                $imagePath = $request->file('user_resume')->storeAs('resumes', $fileName, 'public');
+              
                 // Optionally, delete the old image file if it exists
                 if ($internal_lead->resume){
                     Storage::disk('public')->delete($internal_lead->resume);
