@@ -5,14 +5,10 @@
     <div class="content container-fluid">
         <div class="page-header">
             <div class="row">
-            @if(!empty($userLeadcreators))
-                <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-               
-                    <h5 class="text-uppercase mb-0 mt-0 page-title"> Candidate Lists  </h5>
-                @else
-                    <h5 class="text-uppercase mb-0 mt-0 page-title"> Candidate Lists of  </h5>
-                @endif
-                    
+            <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                    @if($leads->isNotEmpty())
+                        <h5 class="text-uppercase mb-0 mt-0 page-title">Candidate Lists {{ $leads->first()->technology->technology_name }} Technology</h5>
+                    @endif 
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                     <ul class="breadcrumb float-right p-0 mb-0">
@@ -24,6 +20,58 @@
             </div>
         </div>
         
+        <div id="custom-page-header">
+       <div class="row mt-4">
+        <div class="col-12">
+            <div class="lead-status-cards">
+                @php
+                    $statusMapping = [
+                        1 => ['badgeClass' => 'badge-secondary', 'iconClass' => 'fas fa-phone', 'cardClass' => 'bg-light-secondary'],
+                        2 => ['badgeClass' => 'badge-primary', 'iconClass' => 'fas fa-search', 'cardClass' => 'bg-light-primary'],
+                        3 => ['badgeClass' => 'badge-info', 'iconClass' => 'fas fa-cog', 'cardClass' => 'bg-light-info'],
+                        4 => ['badgeClass' => 'badge-success', 'iconClass' => 'fas fa-file-alt', 'cardClass' => 'bg-light-success'],
+                        5 => ['badgeClass' => 'badge-warning', 'iconClass' => 'fas fa-file-signature', 'cardClass' => 'bg-light-warning'],
+                        6 => ['badgeClass' => 'badge-danger', 'iconClass' => 'fas fa-file-invoice', 'cardClass' => 'bg-light-danger'],
+                        7 => ['badgeClass' => 'badge-danger', 'iconClass' => 'fas fa-times-circle', 'cardClass' => 'bg-light-danger'],
+                        8 => ['badgeClass' => 'badge-dark', 'iconClass' => 'fas fa-users', 'cardClass' => 'bg-light-dark'],
+                        9 => ['badgeClass' => 'badge-info', 'iconClass' => 'fas fa-check-circle', 'cardClass' => 'bg-light-success']
+                    ];
+                @endphp
+
+                @foreach ($leads->groupBy('status') as $statusId => $groupedLeads)
+                    @php
+                        $badgeClass = $statusMapping[$statusId]['badgeClass'] ?? 'badge-secondary';
+                        $iconClass = $statusMapping[$statusId]['iconClass'] ?? 'fas fa-info-circle';
+                        $cardClass = $statusMapping[$statusId]['cardClass'] ?? 'bg-light-secondary';
+                        $leadStatusName = $groupedLeads->first()->leadStatus->leadstatusname ?? 'Unknown';
+                    @endphp
+
+                    <div class="lead-status-card text-center {{ $cardClass }}">
+                        <a target="_blank" href="" class="lead-status-card-link">
+                            <div class="card-body">
+                                <span class="badge {{ $badgeClass }} mb-2">
+                                    <i class="{{ $iconClass }}"></i>
+                                </span>
+                                <h6 class="card-title">{{ $leadStatusName }}</h6>
+                                <p class="card-text">{{ $groupedLeads->count() }}</p>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+
+                {{-- Total Leads Card --}}
+                <div class="lead-status-card text-center bg-light-primary">
+                    <div class="card-body">
+                        <span class="badge badge-primary mb-2">
+                            <i class="fas fa-list"></i> {{-- FontAwesome icon --}}
+                        </span>
+                        <h6 class="card-title">Total Candidate</h6>
+                        <p class="card-text">{{ $leads->count() }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
         <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
        
@@ -146,7 +194,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach($leads as $lead)
-                                        <tr>
+                                        <tr style="color: {{ $lead->leadStatus->leadstatusname === 'Rejected' ? 'red' : ($lead->leadStatus->leadstatusname === 'Closed' ? 'green' : 'black') }}">
                                         <td>{{ $lead->candidate_name }}</td>
                                         <td>{{ $lead->candidate_email }}<br>
                                         {{ $lead->candidate_mobile }}
@@ -253,21 +301,21 @@
                     {
                         extend: 'print',
                         exportOptions: {
-                            columns:  [1, 2, 3, 4, 5, 7, 8, 9]
+                            columns:  [1, 2, 3, 4, 6, 7, ]
                         }
                     },
                     {
                         extend: 'excel',
                         text: '<img src="{{ asset('assets/img/excel.png') }}" alt="Excel" style="height:20px;"/> Excel',
                         exportOptions: {
-                            columns: [1, 2, 3, 4, 5, 7, 8, 9]
+                            columns:  [1, 2, 3, 4, 6, 7, ]
                         }
                     },
                     {
                         extend: 'pdf',
                         text: '<img src="{{ asset('assets/img/pdf.png') }}" alt="Pdf" style="height:20px;"/> Pdf',
                         exportOptions: {
-                            columns:  [1, 2, 3, 4, 5, 7, 8, 9] 
+                            columns:  [1, 2, 3, 4, 6, 7, ]
                         }
                     },
                     'colvis'

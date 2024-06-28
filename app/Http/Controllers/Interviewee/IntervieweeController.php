@@ -9,6 +9,7 @@ use App\Models\Lead\Lead;
 use App\Models\User\User;
 use App\Models\Lead\LeadStatus;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Hr\InternalLead;
 use App\Models\Hr\InternalLeadDetail;
@@ -40,7 +41,7 @@ class IntervieweeController extends Controller
             $interviewStatus = $request->input('status');
         if ($userLeadcreators->role == 3 || $userLeadcreators->role == 2) {  
             
-            $query = InternalLead::with([ 'leadStatus','intervieweeName','userName']);
+            $query = InternalLead::with([ 'leadStatus','intervieweeName','userName','technology']);
             if($userId){
                 $query->where(function($q) use ($userId) {
                     $q->where('created_by', $userId)
@@ -143,11 +144,12 @@ class IntervieweeController extends Controller
             $selectedValues = [
                 'interview_status' => $interviewStatus,
             ];
+          
+           
         return view('interviewee.technology_candidate_list', compact('userLeadcreators','leads','leadStatuss','selectedValues','candidatelist'));
     }
     public function view( $candidatelist)
     {
-        
         $leadHistories = InternalLeadDetail::where('lead_id',$candidatelist)
         ->orderBy('created_at', 'ASC')
         ->with(['InternalLead','leadStatus', 'userName'])
@@ -155,10 +157,43 @@ class IntervieweeController extends Controller
         ->get();
         $leadDatas = InternalLead::with(['leadStatus', 'intervieweeName', 'userName','technology','experienceYear'])
         ->where('id','=', $candidatelist)
-        ->get();
-         
+        ->get();  
         return view('interviewee.candidate_view',compact('leadDatas','leadHistories'));
-
-
+    } 
+    public function checkBox(Request $request)
+    {
+        $checkboxs_id = $request->input('checkboxIDs');
+        $success = false;
+        $status_update = false;
+        $interview_status = $request->input('status');
+        foreach ($checkboxs_id as $checkbox_id) {
+            $interview_status = $request->input('status');
+            
+            $lead = InternalLead::find($checkbox_id);
+            if ($lead->checkbox_status != 1){
+                $lead->update(['checkbox_status' => 1]);
+                $lead->update(['status' => $interview_status]);
+                $success = true;
+                $status_update = $lead->checkbox_status;
+            }elseif ($lead->checkbox_status == 1) {
+                $lead->update(['checkbox_status' => 1]);
+                $lead->update(['status' => $interview_status]);
+                $success = true;
+            }
+             else {
+                $lead->update(['checkbox_status' => 0]);
+                $success = false;
+                $status_update = $lead->checkbox_status;
+            }
+        }
+        return response()->json([
+            'success' => $success, 
+            'status' => $status_update,
+            'interview_status' => $interview_status 
+        ]);
+            
+            
+           
+                
     } 
 }

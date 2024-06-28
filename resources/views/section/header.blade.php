@@ -11,7 +11,12 @@
 		<a id="toggle_btn" class="float-left" href="javascript:void(0);">
 			<img src="{{ asset('assets/img/sidebar/icon-21.png') }}" alt="">
 		</a>
-
+		@php
+            if (!auth()->check() || auth()->user()->role === null) {
+                header("Location: " . route('login'));
+                exit();
+            }
+        @endphp
 		@if(auth()->user()->role != 3)
 			<ul class="nav float-left search-dropdown-box">
 				<li class="nav-item dropdown d-none d-sm-block">

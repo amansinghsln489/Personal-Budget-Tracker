@@ -12,7 +12,7 @@ function isActiveRoute($routeName)
             <div class="header-left">
                 <a href="{{ route('dashboard') }}" class="logo">
                     <img src="{{ asset('assets/img/logo1.png') }}" width="150" height="40" alt="">
-                    <span class="text-uppercase">HRLM</span>
+                    <span class="text-uppercase">HRMS</span>
                 </a>
             </div>
             <ul class="sidebar-ul">

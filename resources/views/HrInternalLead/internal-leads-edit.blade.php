@@ -192,7 +192,7 @@
 
                               
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                          <strong><label>Candidate Interview Feedback</label></strong>
                                             <textarea  class="form-control" name="candidate_interview_feedback" rows="3" placeholder="Candidate Interview Feedback">
@@ -201,6 +201,15 @@
 
                                        </div>
                                     </div>
+                                    <div class="col-md-6">
+                                            <div class="form-group">
+                                            <strong><label>Update Candidate Resume</label></strong>
+                                                <input type="file" name="user_resume" accept=".pdf,.doc,.docx" class="form-control" id="user_resume">
+                                                <br>
+                                                <div id="user_resume_error" class="error" style="color: red; font-weight: bold;"></div>
+                                            </div>
+                                           
+                                        </div>
                                  </div>
 
                                

@@ -20,6 +20,7 @@ class CreateInternalLeadsTable extends Migration
             $table->string('candidate_mobile');
             $table->string('interviewee_id');
             $table->string('technology_id');
+            $table->integer('checkbox_status')->default(0);
             $table->string('created_by');
             $table->string('image')->nullable();
             $table->string('resume')->nullable();

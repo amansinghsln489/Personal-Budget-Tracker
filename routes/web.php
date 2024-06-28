@@ -200,6 +200,8 @@ Route::post('/condidate/list/{userId}', [IntervieweeController::class, 'show'])-
 Route::get('/condidate/interviewer/{candidatelist}', [IntervieweeController::class, 'candidateList'])->name('condidate.list.all');
 Route::post('/condidate/interviewer/{candidatelist}', [IntervieweeController::class, 'candidateList'])->name('condidate.list.all');
 Route::get('condidate/view/{candidatelist}', [IntervieweeController::class, 'view'])->name('condidate-leads.view');
+Route::post('/candidate/checkbox', [IntervieweeController::class, 'checkBox'])->name('candidate.checkbox');
+
 
 
 // Internal comment and update route

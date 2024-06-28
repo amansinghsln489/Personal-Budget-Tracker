@@ -27,7 +27,7 @@
 
         <!-- ================================================================================================================= -->
         <div id="custom-page-header">
-    <div class="row mt-4">
+     <div class="row mt-4">
         <div class="col-12">
             <div class="lead-status-cards">
                 @php
@@ -207,7 +207,7 @@
 
 
                                         @foreach($leads as $lead)
-                                        <tr>
+                                        <tr style="color: {{ $lead->leadStatus->leadstatusname === 'Rejected' ? 'red' : ($lead->leadStatus->leadstatusname === 'Closed' ? 'green' : 'black') }}">
                                        
                                         <td>{{ $lead->candidate_name }}</td>
                                     
@@ -319,21 +319,21 @@
                     {
                         extend: 'print',
                         exportOptions: {
-                            columns:  [1, 2, 3, 4, 5, 7, 8, 9]
+                            columns:  [1, 2, 3, 4, 6, 7, ]
                         }
                     },
                     {
                         extend: 'excel',
                         text: '<img src="{{ asset('assets/img/excel.png') }}" alt="Excel" style="height:20px;"/> Excel',
                         exportOptions: {
-                            columns: [1, 2, 3, 4, 5, 7, 8, 9]
+                            columns:  [1, 2, 3, 4, 6, 7, ]
                         }
                     },
                     {
                         extend: 'pdf',
                         text: '<img src="{{ asset('assets/img/pdf.png') }}" alt="Pdf" style="height:20px;"/> Pdf',
                         exportOptions: {
-                            columns:  [1, 2, 3, 4, 5, 7, 8, 9] 
+                            columns:  [1, 2, 3, 4, 6, 7, ] 
                         }
                     },
                     'colvis'

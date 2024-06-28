@@ -161,3 +161,39 @@ td span {
     cursor: pointer; /* Changes cursor to indicate the text is interactive */
 }
 
+/* check_box status color */
+    /* .highlight-red{
+       
+        color: red;
+    }
+    .read-checkbox{
+       
+        color: red;
+    } */
+    .highlight-red {
+        color: red;
+    }
+    
+    .highlight-green {
+        color: green;
+    }
+    
+    .highlight-black {
+        color: black;
+    }
+
+    #openModalBtn {
+        position: absolute;
+        left: 245px;
+    }
+    @media only screen and (max-width: 600px) {
+        div#example1_filter {
+            margin-top: 60px;
+        }
+        #openModalBtn {
+            position: absolute;
+            left: 50%;
+            top: 125px;
+            transform: translate(-50%, 0px);
+        }
+    }

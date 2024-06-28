@@ -13,6 +13,7 @@ use App\Models\User\User;
 use App\Models\Hr\InternalLeadDetail;
 use App\Models\User\Role;
 use App\Models\Company\Experience;
+use Illuminate\Support\Facades\Storage;
 
 
 
@@ -154,17 +155,39 @@ class InternalLeadController extends Controller
 
     public function update(Request $request, InternalLead $internal_lead)
     {
+       
         $user = Auth::user();
         $userId = $user->user_id;
         $userName = $user->firstname . ' ' . $user->lastname;
         $roleName = Role::find($user->role)->role_name;
-    
+       
         $request->validate([
             'candidate_name' => 'required|string',
             'candidate_email' => 'required|email',
             'candidate_mobile' => 'required|string',
            
         ]);
+        if ($request->hasFile('user_resume')) {
+            // Validate the image file
+            if ($request->file('user_resume')->isValid()) {
+                // Store the new image file and get the path
+                $imagePath = $request->file('user_resume')->store('resumes', 'public');
+                
+                // Optionally, delete the old image file if it exists
+                if ($internal_lead->resume){
+                    Storage::disk('public')->delete($internal_lead->resume);
+                }
+    
+                // Update the user's image path
+                $internal_lead->resume = $imagePath;
+            } else {
+                throw new \Exception('Invalid image file.');
+            }
+        }
+        if (!empty($imagePath)) {
+            $internal_lead->resume = $imagePath;
+            $internal_lead->save();
+        }
        
         $internal_lead->update([
             'candidate_name' => $request->input('candidate_name'),
@@ -177,12 +200,12 @@ class InternalLeadController extends Controller
             'technology_id' => $request->input('technology_id'),
             'experience' => $request->input('experience'),
             'additional_comments' => $request->input('additional_comments'),
+           
         ]);
     
         // Get the ID of the updated internal lead
         $lastCreatedId = $internal_lead->id;
         $candidate_interview_feedback = $request->input('candidate_interview_feedback');
-        
         if(!empty($candidate_interview_feedback)){
         // Insert data into InternalLeadDetail table
         $leadHistory = new InternalLeadDetail();

@@ -2,9 +2,6 @@
 
 @section('content')
 @section('title', 'Lead')
-
-
-
 <div class="page-wrapper">
 	<div class="chat-main-row">
 		<div class="chat-main-wrapper">
@@ -62,7 +59,7 @@
 								<div class="chat-box">
 									<div class="chats">
                                     @foreach($leadHistories as $history)
-									@if ($history->leadCreate_user_role == "Humen Resource")
+									@if ($history->leadCreate_user_role == "Human Resource")
 									@if(!is_null($history->comment) && $history->comment !== '')
 										<div class="chat chat-left">
 											<div class="chat-avatar">
@@ -215,7 +212,7 @@
 													Working Experience : 
 														<span class="float-right text-muted">{{ $leadData->experienceYear->experience }}</span>
 													</li>
-													<li><strong> -- Detals --</strong></li>
+													<li><strong> -- Detail --</strong></li>
 													<li>
 														<span>Technology:</span>
 														<span class="float-right text-muted">{{ $leadData->technology->technology_name }}</span>

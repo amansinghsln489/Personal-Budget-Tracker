@@ -110,7 +110,11 @@
                @foreach($interviewees as $interviewee)
                        <tr style="background-color: {{ $backgroundColors[$colorIndex % count($backgroundColors)] }};">
                        <td>
+                        @if($interviewee->user_image)
                            <img src="{{ asset('storage/' . $interviewee->user_image) }}" alt="Image of {{ $interviewee->firstname }} {{ $interviewee->lastname }}" width="50" height="50">
+                        @else
+                          <span class="avatar">{{ strtoupper(substr($interviewee->firstname, 0, 1)) }}{{ strtoupper(substr($interviewee->lastname, 0, 1)) }}</span>
+						@endif
                        </td>
                        <td>
                            {{ $interviewee->firstname }} {{ $interviewee->lastname }} 

@@ -25,6 +25,7 @@ class InternalLead extends Model
         'created_by',
         'image',
         'resume',
+        'checkbox_status',
         'status',
         'experience',
         'additional_comments',
