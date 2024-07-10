@@ -69,11 +69,11 @@
 	<div class="main-wrapper">
 		<div class="account-page">
 			<div class="container">
-				<h3 class="account-title text-white">BT-Login</h3>
+				<h3 class="account-title text-white">Personal Budget Tracker</h3>
 				<div class="account-box">
 					<div class="account-wrapper">
 						<div class="account-logo">
-							<a href=""><img src="{{ asset('assets/img/logo1.png') }}" alt="SchoolAdmin"></a>
+							<!-- <a href=""><img src="{{ asset('assets/img/logo1.png') }}" alt="SchoolAdmin"></a> -->
 						</div>
 						<form method="POST" action="{{ route('login') }}">
                             @csrf
@@ -93,7 +93,7 @@
                                 <button type="submit" class="btn btn-primary btn-block account-btn">Login</button>
                             </div>
                             <div class="text-center">
-                                <a href="{{ route('forgot-password') }}" class="btn btn-secondary btn-block account-btn">Forgot your password?</a>
+                                <a href="{{ route('register') }}">Register here </a>
                             </div>
 
                         </form>

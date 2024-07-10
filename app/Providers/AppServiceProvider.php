@@ -29,13 +29,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // Share user and role data with all views
-        View::composer('*', function ($view) {
-            $user = Auth::user();
-            if ($user) {
-                $role = $user->role;
-                $role = Role::where('role_id', $role)->first();
-                $view->with(compact('user', 'role'));
-            }
-        });
+       
     }
 }

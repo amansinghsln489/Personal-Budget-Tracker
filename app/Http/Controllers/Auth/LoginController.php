@@ -29,6 +29,8 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
     
         if (Auth::attempt($credentials)) {
+
+            // die("aman");
             // Authentication passed...
             // return redirect()->intended('view-lead');
             return redirect()->intended('dashboard');
